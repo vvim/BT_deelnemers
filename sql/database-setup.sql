@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Aug 04, 2016 at 04:53 PM
+-- Generation Time: Aug 07, 2016 at 04:09 PM
 -- Server version: 5.5.50-0+deb8u1
 -- PHP Version: 5.6.24-0+deb8u1
 
@@ -67,14 +67,7 @@ CREATE TABLE IF NOT EXISTS `t_deelnemers` (
   `stop_reden` varchar(250) DEFAULT NULL,
   `soort_deelnemer` tinyint(3) unsigned NOT NULL,
   `varia` varchar(1000) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `t_deelnemers`
---
-
-
--- --------------------------------------------------------
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 --
 -- Table structure for table `t_deelnemer_contact_voorkeur`
@@ -110,6 +103,22 @@ CREATE TABLE IF NOT EXISTS `t_deelnemer_doelgroep` (
   `id` tinyint(3) unsigned NOT NULL,
   `doelgroep` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `t_deelnemer_doelgroep`
+--
+
+INSERT INTO `t_deelnemer_doelgroep` (`id`, `doelgroep`) VALUES
+(0, 'iedereen'),
+(1, 'armoede of kansarmoede'),
+(2, 'handicap of beperking'),
+(3, 'vrouwen'),
+(4, 'mensen van allochtone afkomst'),
+(5, 'senioren'),
+(6, 'werkzoekenden'),
+(7, 'jeugd en kinderen'),
+(8, 'buurtbewoners'),
+(9, 'psychiatrisch profiel');
 
 -- --------------------------------------------------------
 
@@ -241,16 +250,8 @@ CREATE TABLE IF NOT EXISTS `t_deelnemer_soort_deelnemer` (
 --
 
 INSERT INTO `t_deelnemer_soort_deelnemer` (`id`, `soort`) VALUES
-(0, 'iedereen'),
-(1, 'armoede of '),
-(2, 'handicap of'),
-(3, 'vrouwen'),
-(4, 'mensen van '),
-(5, 'senioren'),
-(6, 'werkzoekend'),
-(7, 'jeugd en ki'),
-(8, 'buurtbewone'),
-(9, 'psychiatris');
+(0, 'individu'),
+(1, 'organisatie');
 
 -- --------------------------------------------------------
 
@@ -354,7 +355,7 @@ ALTER TABLE `t_deelnemer_statuut`
 -- AUTO_INCREMENT for table `t_deelnemers`
 --
 ALTER TABLE `t_deelnemers`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=0;
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
