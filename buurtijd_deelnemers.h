@@ -6,6 +6,8 @@
 #include <QSqlError>
 #include <QSqlQuery>
 #include <QMessageBox>
+#include <QSqlRelationalTableModel>
+#include <QDataWidgetMapper>
 
 namespace Ui {
 class Buurtijd_deelnemers;
@@ -20,9 +22,14 @@ public:
     ~Buurtijd_deelnemers();
 
 private:
+    void showError(const QSqlError &err);
     Ui::Buurtijd_deelnemers *ui;
     bool connectToDatabase();
     QSqlDatabase db;
+    QSqlRelationalTableModel *model;
+    QDataWidgetMapper *mapper;
+    int contactVoorkeurIdx, doelgroepIdx, domeinIdx, geslachtIdx, hoeLerenKennenIdx, ingeschrevenDoorIdx, niveauNlIdx, soortDeelnemerIdx, statuutIdx;
+
 };
 
 #endif // BUURTIJD_DEELNEMERS_H
