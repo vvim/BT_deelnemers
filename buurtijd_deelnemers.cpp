@@ -81,6 +81,9 @@ Buurtijd_deelnemers::Buurtijd_deelnemers(QWidget *parent) :
     connect(ui->deelnemersTable->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),
             mapper, SLOT(setCurrentModelIndex(QModelIndex)));
 
+    connect(ui->deelnemersTable->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),
+            this, SLOT(ChangeRow(QModelIndex)));
+
     ui->deelnemersTable->setCurrentIndex(model->index(0, 0));
 
 
@@ -94,6 +97,9 @@ Buurtijd_deelnemers::Buurtijd_deelnemers(QWidget *parent) :
     ui->dateEdit_laatstecontact->setDisplayFormat("dd MMM yyyy");
     ui->dateEdit_laatstecontact->setLocale(QLocale::Dutch);
     ui->dateEdit_laatstecontact->setCalendarPopup(true);  //zie http://stackoverflow.com/questions/7031962/qdateedit-calendar-popup
+    // populate QComboBoxes
+    ui->comboBox_geslacht->addItem("man");
+    ui->comboBox_geslacht->addItem("vrouw");
 }
 
 Buurtijd_deelnemers::~Buurtijd_deelnemers()
@@ -143,3 +149,34 @@ void Buurtijd_deelnemers::showError(const QSqlError &err)
                 "Error initializing database: " + err.text());
 }
 
+void Buurtijd_deelnemers::ChangeRow(QModelIndex new_index)
+{
+    // !! zodra je van fiche verandert , vraag aan de gebruiker "wijzigingen opslaan"? submitAll / Rollback
+    //  if(QMessageBox("save changes?"))
+    //  {
+    //      commit();
+    //      mapper->setCurrentModelIndex(new_index);
+    //  }
+    //  else
+    //  {
+    //      rollback();
+    //      return;
+    //  }
+
+    int currentRow = ui->deelnemersTable->currentIndex().row();
+    int geslachtIdx = model->fieldIndex("geslacht");
+    int naamIdx = model->fieldIndex("naam");
+    int ingeschrdoorIdx = model->fieldIndex("ingeschreven_door");
+
+
+    if(model->data(model->index(currentRow,geslachtIdx)).isNull()) // NULL.toInt() == 0 ! so this can be misleading
+    {
+        // geslacht is NULL
+        ui->comboBox_geslacht->setCurrentIndex(-1);
+    }
+    else
+    {
+        ui->comboBox_geslacht->setCurrentIndex(model->data(model->index(currentRow,geslachtIdx)).toInt());
+    }
+
+}

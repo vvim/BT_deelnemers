@@ -30,6 +30,8 @@ private:
     QDataWidgetMapper *mapper;
     int contactVoorkeurIdx, doelgroepIdx, domeinIdx, geslachtIdx, hoeLerenKennenIdx, ingeschrevenDoorIdx, niveauNlIdx, soortDeelnemerIdx, statuutIdx;
 
+private slots:
+    void ChangeRow(QModelIndex new_index);
 };
 
 #endif // BUURTIJD_DEELNEMERS_H
