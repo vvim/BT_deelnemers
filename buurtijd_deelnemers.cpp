@@ -43,12 +43,6 @@ Buurtijd_deelnemers::Buurtijd_deelnemers(QWidget *parent) :
     /// and then the entire row gets ignored during the JOIN. So small workaround:
     ///     -> as we do not use relations amongst the tables, maybe better to use the simpler QSqlTableModel ???
 
-    // Remember the indexes of the columns
-    // invalid index => -1
-    doelgroepIdx = model_deelnemers->fieldIndex("doelgroep");
-    domeinIdx = model_deelnemers->fieldIndex("domein");
-    soortDeelnemerIdx = model_deelnemers->fieldIndex("soort_deelnemer");
-
     //  ui.bookTable->setColumnHidden(model_deelnemers->fieldIndex("id"), true);
 
     //mapper->setItemDelegate(new BookDelegate(this));
@@ -183,6 +177,8 @@ void Buurtijd_deelnemers::showError(const QSqlError &err)
 
 void Buurtijd_deelnemers::ChangeRow(QModelIndex new_index)
 {
+    int currentRow = new_index.row();
+
     /* !! zodra je van fiche verandert , vraag aan de gebruiker "wijzigingen opslaan"? submitAll / Rollback
      *
      * 1) testen of er iets is gewijzigd bij de gebruiker
@@ -215,7 +211,39 @@ void Buurtijd_deelnemers::ChangeRow(QModelIndex new_index)
 
     mapper->setCurrentModelIndex(new_index);
 
-    // if(model_deelnemers->data(model_deelnemers->index(currentRow,geslachtIdx)).isNull()) // NULL.toInt() == 0 ! so this can be misleading
+    /* 4) kiezen wat zichtbaar is en wat niet */
+
+    /// -> 1) information for all participants -> is always visible, so we do not need to make any changes here
+
+    /// -> 2) information for official members only
+    /// info: invalid index => -1
+
+    showInformationForOfficialMember(
+                model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("lid"))).toBool()
+                );
+
+    /// -> 2b) information for official members that have quit
+    /// TODO: testen of 2b) getoond kan worden als 2) false is, want dat heeft geen zin
+    showInformationForOfficialMemberHasQuit(
+                model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("was_lid_is_nu_gestopt"))).toBool()
+                );
+
+    /// info: NULL.toInt() == 0 ! so this can be misleading , you can test with ().isNull()
+    if( !(model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("soort_deelnemer"))).isNull())
+            && model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("soort_deelnemer"))).toInt() == 0)
+    {
+        /// -> 3) information for individuals only
+        qDebug() << model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("naam"))).toString() << "is een individu";
+        showInformationForIndividual(true);
+        showInformationForOrganisation(false);
+    }
+    else
+    {
+        /// -> 4) information for organisations only
+        qDebug() << model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("naam"))).toString() << "is een organisatie";
+        showInformationForIndividual(false);
+        showInformationForOrganisation(true);
+    }
 }
 
 void Buurtijd_deelnemers::mapComboboxAndTableModel(QComboBox *combobox,QSqlRelationalTableModel *model, QString table_name, int t_deelnemers_fieldindex)
@@ -231,4 +259,58 @@ void Buurtijd_deelnemers::mapComboboxAndTableModel(QComboBox *combobox,QSqlRelat
     combobox->setModel(model);
     combobox->setModelColumn(1);
     mapper->addMapping(combobox, t_deelnemers_fieldindex,"currentIndex");
+}
+
+void Buurtijd_deelnemers::showInformationForOfficialMember(bool make_visible)
+{
+    /// -> 2) information for official members only
+    ui->dateEdit_inschrijfdatum->setVisible(make_visible);
+    ui->label_inschrijfdatum->setVisible(make_visible);
+    ui->checkBox_hr_goedgekeurd->setVisible(make_visible);
+    ui->checkBox_contact_delen->setVisible(make_visible);
+    ui->checkBox_fotomateriaal_gebruiken->setVisible(make_visible);
+    ui->checkBox_was_lid_is_nu_gestopt->setVisible(make_visible);
+    ui->comboBox_ingeschreven_door->setVisible(make_visible);
+    ui->label_ingeschreven_door->setVisible(make_visible);
+}
+
+void Buurtijd_deelnemers::showInformationForOfficialMemberHasQuit(bool make_visible)
+{
+    /// -> 2b) information for official members that have quit
+    ui->dateEdit_stop_datum->setVisible(make_visible);
+    ui->label_stop_datum->setVisible(make_visible);
+    ui->plainTextEdit_stop_reden->setVisible(make_visible);
+    ui->label_stop_reden->setVisible(make_visible);
+}
+
+void Buurtijd_deelnemers::showInformationForIndividual(bool make_visible)
+{
+    /// -> 3) information for individuals only
+    ui->le_familieNaam->setVisible(make_visible);
+    ui->label_familieNaam->setVisible(make_visible);
+    ui->dateEdit_geboortedatum->setVisible(make_visible);
+    ui->label_geboortedatum->setVisible(make_visible);
+    ui->le_afkomst->setVisible(make_visible);
+    ui->label_afkomst->setVisible(make_visible);
+    ui->checkBox_brandverzekering->setVisible(make_visible);
+    ui->checkBox_familiale_verzekering->setVisible(make_visible);
+    ui->comboBox_geslacht->setVisible(make_visible);
+    ui->label_geslacht->setVisible(make_visible);
+    ui->comboBox_statuut->setVisible(make_visible);
+    ui->label_statuut->setVisible(make_visible);
+    ui->comboBox_niveau_nederlands->setVisible(make_visible);
+    ui->label_niveau_nederlands->setVisible(make_visible);
+}
+
+void Buurtijd_deelnemers::showInformationForOrganisation(bool make_visible)
+{
+    /// -> 4) information for organisations only
+    ui->le_contactpersoon_organisatie_familienaam->setVisible(make_visible);
+    ui->label_contactpersoon_organisatie->setVisible(make_visible);
+    ui->le_contactpersoon_organisatie_voornaam->setVisible(make_visible);
+    ui->checkBox_vrijwilligers_verzekering->setVisible(make_visible);
+    ui->label_domein->setVisible(make_visible);
+    ui->listView_domein->setVisible(make_visible);
+    ui->label_doelgroep->setVisible(make_visible);
+    ui->listView_doelgroep->setVisible(make_visible);
 }
