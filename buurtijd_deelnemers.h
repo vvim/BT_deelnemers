@@ -26,7 +26,7 @@ private:
     Ui::Buurtijd_deelnemers *ui;
     bool connectToDatabase();
     QSqlDatabase db;
-    QSqlRelationalTableModel *model;
+    QSqlRelationalTableModel *model_deelnemers, *contactVoorkeur_model, *doelgroep_model, *domein_model, *geslacht_model, *hoeLerenKennen_model, *ingeschrevenDoor_model, *niveauNl_model, *soortDeelnemer_model, *statuut_model;
     QDataWidgetMapper *mapper;
     int contactVoorkeurIdx, doelgroepIdx, domeinIdx, geslachtIdx, hoeLerenKennenIdx, ingeschrevenDoorIdx, niveauNlIdx, soortDeelnemerIdx, statuutIdx;
 
