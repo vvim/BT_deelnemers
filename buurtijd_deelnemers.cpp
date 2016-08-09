@@ -72,9 +72,9 @@ Buurtijd_deelnemers::Buurtijd_deelnemers(QWidget *parent) :
     mapper->addMapping(ui->le_email2, model_deelnemers->fieldIndex("email2"));
     mapper->addMapping(ui->checkbox_lid, model_deelnemers->fieldIndex("lid"));
     mapper->addMapping(ui->dateEdit_inschrijfdatum, model_deelnemers->fieldIndex("inschrijf_datum"));
-    mapper->addMapping(ui->comboBox_ingeschreven_door, model_deelnemers->fieldIndex("ingeschreven_door"));
+    mapper->addMapping(ui->comboBox_ingeschreven_door, model_deelnemers->fieldIndex("ingeschreven_door"),"currentIndex");
     mapper->addMapping(ui->dateEdit_laatstecontact, model_deelnemers->fieldIndex("laatste_contact"));
-    mapper->addMapping(ui->comboBox_geslacht, model_deelnemers->fieldIndex("geslacht"));
+    mapper->addMapping(ui->comboBox_geslacht, model_deelnemers->fieldIndex("geslacht"),"currentIndex");
     mapper->addMapping(ui->dateEdit_geboortedatum, model_deelnemers->fieldIndex("geboortedatum"));
     mapper->addMapping(ui->le_afkomst, model_deelnemers->fieldIndex("afkomst"));
     //mapper->addMapping(ui->le_, model_deelnemers->fieldIndex(""));
