@@ -19,34 +19,6 @@ Buurtijd_deelnemers::Buurtijd_deelnemers(QWidget *parent) :
     model_deelnemers->setEditStrategy(QSqlTableModel::OnManualSubmit);
     model_deelnemers->setTable("t_deelnemers");
 
-    mapComboboxAndTableModel(ui->comboBox_statuut,model_statuut,"t_deelnemer_statuut");
-
-    // Remember the indexes of the columns
-    // invalid index => -1
-    contactVoorkeurIdx = model_deelnemers->fieldIndex("contactvoorkeur");
-    doelgroepIdx = model_deelnemers->fieldIndex("doelgroep");
-    domeinIdx = model_deelnemers->fieldIndex("domein");
-    geslachtIdx = model_deelnemers->fieldIndex("geslacht");
-    hoeLerenKennenIdx = model_deelnemers->fieldIndex("bt_leren_kennen");
-    ingeschrevenDoorIdx = model_deelnemers->fieldIndex("ingeschreven_door");
-    niveauNlIdx = model_deelnemers->fieldIndex("niveau_nl");
-    soortDeelnemerIdx = model_deelnemers->fieldIndex("soort_deelnemer");
-    statuutIdx = model_deelnemers->fieldIndex("statuut");
-
-
-    /** voorlopig nog geen relaties zetten. Er zijn namelijk veel cellen met NULL als waarde, en die worden dan uit de Join geweerd
-
-    // Set the relations to the other database tables
-    model_deelnemers->setRelation(contactVoorkeurIdx, QSqlRelation("t_deelnemer_contact_voorkeur", "id", "voorkeur"));
-    // doelgroep -> multiple select...
-    // domein -> multiple select...
-    model_deelnemers->setRelation(geslachtIdx, QSqlRelation("t_deelnemer_geslacht", "id", "geslacht"));
-    model_deelnemers->setRelation(hoeLerenKennenIdx, QSqlRelation("t_deelnemer_hoe_leren_kennen", "id", "info"));
-    model_deelnemers->setRelation(ingeschrevenDoorIdx, QSqlRelation("t_deelnemer_ingeschreven_door", "id", "medewerker"));
-    model_deelnemers->setRelation(niveauNlIdx, QSqlRelation("t_deelnemer_niv_nederlands", "id", "niveau"));
-    model_deelnemers->setRelation(soortDeelnemerIdx, QSqlRelation("t_deelnemer_soort_deelnemer", "id", "soort"));
-    model_deelnemers->setRelation(statuutIdx, QSqlRelation("t_deelnemer_statuut", "id", "statuut"));
-    **/
     // Populate the model
     if (!model_deelnemers->select())
     {
@@ -57,9 +29,27 @@ Buurtijd_deelnemers::Buurtijd_deelnemers(QWidget *parent) :
     ui->deelnemersTable->setModel(model_deelnemers);
 
     mapper = new QDataWidgetMapper(this);
+    mapper->setModel(model_deelnemers);
+
+    // Populate the comboboxes
+    mapComboboxAndTableModel(ui->comboBox_statuut,model_statuut,"t_deelnemer_statuut",model_deelnemers->fieldIndex("statuut"));
+    mapComboboxAndTableModel(ui->comboBox_geslacht,model_geslacht,"t_deelnemer_geslacht",model_deelnemers->fieldIndex("geslacht"));
+    mapComboboxAndTableModel(ui->comboBox_contactvoorkeur,model_contactVoorkeur,"t_deelnemer_contact_voorkeur",model_deelnemers->fieldIndex("contactvoorkeur"));
+    mapComboboxAndTableModel(ui->comboBox_ingeschreven_door,model_ingeschrevenDoor,"t_deelnemer_ingeschreven_door",model_deelnemers->fieldIndex("ingeschreven_door"));
+    mapComboboxAndTableModel(ui->comboBox_hoe_bt_leren_kennen,model_hoeLerenKennen,"t_deelnemer_hoe_leren_kennen",model_deelnemers->fieldIndex("bt_leren_kennen"));
+    mapComboboxAndTableModel(ui->comboBox_niveau_nederlands,model_niveauNl,"t_deelnemer_niv_nederlands",model_deelnemers->fieldIndex("niveau_nl"));
+    /// I do not use SetRelation() because several columns have NULL as a value,
+    /// and then the entire row gets ignored during the JOIN. So small workaround:
+    ///     -> as we do not use relations amongst the tables, maybe better to use the simpler QSqlTableModel ???
+
+    // Remember the indexes of the columns
+    // invalid index => -1
+    doelgroepIdx = model_deelnemers->fieldIndex("doelgroep");
+    domeinIdx = model_deelnemers->fieldIndex("domein");
+    soortDeelnemerIdx = model_deelnemers->fieldIndex("soort_deelnemer");
+
     //  ui.bookTable->setColumnHidden(model_deelnemers->fieldIndex("id"), true);
 
-    mapper->setModel(model_deelnemers);
     //mapper->setItemDelegate(new BookDelegate(this));
     mapper->addMapping(ui->le_naam, model_deelnemers->fieldIndex("naam"));
     mapper->addMapping(ui->le_familieNaam, model_deelnemers->fieldIndex("familienaam"));
@@ -74,9 +64,7 @@ Buurtijd_deelnemers::Buurtijd_deelnemers(QWidget *parent) :
     mapper->addMapping(ui->le_email2, model_deelnemers->fieldIndex("email2"));
     mapper->addMapping(ui->checkbox_lid, model_deelnemers->fieldIndex("lid"));
     mapper->addMapping(ui->dateEdit_inschrijfdatum, model_deelnemers->fieldIndex("inschrijf_datum"));
-    mapper->addMapping(ui->comboBox_ingeschreven_door, model_deelnemers->fieldIndex("ingeschreven_door"),"currentIndex");
     mapper->addMapping(ui->dateEdit_laatstecontact, model_deelnemers->fieldIndex("laatste_contact"));
-    mapper->addMapping(ui->comboBox_geslacht, model_deelnemers->fieldIndex("geslacht"),"currentIndex");
     mapper->addMapping(ui->dateEdit_geboortedatum, model_deelnemers->fieldIndex("geboortedatum"));
     mapper->addMapping(ui->le_afkomst, model_deelnemers->fieldIndex("afkomst"));
     //mapper->addMapping(ui->le_, model_deelnemers->fieldIndex(""));
@@ -100,9 +88,6 @@ Buurtijd_deelnemers::Buurtijd_deelnemers(QWidget *parent) :
     ui->dateEdit_laatstecontact->setDisplayFormat("dd MMM yyyy");
     ui->dateEdit_laatstecontact->setLocale(QLocale::Dutch);
     ui->dateEdit_laatstecontact->setCalendarPopup(true);  //zie http://stackoverflow.com/questions/7031962/qdateedit-calendar-popup
-    // populate QComboBoxes
-    ui->comboBox_geslacht->addItem("man");
-    ui->comboBox_geslacht->addItem("vrouw");
 }
 
 Buurtijd_deelnemers::~Buurtijd_deelnemers()
@@ -200,11 +185,11 @@ void Buurtijd_deelnemers::ChangeRow(QModelIndex new_index)
       }
 }
 
-void Buurtijd_deelnemers::mapComboboxAndTableModel(QComboBox *combobox,QSqlRelationalTableModel *model, QString table)
+void Buurtijd_deelnemers::mapComboboxAndTableModel(QComboBox *combobox,QSqlRelationalTableModel *model, QString table_name, int t_deelnemers_fieldindex)
 {
     model = new QSqlRelationalTableModel(combobox);
     model->setEditStrategy(QSqlTableModel::OnManualSubmit);
-    model->setTable(table);
+    model->setTable(table_name);
     if (!model->select())
     {
         showError(model->lastError());
@@ -212,4 +197,5 @@ void Buurtijd_deelnemers::mapComboboxAndTableModel(QComboBox *combobox,QSqlRelat
     }
     combobox->setModel(model);
     combobox->setModelColumn(1);
+    mapper->addMapping(combobox, t_deelnemers_fieldindex,"currentIndex");
 }
