@@ -38,6 +38,7 @@ Buurtijd_deelnemers::Buurtijd_deelnemers(QWidget *parent) :
     mapComboboxAndTableModel(ui->comboBox_ingeschreven_door,model_ingeschrevenDoor,"t_deelnemer_ingeschreven_door",model_deelnemers->fieldIndex("ingeschreven_door"));
     mapComboboxAndTableModel(ui->comboBox_hoe_bt_leren_kennen,model_hoeLerenKennen,"t_deelnemer_hoe_leren_kennen",model_deelnemers->fieldIndex("bt_leren_kennen"));
     mapComboboxAndTableModel(ui->comboBox_niveau_nederlands,model_niveauNl,"t_deelnemer_niv_nederlands",model_deelnemers->fieldIndex("niveau_nl"));
+    mapComboboxAndTableModel(ui->comboBox_soort,model_soort,"t_deelnemer_soort",model_deelnemers->fieldIndex("soort_deelnemer"));
     /// I do not use SetRelation() because several columns have NULL as a value,
     /// and then the entire row gets ignored during the JOIN. So small workaround:
     ///     -> as we do not use relations amongst the tables, maybe better to use the simpler QSqlTableModel ???
