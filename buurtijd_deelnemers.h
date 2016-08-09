@@ -28,7 +28,7 @@ private:
     bool connectToDatabase();
     QSqlDatabase db;
     // as we do not use relations amongst the tables, maybe better to use the simpler QSqlTableModel ???
-    QSqlRelationalTableModel *model_deelnemers, *model_contactVoorkeur, *model_doelgroep, *model_domein, *model_geslacht, *model_hoeLerenKennen, *model_ingeschrevenDoor, *model_niveauNl, *model_soortDeelnemer, *model_statuut;
+    QSqlRelationalTableModel *model_deelnemers, *model_contactVoorkeur, *model_doelgroep, *model_domein, *model_geslacht, *model_hoeLerenKennen, *model_ingeschrevenDoor, *model_niveauNl, *model_soortDeelnemer, *model_statuut, *model_soort;
     QDataWidgetMapper *mapper;
     int contactVoorkeurIdx, doelgroepIdx, domeinIdx, geslachtIdx, hoeLerenKennenIdx, ingeschrevenDoorIdx, niveauNlIdx, soortDeelnemerIdx, statuutIdx;
     void mapComboboxAndTableModel(QComboBox *combobox, QSqlRelationalTableModel *model, QString table_name, int t_deelnemers_fieldindex);

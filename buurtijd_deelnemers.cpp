@@ -68,12 +68,12 @@ Buurtijd_deelnemers::Buurtijd_deelnemers(QWidget *parent) :
     mapper->addMapping(ui->dateEdit_laatstecontact, model_deelnemers->fieldIndex("laatste_contact"));
     mapper->addMapping(ui->plainTextEdit_wanneer_best_contacteren, model_deelnemers->fieldIndex("wanneer_best_contacteren"));
     mapper->addMapping(ui->plainTextEdit_varia, model_deelnemers->fieldIndex("varia"));
-    mapper->addMapping(ui->rb_individu, model_deelnemers->fieldIndex("soort"));
     /** comboboxes:
      *    "contactvoorkeur"
      *    "hoe_buurtijd_leren_kennen"
+     *    "soort" -> voor ComboBox gekozen omdat dit eenvoudig ter programmeren was, een radiobutton brengt niet echt een voordeel op
      **/
-//TODO: individu of organisatie . Radiobutton, zie http://www.qtcentre.org/threads/21860-QRadioButton-and-QDataWidgetMapper qwidgetmapper radiobutton
+
 
     /// -> 2) information for official members only
     mapper->addMapping(ui->dateEdit_inschrijfdatum, model_deelnemers->fieldIndex("inschrijf_datum"));

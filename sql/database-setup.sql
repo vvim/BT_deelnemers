@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Aug 07, 2016 at 04:09 PM
+-- Generation Time: Aug 09, 2016 at 04:23 PM
 -- Server version: 5.5.50-0+deb8u1
 -- PHP Version: 5.6.24-0+deb8u1
 
@@ -233,6 +233,25 @@ INSERT INTO `t_deelnemer_niv_nederlands` (`id`, `niveau`) VALUES
 (1, 'een paar woorden'),
 (2, 'duidelijke zinnen'),
 (3, 'vloeiend of moedertaal');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `t_deelnemer_soort`
+--
+
+CREATE TABLE IF NOT EXISTS `t_deelnemer_soort` (
+  `id` int(11) NOT NULL,
+  `soort` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `t_deelnemer_soort`
+--
+
+INSERT INTO `t_deelnemer_soort` (`id`, `soort`) VALUES
+(0, 'individu'),
+(1, 'organisatie');
 
 -- --------------------------------------------------------
 
