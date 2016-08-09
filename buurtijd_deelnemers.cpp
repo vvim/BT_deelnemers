@@ -81,8 +81,8 @@ Buurtijd_deelnemers::Buurtijd_deelnemers(QWidget *parent) :
     mapper->addMapping(ui->le_afkomst, model_deelnemers->fieldIndex("afkomst"));
     //mapper->addMapping(ui->le_, model_deelnemers->fieldIndex(""));
 
-    connect(ui->deelnemersTable->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),
-            mapper, SLOT(setCurrentModelIndex(QModelIndex)));
+    //connect(ui->deelnemersTable->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),
+    //        mapper, SLOT(setCurrentModelIndex(QModelIndex)));
 
     connect(ui->deelnemersTable->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),
             this, SLOT(ChangeRow(QModelIndex)));
@@ -188,7 +188,16 @@ void Buurtijd_deelnemers::ChangeRow(QModelIndex new_index)
         ui->comboBox_geslacht->setCurrentIndex(model_deelnemers->data(model_deelnemers->index(currentRow,geslachtIdx)).toInt());
     }
 */
-    // mapper->setCurrentModelIndex(new_index); => crash. Why??
+    int reply = QMessageBox::question(this, "Toon volgende deelnemer?", "Ben je zeker dat je de volgende deelnemer wilt tonen?",
+                                    QMessageBox::Yes|QMessageBox::No);
+      if (reply == QMessageBox::Yes)
+      {
+        mapper->setCurrentModelIndex(new_index); //=> no longer crashes, see comment
+      }
+      else
+      {
+        qDebug() << "Yes was *not* clicked";
+      }
 }
 
 void Buurtijd_deelnemers::mapComboboxAndTableModel(QComboBox *combobox,QSqlRelationalTableModel *model, QString table)
