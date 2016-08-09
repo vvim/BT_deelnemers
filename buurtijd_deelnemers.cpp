@@ -19,6 +19,8 @@ Buurtijd_deelnemers::Buurtijd_deelnemers(QWidget *parent) :
     model_deelnemers->setEditStrategy(QSqlTableModel::OnManualSubmit);
     model_deelnemers->setTable("t_deelnemers");
 
+    mapComboboxAndTableModel(ui->comboBox_statuut,model_statuut,"t_deelnemer_statuut");
+
     // Remember the indexes of the columns
     // invalid index => -1
     contactVoorkeurIdx = model_deelnemers->fieldIndex("contactvoorkeur");
@@ -187,4 +189,18 @@ void Buurtijd_deelnemers::ChangeRow(QModelIndex new_index)
     }
 */
     // mapper->setCurrentModelIndex(new_index); => crash. Why??
+}
+
+void Buurtijd_deelnemers::mapComboboxAndTableModel(QComboBox *combobox,QSqlRelationalTableModel *model, QString table)
+{
+    model = new QSqlRelationalTableModel(combobox);
+    model->setEditStrategy(QSqlTableModel::OnManualSubmit);
+    model->setTable(table);
+    if (!model->select())
+    {
+        showError(model->lastError());
+        return;
+    }
+    combobox->setModel(model);
+    combobox->setModelColumn(1);
 }
