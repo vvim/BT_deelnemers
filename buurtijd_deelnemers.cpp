@@ -139,50 +139,39 @@ void Buurtijd_deelnemers::showError(const QSqlError &err)
 
 void Buurtijd_deelnemers::ChangeRow(QModelIndex new_index)
 {
-    // !! zodra je van fiche verandert , vraag aan de gebruiker "wijzigingen opslaan"? submitAll / Rollback
-    //  if(QMessageBox("save changes?"))
-    //  {
-    //      commit();
-    //      mapper->setCurrentModelIndex(new_index);
-    //  }
-    //  else
-    //  {
-    //      rollback();
-    //      return;
-    //  }
-
-    int currentRow = ui->deelnemersTable->currentIndex().row();
-    int geslachtIdx = model_deelnemers->fieldIndex("geslacht");
-    int naamIdx = model_deelnemers->fieldIndex("naam");
-    int ingeschrdoorIdx = model_deelnemers->fieldIndex("ingeschreven_door");
-    qDebug() << "row changed" << currentRow << new_index.row();
-    qDebug() << "naam:" << model_deelnemers->data(model_deelnemers->index(currentRow,naamIdx)).toString();
-    qDebug() << "geslacht:" << model_deelnemers->data(model_deelnemers->index(currentRow,geslachtIdx)).toInt();
-    qDebug() << "    is NULL?" << model_deelnemers->data(model_deelnemers->index(currentRow,geslachtIdx)).isNull();
-    qDebug() << "ingeschreven door:" << model_deelnemers->data(model_deelnemers->index(currentRow,ingeschrdoorIdx)).toInt();
-
-/*
-
-    if(model_deelnemers->data(model_deelnemers->index(currentRow,geslachtIdx)).isNull()) // NULL.toInt() == 0 ! so this can be misleading
+    /* !! zodra je van fiche verandert , vraag aan de gebruiker "wijzigingen opslaan"? submitAll / Rollback
+     *
+     * 1) testen of er iets is gewijzigd bij de gebruiker
+     *          hoe? houden we een BOOL bij met "heeft iets aangeklikt"
+     *               of vergelijken we de inhoud van elke widget met de inhoud van het overeenkomstige model?
+     *
+     * 2) indien nodig: messagebox laten zien
+     *
+     * 3) verder doen met de werking van het programma
+    int reply = QMessageBox::question(this, "Wijzigingen opslaan?", "Wijzigingen opslaan?",
+                                    QMessageBox::Yes|QMessageBox::No);
+    if (reply == QMessageBox::Yes)
     {
-        // geslacht is NULL
-        ui->comboBox_geslacht->setCurrentIndex(-1);
+        // commit();
+    }
+    else if (reply == QMessageBox::No)
+    {
+        // rollback();
+        qDebug() << "Yes was *not* clicked";
     }
     else
     {
-        ui->comboBox_geslacht->setCurrentIndex(model_deelnemers->data(model_deelnemers->index(currentRow,geslachtIdx)).toInt());
+        // de gebruiker heeft op ESC gedrukt of het kruisje aangeklikt: geldt niet als input
+        return;
     }
-*/
-    int reply = QMessageBox::question(this, "Toon volgende deelnemer?", "Ben je zeker dat je de volgende deelnemer wilt tonen?",
-                                    QMessageBox::Yes|QMessageBox::No);
-      if (reply == QMessageBox::Yes)
-      {
-        mapper->setCurrentModelIndex(new_index); //=> no longer crashes, see comment
-      }
-      else
-      {
-        qDebug() << "Yes was *not* clicked";
-      }
+     *
+     * 3) verder doen met de werking van het programma
+     *
+    **/
+
+    mapper->setCurrentModelIndex(new_index);
+
+    // if(model_deelnemers->data(model_deelnemers->index(currentRow,geslachtIdx)).isNull()) // NULL.toInt() == 0 ! so this can be misleading
 }
 
 void Buurtijd_deelnemers::mapComboboxAndTableModel(QComboBox *combobox,QSqlRelationalTableModel *model, QString table_name, int t_deelnemers_fieldindex)
