@@ -51,8 +51,10 @@ Buurtijd_deelnemers::Buurtijd_deelnemers(QWidget *parent) :
     //  ui.bookTable->setColumnHidden(model_deelnemers->fieldIndex("id"), true);
 
     //mapper->setItemDelegate(new BookDelegate(this));
+
+    // mapping database t_deelnemers to ui->...
+    /// -> 1) information for all participants
     mapper->addMapping(ui->le_naam, model_deelnemers->fieldIndex("naam"));
-    mapper->addMapping(ui->le_familieNaam, model_deelnemers->fieldIndex("familienaam"));
     mapper->addMapping(ui->le_straat, model_deelnemers->fieldIndex("straat"));
     mapper->addMapping(ui->le_huisnr, model_deelnemers->fieldIndex("huisnr"));
     mapper->addMapping(ui->le_busnr, model_deelnemers->fieldIndex("busnr"));
@@ -63,10 +65,49 @@ Buurtijd_deelnemers::Buurtijd_deelnemers(QWidget *parent) :
     mapper->addMapping(ui->le_email1, model_deelnemers->fieldIndex("email1"));
     mapper->addMapping(ui->le_email2, model_deelnemers->fieldIndex("email2"));
     mapper->addMapping(ui->checkbox_lid, model_deelnemers->fieldIndex("lid"));
-    mapper->addMapping(ui->dateEdit_inschrijfdatum, model_deelnemers->fieldIndex("inschrijf_datum"));
     mapper->addMapping(ui->dateEdit_laatstecontact, model_deelnemers->fieldIndex("laatste_contact"));
+    mapper->addMapping(ui->plainTextEdit_wanneer_best_contacteren, model_deelnemers->fieldIndex("wanneer_best_contacteren"));
+    mapper->addMapping(ui->plainTextEdit_varia, model_deelnemers->fieldIndex("varia"));
+    mapper->addMapping(ui->rb_individu, model_deelnemers->fieldIndex("soort"));
+    /** comboboxes:
+     *    "contactvoorkeur"
+     *    "hoe_buurtijd_leren_kennen"
+     **/
+//TODO: individu of organisatie . Radiobutton, zie http://www.qtcentre.org/threads/21860-QRadioButton-and-QDataWidgetMapper qwidgetmapper radiobutton
+
+    /// -> 2) information for official members only
+    mapper->addMapping(ui->dateEdit_inschrijfdatum, model_deelnemers->fieldIndex("inschrijf_datum"));
+    mapper->addMapping(ui->checkBox_hr_goedgekeurd, model_deelnemers->fieldIndex("hr_goedgekeurd"));
+    mapper->addMapping(ui->checkBox_contact_delen, model_deelnemers->fieldIndex("contact_delen"));
+    mapper->addMapping(ui->checkBox_fotomateriaal_gebruiken, model_deelnemers->fieldIndex("fotomateriaal_gebruiken"));
+    mapper->addMapping(ui->checkBox_was_lid_is_nu_gestopt, model_deelnemers->fieldIndex("was_lid_is_nu_gestopt"));
+    /** comboboxes:
+     *    "ingeschreven_door"
+     **/
+    /// -> 2b) information for official members that have quit
+    mapper->addMapping(ui->dateEdit_stop_datum, model_deelnemers->fieldIndex("stop_datum"));
+    mapper->addMapping(ui->plainTextEdit_stop_reden, model_deelnemers->fieldIndex("stop_reden"));
+
+
+    /// -> 3) information for individuals only
+    mapper->addMapping(ui->le_familieNaam, model_deelnemers->fieldIndex("familienaam"));
     mapper->addMapping(ui->dateEdit_geboortedatum, model_deelnemers->fieldIndex("geboortedatum"));
     mapper->addMapping(ui->le_afkomst, model_deelnemers->fieldIndex("afkomst"));
+    mapper->addMapping(ui->checkBox_brandverzekering, model_deelnemers->fieldIndex("brand_verzekering"));
+    mapper->addMapping(ui->checkBox_familiale_verzekering, model_deelnemers->fieldIndex("fam_verzekering"));
+    /** comboboxes:
+     *    "geslacht"
+     *    "statuut"
+     *    "niv_nederlands"
+     **/
+
+    /// -> 4) information for organisations only
+    mapper->addMapping(ui->le_contactpersoon_organisatie_familienaam, model_deelnemers->fieldIndex("contactpersoon_familienaam"));
+    mapper->addMapping(ui->le_contactpersoon_organisatie_voornaam, model_deelnemers->fieldIndex("contactpersoon_voornaam"));
+    mapper->addMapping(ui->checkBox_vrijwilligers_verzekering, model_deelnemers->fieldIndex("vrijwilligers_verzekering"));
+//TODO: domein
+//TODO: doelgroep
+
     //mapper->addMapping(ui->le_, model_deelnemers->fieldIndex(""));
 
     //connect(ui->deelnemersTable->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),
