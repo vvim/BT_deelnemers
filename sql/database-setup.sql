@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Aug 09, 2016 at 04:23 PM
+-- Generation Time: Aug 10, 2016 at 07:41 PM
 -- Server version: 5.5.50-0+deb8u1
 -- PHP Version: 5.6.24-0+deb8u1
 
@@ -46,23 +46,23 @@ CREATE TABLE IF NOT EXISTS `t_deelnemers` (
   `statuut` tinyint(3) unsigned DEFAULT NULL,
   `bt_leren_kennen` tinyint(3) unsigned DEFAULT NULL,
   `niveau_nl` tinyint(3) unsigned DEFAULT NULL,
-  `hr_goedgekeurd` tinyint(1) DEFAULT NULL,
-  `contact_delen` tinyint(1) DEFAULT NULL,
-  `fam_verzekering` tinyint(1) DEFAULT NULL,
-  `brand_verzekering` tinyint(1) DEFAULT NULL,
-  `fotomateriaal_gebruiken` tinyint(1) DEFAULT NULL,
+  `hr_goedgekeurd` tinyint(1) NOT NULL,
+  `contact_delen` tinyint(1) NOT NULL,
+  `fam_verzekering` tinyint(1) NOT NULL,
+  `brand_verzekering` tinyint(1) NOT NULL,
+  `fotomateriaal_gebruiken` tinyint(1) NOT NULL,
   `wanneer_best_contacteren` varchar(200) DEFAULT NULL,
   `contactvoorkeur` tinyint(3) unsigned DEFAULT NULL,
   `contactpersoon_voornaam` varchar(30) DEFAULT NULL,
   `contactpersoon_familienaam` varchar(30) DEFAULT NULL,
   `domein` varchar(20) DEFAULT NULL COMMENT 'How to save an Array of Ints in MySQL? Dirty solution',
-  `vrijwilligers_verzekering` tinyint(1) DEFAULT NULL,
+  `vrijwilligers_verzekering` tinyint(1) NOT NULL,
   `doelgroep` varchar(20) DEFAULT NULL COMMENT 'How to save an Array of Ints in MySQL? Dirty solution',
   `lid` tinyint(1) NOT NULL,
   `ingeschreven_door` tinyint(3) unsigned DEFAULT NULL,
   `inschrijf_datum` date DEFAULT NULL,
   `laatste_contact` date DEFAULT NULL,
-  `was_lid_is_nu_gestopt` tinyint(1) DEFAULT NULL,
+  `was_lid_is_nu_gestopt` tinyint(1) NOT NULL,
   `stop_datum` date DEFAULT NULL,
   `stop_reden` varchar(250) DEFAULT NULL,
   `soort_deelnemer` tinyint(3) unsigned NOT NULL,
