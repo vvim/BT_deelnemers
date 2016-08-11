@@ -39,6 +39,8 @@ Buurtijd_deelnemers::Buurtijd_deelnemers(QWidget *parent) :
     mapComboboxAndTableModel(ui->comboBox_hoe_bt_leren_kennen,model_hoeLerenKennen,"t_deelnemer_hoe_leren_kennen",model_deelnemers->fieldIndex("bt_leren_kennen"));
     mapComboboxAndTableModel(ui->comboBox_niveau_nederlands,model_niveauNl,"t_deelnemer_niv_nederlands",model_deelnemers->fieldIndex("niveau_nl"));
     mapComboboxAndTableModel(ui->comboBox_soort,model_soort,"t_deelnemer_soort",model_deelnemers->fieldIndex("soort_deelnemer"));
+    mapListviewAndTableModel(ui->listView_doelgroep,model_doelgroep,"t_deelnemer_doelgroep",model_deelnemers->fieldIndex("doelgroep"));
+    mapListviewAndTableModel(ui->listView_domein,model_domein,"t_deelnemer_domein",model_deelnemers->fieldIndex("domein"));
     /// I do not use SetRelation() because several columns have NULL as a value,
     /// and then the entire row gets ignored during the JOIN. So small workaround:
     ///     -> as we do not use relations amongst the tables, maybe better to use the simpler QSqlTableModel ???
@@ -100,8 +102,10 @@ Buurtijd_deelnemers::Buurtijd_deelnemers(QWidget *parent) :
     mapper->addMapping(ui->le_contactpersoon_organisatie_familienaam, model_deelnemers->fieldIndex("contactpersoon_familienaam"));
     mapper->addMapping(ui->le_contactpersoon_organisatie_voornaam, model_deelnemers->fieldIndex("contactpersoon_voornaam"));
     mapper->addMapping(ui->checkBox_vrijwilligers_verzekering, model_deelnemers->fieldIndex("vrijwilligers_verzekering"));
-//TODO: domein
-//TODO: doelgroep
+    /** listviews:
+     *    "domein"
+     *    "doelgroep"
+     **/
 
     //mapper->addMapping(ui->le_, model_deelnemers->fieldIndex(""));
 
@@ -259,6 +263,26 @@ void Buurtijd_deelnemers::mapComboboxAndTableModel(QComboBox *combobox,QSqlRelat
     combobox->setModel(model);
     combobox->setModelColumn(1);
     mapper->addMapping(combobox, t_deelnemers_fieldindex,"currentIndex");
+}
+
+
+void Buurtijd_deelnemers::mapListviewAndTableModel(QListView *listview,QSqlRelationalTableModel *model, QString table_name, int t_deelnemers_fieldindex)
+{
+    model = new QSqlRelationalTableModel(listview);
+    model->setEditStrategy(QSqlTableModel::OnManualSubmit);
+    model->setTable(table_name);
+    if (!model->select())
+    {
+        showError(model->lastError());
+        return;
+    }
+    listview->setModel(model);
+    listview->setModelColumn(1);
+    listview->setSelectionBehavior(QAbstractItemView::SelectRows);     // http://doc.qt.io/qt-4.8/qabstractitemview.html#SelectionBehavior-enum
+    listview->setSelectionMode(QAbstractItemView::MultiSelection);      //http://doc.qt.io/qt-4.8/qabstractitemview.html#SelectionMode-enum
+    // see issue #1 https://github.com/vvim/BT_deelnemers/issues/1
+    listview->selectAll();
+    mapper->addMapping(listview, t_deelnemers_fieldindex,"currentIndex");
 }
 
 void Buurtijd_deelnemers::showInformationForOfficialMember(bool make_visible)

@@ -9,6 +9,7 @@
 #include <QSqlRelationalTableModel>
 #include <QDataWidgetMapper>
 #include <QComboBox>
+#include <QListView>
 
 namespace Ui {
 class Buurtijd_deelnemers;
@@ -31,6 +32,7 @@ private:
     QSqlRelationalTableModel *model_deelnemers, *model_contactVoorkeur, *model_doelgroep, *model_domein, *model_geslacht, *model_hoeLerenKennen, *model_ingeschrevenDoor, *model_niveauNl, *model_soortDeelnemer, *model_statuut, *model_soort;
     QDataWidgetMapper *mapper;
     void mapComboboxAndTableModel(QComboBox *combobox, QSqlRelationalTableModel *model, QString table_name, int t_deelnemers_fieldindex);
+    void mapListviewAndTableModel(QListView *listview, QSqlRelationalTableModel *model, QString table_name, int t_deelnemers_fieldindex);
     void showInformationForOfficialMember(bool make_visible);
     void showInformationForOfficialMemberHasQuit(bool make_visible);
     void showInformationForIndividual(bool make_visible);
