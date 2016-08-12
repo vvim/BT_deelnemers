@@ -11,6 +11,8 @@ Buurtijd_deelnemers::Buurtijd_deelnemers(QWidget *parent) :
     ui(new Ui::Buurtijd_deelnemers)
 {
     ui->setupUi(this);
+    ui->saveButton->setAutoFillBackground(true);
+    ui->saveButton->setStyleSheet("background-color: rgb(255, 0, 0); color: rgb(255, 255, 255)");
     db = QSqlDatabase::addDatabase("QMYSQL");
     connectToDatabase();
 
@@ -337,4 +339,22 @@ void Buurtijd_deelnemers::showInformationForOrganisation(bool make_visible)
     ui->listView_domein->setVisible(make_visible);
     ui->label_doelgroep->setVisible(make_visible);
     ui->listView_doelgroep->setVisible(make_visible);
+}
+
+void Buurtijd_deelnemers::on_saveButton_clicked()
+{
+    qDebug() << Q_FUNC_INFO;
+
+    model_deelnemers->database().transaction();
+
+    if(model_deelnemers->submitAll())
+    {
+        qDebug() << "submitAll is successful, committing";
+        model_deelnemers->database().commit();
+    }
+    else
+    {
+        qDebug() << "submitAll FAILED, rollback";
+        model_deelnemers->database().rollback();
+    }
 }
