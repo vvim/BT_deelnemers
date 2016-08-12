@@ -265,11 +265,11 @@ void Buurtijd_deelnemers::mapComboboxAndTableModel(QComboBox *combobox,QSqlRelat
     mapper->addMapping(combobox, t_deelnemers_fieldindex,"currentIndex");
 }
 
-
-void Buurtijd_deelnemers::mapListviewAndTableModel(QListView *listview,QSqlRelationalTableModel *model, QString table_name, int t_deelnemers_fieldindex)
+void Buurtijd_deelnemers::mapListviewAndTableModel(BTListView *listview, BTSqlTableModel *model, QString table_name, int t_deelnemers_fieldindex)
 {
-    model = new QSqlRelationalTableModel(listview);
-    model->setEditStrategy(QSqlTableModel::OnManualSubmit);
+    model = new BTSqlTableModel(listview);
+    //model->setEditStrategy(QSqlTableModel::OnManualSubmit);
+    listview->setEditTriggers(QAbstractItemView::NoEditTriggers);
     model->setTable(table_name);
     if (!model->select())
     {

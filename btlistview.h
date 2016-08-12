@@ -2,6 +2,7 @@
 #define BTLISTVIEW_H
 
 #include <QListView>
+#include "btsqltablemodel.h"
 
 class BTListView : public QListView
 {

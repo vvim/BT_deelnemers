@@ -94,12 +94,23 @@ void BTListView::setSelectedItemsList(const QString &selecteditems)
         if( list.contains(this->model()->index( i, 0 ).data().toString()) )
         {
             qDebug() << "found ID" << this->model()->index( i, 0 ).data().toString();
-            this->setCurrentIndex(this->model()->index( i, 1));
+            this->model()->setData(this->model()->index( i, 1 ), Qt::Checked, Qt::CheckStateRole);
         }
+        else
+            this->model()->setData(this->model()->index( i, 1 ), Qt::Unchecked, Qt::CheckStateRole);
     }
 }
 
 QString BTListView::selectedItemsList() const
 {
+    BTSqlTableModel* model = (BTSqlTableModel*) this->model();
+    const QStringList &checkeditems = model->getCheckedItems();
+    // m_selectedItemsList = checkeditems.join(", "); // why this error?
+    /** Why this building error??
+     *      error: passing 'const QString' as 'this' argument of 'QString& QString::operator=(const QString&)' discards
+     *             qualifiers [-fpermissive]
+     *             this->m_selectedItemsList = checkeditems.join(", ");
+     *                                       ^
+    **/ /*stupid solution:*/ return checkeditems.join(", ");
     return m_selectedItemsList;
 }
