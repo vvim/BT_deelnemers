@@ -282,7 +282,7 @@ void Buurtijd_deelnemers::mapListviewAndTableModel(QListView *listview,QSqlRelat
     //listview->setSelectionMode(QAbstractItemView::MultiSelection);      //http://doc.qt.io/qt-4.8/qabstractitemview.html#SelectionMode-enum
     listview->setSelectionMode(QAbstractItemView::ExtendedSelection);      //http://doc.qt.io/qt-4.8/qabstractitemview.html#SelectionMode-enum
     // see issue #1 https://github.com/vvim/BT_deelnemers/issues/1
-    mapper->addMapping(listview, t_deelnemers_fieldindex,"currentIndex");
+    mapper->addMapping(listview, t_deelnemers_fieldindex,"selectedItemsList");
 }
 
 void Buurtijd_deelnemers::showInformationForOfficialMember(bool make_visible)
