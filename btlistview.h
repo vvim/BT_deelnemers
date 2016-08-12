@@ -12,8 +12,6 @@ public:
     explicit BTListView(QWidget *parent = 0);
     ~BTListView();
 
-    void outputSelectedItems();
-
     void setSelectedItemsList(const QString &selecteditems);
     QString selectedItemsList() const;
 
