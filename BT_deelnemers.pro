@@ -19,10 +19,12 @@ LIBS += /usr/lib/x86_64-linux-gnu/qt4/plugins/sqldrivers/libqsqlmysql.so
 SOURCES += main.cpp\
         buurtijd_deelnemers.cpp \
     btlistview.cpp \
-    btsqltablemodel.cpp
+    btsqltablemodel.cpp \
+    mylineedit.cpp
 
 HEADERS  += buurtijd_deelnemers.h \
     btlistview.h \
-    btsqltablemodel.h
+    btsqltablemodel.h \
+    mylineedit.h
 
 FORMS    += buurtijd_deelnemers.ui
