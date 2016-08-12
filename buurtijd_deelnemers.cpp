@@ -6,6 +6,9 @@
 #define USER "testuser"
 #define PASSWORD "HiDrNick!"
 
+#define vvimDebug()\
+    qDebug() << "[" << Q_FUNC_INFO << "]"
+
 Buurtijd_deelnemers::Buurtijd_deelnemers(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Buurtijd_deelnemers)
@@ -137,13 +140,13 @@ Buurtijd_deelnemers::Buurtijd_deelnemers(QWidget *parent) :
 Buurtijd_deelnemers::~Buurtijd_deelnemers()
 {
     db.close();
-    qDebug() << "database closed";
+    vvimDebug() << "database closed";
     delete ui;
 }
 
 bool Buurtijd_deelnemers::connectToDatabase()
 {
-     qDebug() << "drivers: "<< QSqlDatabase::drivers();
+     vvimDebug() << "drivers: "<< QSqlDatabase::drivers();
     /**
         ** maybe needed to be added later: **
 
@@ -169,7 +172,7 @@ bool Buurtijd_deelnemers::connectToDatabase()
         return false;
     }
 
-    qDebug() << "Connected to database at " << HOST; // settings.value("db/host").toString();
+    vvimDebug() << "Connected to database at " << HOST; // settings.value("db/host").toString();
 
     return true;
 }
@@ -239,14 +242,14 @@ void Buurtijd_deelnemers::ChangeRow(QModelIndex new_index)
             && model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("soort_deelnemer"))).toInt() == 0)
     {
         /// -> 3) information for individuals only
-        qDebug() << model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("naam"))).toString() << "is een individu";
+        vvimDebug() << model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("naam"))).toString() << "is een individu";
         showInformationForIndividual(true);
         showInformationForOrganisation(false);
     }
     else
     {
         /// -> 4) information for organisations only
-        qDebug() << model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("naam"))).toString() << "is een organisatie";
+        vvimDebug() << model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("naam"))).toString() << "is een organisatie";
         showInformationForIndividual(false);
         showInformationForOrganisation(true);
     }
@@ -343,18 +346,17 @@ void Buurtijd_deelnemers::showInformationForOrganisation(bool make_visible)
 
 void Buurtijd_deelnemers::on_saveButton_clicked()
 {
-    qDebug() << Q_FUNC_INFO;
-
+    vvimDebug() << "saving";
     model_deelnemers->database().transaction();
 
     if(model_deelnemers->submitAll())
     {
-        qDebug() << "submitAll is successful, committing";
+        vvimDebug() << "submitAll is successful, committing";
         model_deelnemers->database().commit();
     }
     else
     {
-        qDebug() << "submitAll FAILED, rollback";
+        vvimDebug() << "submitAll FAILED, rollback";
         model_deelnemers->database().rollback();
     }
 }

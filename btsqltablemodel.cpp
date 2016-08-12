@@ -2,6 +2,8 @@
 #include <QDebug>
 #include "btsqltablemodel.h"
 
+#define vvimDebug()\
+    qDebug() << "[" << Q_FUNC_INFO << "]"
 
 // based on example by WalletFox.com : http://www.walletfox.com/course/qtcheckablelist.php
 
@@ -20,7 +22,8 @@ BTSqlTableModel::~BTSqlTableModel()
 Qt::ItemFlags BTSqlTableModel::flags(const QModelIndex &index) const
 {
     Qt::ItemFlags defaultFlags = QSqlTableModel::flags(index);
-    if (index.isValid()){
+    if (index.isValid())
+    {
         return defaultFlags | Qt::ItemIsUserCheckable;
     }
     return defaultFlags;
@@ -66,7 +69,7 @@ QStringList BTSqlTableModel::getCheckedItems()
     {
         checked_ids.append(index.sibling(index.row(),0).data().toString());
     }
-    qDebug() << this->objectName() << "vanuit BTSqlTableModel" << checked_ids.count() << "checked";
-    qDebug() << checked_ids;
+    vvimDebug() << checked_ids.count() << "items aangevinkt";
+    vvimDebug() << checked_ids;
     return checked_ids;
 }

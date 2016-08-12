@@ -1,6 +1,9 @@
 #include "btlistview.h"
 #include <QDebug>
 
+#define vvimDebug()\
+    qDebug() << "[" << Q_FUNC_INFO << "]"
+
 BTListView::BTListView(QWidget *widget ) :
     QListView(widget)
 {
@@ -38,13 +41,13 @@ void BTListView::setSelectedItemsList(const QString &selecteditems)
     // see http://stackoverflow.com/a/14175044
     QStringList list = selecteditems.split(", ",QString::SkipEmptyParts);
 
-    qDebug() << this->objectName() << "selected items:" << list.count() << "row count:" << this->model()->rowCount();
+    vvimDebug() << this->objectName() << "selected items:" << list.count() << "row count:" << this->model()->rowCount();
 
     for ( int i = 0 ; i < this->model()->rowCount() ; ++i )
     {
         if( list.contains(this->model()->index( i, 0 ).data().toString()) )
         {
-            qDebug() << "found ID" << this->model()->index( i, 0 ).data().toString();
+            vvimDebug() << "found ID" << this->model()->index( i, 0 ).data().toString();
             this->model()->setData(this->model()->index( i, 1 ), Qt::Checked, Qt::CheckStateRole);
         }
         else
