@@ -5,8 +5,12 @@
 
 class BTListView : public QListView
 {
+    Q_OBJECT
 public:
-    BTListView();
+    explicit BTListView(QWidget *parent = 0);
+    ~BTListView();
+
+    void outputSelectedItems();
 };
 
 #endif // BTLISTVIEW_H

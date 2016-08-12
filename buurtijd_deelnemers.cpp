@@ -279,9 +279,9 @@ void Buurtijd_deelnemers::mapListviewAndTableModel(QListView *listview,QSqlRelat
     listview->setModel(model);
     listview->setModelColumn(1);
     listview->setSelectionBehavior(QAbstractItemView::SelectRows);     // http://doc.qt.io/qt-4.8/qabstractitemview.html#SelectionBehavior-enum
-    listview->setSelectionMode(QAbstractItemView::MultiSelection);      //http://doc.qt.io/qt-4.8/qabstractitemview.html#SelectionMode-enum
+    //listview->setSelectionMode(QAbstractItemView::MultiSelection);      //http://doc.qt.io/qt-4.8/qabstractitemview.html#SelectionMode-enum
+    listview->setSelectionMode(QAbstractItemView::ExtendedSelection);      //http://doc.qt.io/qt-4.8/qabstractitemview.html#SelectionMode-enum
     // see issue #1 https://github.com/vvim/BT_deelnemers/issues/1
-    listview->selectAll();
     mapper->addMapping(listview, t_deelnemers_fieldindex,"currentIndex");
 }
 

@@ -17,8 +17,10 @@ TEMPLATE = app
 LIBS += /usr/lib/x86_64-linux-gnu/qt4/plugins/sqldrivers/libqsqlmysql.so
 
 SOURCES += main.cpp\
-        buurtijd_deelnemers.cpp
+        buurtijd_deelnemers.cpp \
+    btlistview.cpp
 
-HEADERS  += buurtijd_deelnemers.h
+HEADERS  += buurtijd_deelnemers.h \
+    btlistview.h
 
 FORMS    += buurtijd_deelnemers.ui
