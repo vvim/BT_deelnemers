@@ -11,6 +11,7 @@
 #include <QComboBox>
 #include "btlistview.h"
 #include "btsqltablemodel.h"
+#include "mylineedit.h"
 
 namespace Ui {
 class Buurtijd_deelnemers;
@@ -39,6 +40,8 @@ private:
     void showInformationForOfficialMemberHasQuit(bool make_visible);
     void showInformationForIndividual(bool make_visible);
     void showInformationForOrganisation(bool make_visible);
+    MyCompleter *completer;
+    void loadCompleter();
 
 private slots:
     void ChangeRow(QModelIndex new_index);

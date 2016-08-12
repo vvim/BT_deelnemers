@@ -13,6 +13,7 @@ Buurtijd_deelnemers::Buurtijd_deelnemers(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Buurtijd_deelnemers)
 {
+    completer = NULL;
     ui->setupUi(this);
     ui->saveButton->setAutoFillBackground(true);
     ui->saveButton->setStyleSheet("background-color: rgb(255, 0, 0); color: rgb(255, 255, 255)");
@@ -31,6 +32,7 @@ Buurtijd_deelnemers::Buurtijd_deelnemers(QWidget *parent) :
         return;
     }
 
+    loadCompleter();
     ui->deelnemersTable->setModel(model_deelnemers);
 
     mapper = new QDataWidgetMapper(this);
@@ -141,7 +143,20 @@ Buurtijd_deelnemers::~Buurtijd_deelnemers()
 {
     db.close();
     vvimDebug() << "database closed";
+
+    if(completer)
+    {
+        vvimDebug() << "completer _not_ NULL";
+        delete completer;
+    }
+    else
+        vvimDebug() << "completer == NULL";
+    vvimDebug() << "OphaalpuntenWidget() deconstructed";
+
     delete ui;
+
+    vvimDebug() << "delete alle modellen";
+    vvimDebug() << "delete mapping!";
 }
 
 bool Buurtijd_deelnemers::connectToDatabase()
@@ -359,4 +374,20 @@ void Buurtijd_deelnemers::on_saveButton_clicked()
         vvimDebug() << "submitAll FAILED, rollback";
         model_deelnemers->database().rollback();
     }
+}
+
+void Buurtijd_deelnemers::loadCompleter()
+{
+    if(completer)
+        delete completer;
+
+    QStringList words; // "don't come easy, to me, la la la laaa la la"
+    /// FOR ALL DEELNEMERS - via model_deelnemers?
+    completer = new MyCompleter(words, this);
+    completer->setCaseSensitivity(Qt::CaseInsensitive);
+
+    ui->le_zoekDeelnemer->setCompleter(completer);
+    vvimDebug() << "done, completer (re)loaded.";
+
+    // completer zou nog ID moeten teruggeven van de deelnemer
 }

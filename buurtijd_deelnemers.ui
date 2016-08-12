@@ -24,7 +24,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="le_zoekDeelnemer"/>
+      <widget class="MyLineEdit" name="le_zoekDeelnemer"/>
      </item>
     </layout>
    </item>
