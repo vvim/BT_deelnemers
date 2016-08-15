@@ -382,34 +382,34 @@ void Buurtijd_deelnemers::loadCompleter()
         delete completer;
 
     deelnemers_map.clear();
-    QStringList words; // "don't come easy, to me, la la la laaa la la"
-    /// FOR ALL DEELNEMERS - via model_deelnemers?
+    QStringList deelnemers_list;
 
     int idIdx = model_deelnemers->fieldIndex("id");
     int familieNaamIdx = model_deelnemers->fieldIndex("familienaam");
     int naamIdx = model_deelnemers->fieldIndex("naam");
-    vvimDebug() << "[CAVEAT]" << "we expect the combination [naam] [familienaam] to be unique, but can we guarantee that?" << "else we could mix the address of telephonenumber in the mix?";
+    vvimDebug() << "[CAVEAT]" << "we expect the combination [naam] [familienaam] to be unique, but can we guarantee that?" << "else we could mix the address of telephonenumber in the mix?" << "currently I add there ID-number to make every entry unique";
+
     for ( int i = 0 ; i < model_deelnemers->rowCount() ; ++i )
     {
-        QString word;
+        QString dlnmr;
         if( model_deelnemers->index( i, familieNaamIdx ).data().isNull())
         {
-            word = model_deelnemers->index( i, naamIdx ).data().toString();
-            word.append(QString(" (id %1)").arg(model_deelnemers->index( i, idIdx ).data().toString()));
+            dlnmr = model_deelnemers->index( i, naamIdx ).data().toString();
+            dlnmr.append(QString(" (id %1)").arg(model_deelnemers->index( i, idIdx ).data().toString()));
         }
         else
         {
-            word = model_deelnemers->index( i, naamIdx ).data().toString();
-            word.append(" ");
-            word.append(model_deelnemers->index( i, familieNaamIdx ).data().toString());
-            word.append(QString(" (id %1)").arg(model_deelnemers->index( i, idIdx ).data().toString()));
+            dlnmr = model_deelnemers->index( i, naamIdx ).data().toString();
+            dlnmr.append(" ");
+            dlnmr.append(model_deelnemers->index( i, familieNaamIdx ).data().toString());
+            dlnmr.append(QString(" (id %1)").arg(model_deelnemers->index( i, idIdx ).data().toString()));
         }
-        words << word;
-        deelnemers_map[word] = model_deelnemers->index( i, idIdx ).data().toInt();
+        deelnemers_list << dlnmr;
+        deelnemers_map[dlnmr] = model_deelnemers->index( i, idIdx ).data().toInt();
     }
 
-    words.sort();
-    completer = new MyCompleter(words, this);
+    deelnemers_list.sort();
+    completer = new MyCompleter(deelnemers_list, this);
     completer->setCaseSensitivity(Qt::CaseInsensitive);
     ui->le_zoekDeelnemer->setCompleter(completer);
     vvimDebug() << "done, completer (re)loaded.";
