@@ -24,7 +24,14 @@
       </widget>
      </item>
      <item>
-      <widget class="MyLineEdit" name="le_zoekDeelnemer"/>
+      <widget class="MyLineEdit" name="le_zoekDeelnemer" native="true"/>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_showDeelnemer">
+       <property name="text">
+        <string>Toon</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
@@ -436,6 +443,11 @@
    <class>BTListView</class>
    <extends>QWidget</extends>
    <header>btlistview.h</header>
+  </customwidget>
+  <customwidget>
+   <class>MyLineEdit</class>
+   <extends>QWidget</extends>
+   <header>mylineedit.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

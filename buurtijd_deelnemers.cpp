@@ -155,8 +155,8 @@ Buurtijd_deelnemers::~Buurtijd_deelnemers()
 
     delete ui;
 
-    vvimDebug() << "delete alle modellen";
-    vvimDebug() << "delete mapping!";
+    vvimDebug() << "[TODO]" << "delete alle modellen";
+    vvimDebug() << "[TODO]" << "delete mapping!";
 }
 
 bool Buurtijd_deelnemers::connectToDatabase()
@@ -381,13 +381,34 @@ void Buurtijd_deelnemers::loadCompleter()
     if(completer)
         delete completer;
 
+    deelnemers_map.clear();
     QStringList words; // "don't come easy, to me, la la la laaa la la"
     /// FOR ALL DEELNEMERS - via model_deelnemers?
+    words << "Alfa Malfa user1";
+    words << "bETA mALfA user2";
+    words << "alfa alfa beta later old user user224";
+    words << "so much malfa malfa donald user230";
     completer = new MyCompleter(words, this);
     completer->setCaseSensitivity(Qt::CaseInsensitive);
 
+    deelnemers_map["Alfa Malfa user1"] = 1;
+    deelnemers_map["bETA mALfA user2"] = 2;
+    deelnemers_map["alfa alfa beta later old user user224"] = 224;
+    deelnemers_map["so much malfa malfa donald user230"] = 230;
     ui->le_zoekDeelnemer->setCompleter(completer);
     vvimDebug() << "done, completer (re)loaded.";
 
     // completer zou nog ID moeten teruggeven van de deelnemer
+}
+
+void Buurtijd_deelnemers::on_pushButton_showDeelnemer_clicked()
+{
+    int deelnemer_id = deelnemers_map[ui->le_zoekDeelnemer->text()];
+    if (deelnemer_id > 0) // else no match
+    {
+        vvimDebug() << "toon user" << deelnemers_map[ui->le_zoekDeelnemer->text()];
+        // see http://www.qtcentre.org/threads/36071-How-to-move-QDataWidgetMapper-to-a-specific-record
+        model_deelnemers->setFilter( QString(" id = %1 ").arg(deelnemer_id));
+        mapper->toFirst();
+    }
 }

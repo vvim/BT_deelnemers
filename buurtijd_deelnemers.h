@@ -9,6 +9,7 @@
 #include <QSqlRelationalTableModel>
 #include <QDataWidgetMapper>
 #include <QComboBox>
+#include <QMap>
 #include "btlistview.h"
 #include "btsqltablemodel.h"
 #include "mylineedit.h"
@@ -42,10 +43,12 @@ private:
     void showInformationForOrganisation(bool make_visible);
     MyCompleter *completer;
     void loadCompleter();
+    QMap<QString, int> deelnemers_map;
 
 private slots:
     void ChangeRow(QModelIndex new_index);
     void on_saveButton_clicked();
+    void on_pushButton_showDeelnemer_clicked();
 };
 
 #endif // BUURTIJD_DEELNEMERS_H
