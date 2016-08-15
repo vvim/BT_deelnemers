@@ -380,34 +380,49 @@ void Buurtijd_deelnemers::loadCompleter()
 {
     if(completer)
         delete completer;
-/*
+
     deelnemers_map.clear();
     QStringList words; // "don't come easy, to me, la la la laaa la la"
     /// FOR ALL DEELNEMERS - via model_deelnemers?
-    words << "Alfa Malfa user1";
-    words << "bETA mALfA user2";
-    words << "alfa alfa beta later old user user224";
-    words << "so much malfa malfa donald user230";
+
+    int idIdx = model_deelnemers->fieldIndex("id");
+    int familieNaamIdx = model_deelnemers->fieldIndex("familienaam");
+    int naamIdx = model_deelnemers->fieldIndex("naam");
+    vvimDebug() << "[CAVEAT]" << "we expect the combination [naam] [familienaam] to be unique, but can we guarantee that?" << "else we could mix the address of telephonenumber in the mix?";
+    for ( int i = 0 ; i < model_deelnemers->rowCount() ; ++i )
+    {
+        QString word;
+        if( model_deelnemers->index( i, familieNaamIdx ).data().isNull())
+        {
+            word = model_deelnemers->index( i, naamIdx ).data().toString();
+            word.append(QString(" (id %1)").arg(model_deelnemers->index( i, idIdx ).data().toString()));
+        }
+        else
+        {
+            word = model_deelnemers->index( i, naamIdx ).data().toString();
+            word.append(" ");
+            word.append(model_deelnemers->index( i, familieNaamIdx ).data().toString());
+            word.append(QString(" (id %1)").arg(model_deelnemers->index( i, idIdx ).data().toString()));
+        }
+        words << word;
+        deelnemers_map[word] = model_deelnemers->index( i, idIdx ).data().toInt();
+    }
+
+    words.sort();
     completer = new MyCompleter(words, this);
     completer->setCaseSensitivity(Qt::CaseInsensitive);
-
-    deelnemers_map["Alfa Malfa user1"] = 1;
-    deelnemers_map["bETA mALfA user2"] = 2;
-    deelnemers_map["alfa alfa beta later old user user224"] = 224;
-    deelnemers_map["so much malfa malfa donald user230"] = 230;
     ui->le_zoekDeelnemer->setCompleter(completer);
     vvimDebug() << "done, completer (re)loaded.";
-
-*/
-    completer = new QCompleter(model_deelnemers, this);
-    completer->setCompletionColumn(model_deelnemers->fieldIndex("naam"));
-    ui->le_zoekDeelnemer->setCompleter(completer);
 }
 
 void Buurtijd_deelnemers::on_pushButton_showDeelnemer_clicked()
 {
-        vvimDebug() << "toon user" << ui->le_zoekDeelnemer->text();
+    int deelnemer_id = deelnemers_map[ui->le_zoekDeelnemer->text()];
+    if (deelnemer_id > 0) // else no match
+    {
+        vvimDebug() << "toon user" << deelnemers_map[ui->le_zoekDeelnemer->text()];
         // see http://www.qtcentre.org/threads/36071-How-to-move-QDataWidgetMapper-to-a-specific-record
-        model_deelnemers->setFilter( QString(" naam = \"%1\" ").arg(ui->le_zoekDeelnemer->text()));
+        model_deelnemers->setFilter( QString(" id = %1 ").arg(deelnemer_id));
         mapper->toFirst();
+    }
 }
