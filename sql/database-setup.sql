@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Aug 10, 2016 at 07:41 PM
+-- Generation Time: Aug 15, 2016 at 03:27 PM
 -- Server version: 5.5.50-0+deb8u1
 -- PHP Version: 5.6.24-0+deb8u1
 
@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 CREATE TABLE IF NOT EXISTS `t_deelnemers` (
 `id` int(10) unsigned NOT NULL,
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `naam` varchar(30) NOT NULL,
+  `naam` varchar(50) NOT NULL,
   `familienaam` varchar(30) DEFAULT NULL,
   `straat` varchar(50) DEFAULT NULL,
   `huisnr` varchar(10) DEFAULT NULL,
