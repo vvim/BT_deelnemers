@@ -41,7 +41,7 @@ private:
     void showInformationForOfficialMemberHasQuit(bool make_visible);
     void showInformationForIndividual(bool make_visible);
     void showInformationForOrganisation(bool make_visible);
-    MyCompleter *completer;
+    QCompleter *completer;
     void loadCompleter();
     QMap<QString, int> deelnemers_map;
 

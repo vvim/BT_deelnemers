@@ -380,7 +380,7 @@ void Buurtijd_deelnemers::loadCompleter()
 {
     if(completer)
         delete completer;
-
+/*
     deelnemers_map.clear();
     QStringList words; // "don't come easy, to me, la la la laaa la la"
     /// FOR ALL DEELNEMERS - via model_deelnemers?
@@ -398,17 +398,16 @@ void Buurtijd_deelnemers::loadCompleter()
     ui->le_zoekDeelnemer->setCompleter(completer);
     vvimDebug() << "done, completer (re)loaded.";
 
-    // completer zou nog ID moeten teruggeven van de deelnemer
+*/
+    completer = new QCompleter(model_deelnemers, this);
+    completer->setCompletionColumn(model_deelnemers->fieldIndex("naam"));
+    ui->le_zoekDeelnemer->setCompleter(completer);
 }
 
 void Buurtijd_deelnemers::on_pushButton_showDeelnemer_clicked()
 {
-    int deelnemer_id = deelnemers_map[ui->le_zoekDeelnemer->text()];
-    if (deelnemer_id > 0) // else no match
-    {
-        vvimDebug() << "toon user" << deelnemers_map[ui->le_zoekDeelnemer->text()];
+        vvimDebug() << "toon user" << ui->le_zoekDeelnemer->text();
         // see http://www.qtcentre.org/threads/36071-How-to-move-QDataWidgetMapper-to-a-specific-record
-        model_deelnemers->setFilter( QString(" id = %1 ").arg(deelnemer_id));
+        model_deelnemers->setFilter( QString(" naam = \"%1\" ").arg(ui->le_zoekDeelnemer->text()));
         mapper->toFirst();
-    }
 }
