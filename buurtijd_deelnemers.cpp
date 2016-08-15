@@ -6,11 +6,17 @@
 #define USER "testuser"
 #define PASSWORD "HiDrNick!"
 
+#define vvimDebug()\
+    qDebug() << "[" << Q_FUNC_INFO << "]"
+
 Buurtijd_deelnemers::Buurtijd_deelnemers(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Buurtijd_deelnemers)
 {
+    completer = NULL;
     ui->setupUi(this);
+    ui->saveButton->setAutoFillBackground(true);
+    ui->saveButton->setStyleSheet("background-color: rgb(255, 0, 0); color: rgb(255, 255, 255)");
     db = QSqlDatabase::addDatabase("QMYSQL");
     connectToDatabase();
 
@@ -26,6 +32,7 @@ Buurtijd_deelnemers::Buurtijd_deelnemers(QWidget *parent) :
         return;
     }
 
+    loadCompleter();
     ui->deelnemersTable->setModel(model_deelnemers);
 
     mapper = new QDataWidgetMapper(this);
@@ -135,13 +142,26 @@ Buurtijd_deelnemers::Buurtijd_deelnemers(QWidget *parent) :
 Buurtijd_deelnemers::~Buurtijd_deelnemers()
 {
     db.close();
-    qDebug() << "database closed";
+    vvimDebug() << "database closed";
+
+    if(completer)
+    {
+        vvimDebug() << "completer _not_ NULL";
+        delete completer;
+    }
+    else
+        vvimDebug() << "completer == NULL";
+    vvimDebug() << "OphaalpuntenWidget() deconstructed";
+
     delete ui;
+
+    vvimDebug() << "[TODO]" << "delete alle modellen";
+    vvimDebug() << "[TODO]" << "delete mapping!";
 }
 
 bool Buurtijd_deelnemers::connectToDatabase()
 {
-     qDebug() << "drivers: "<< QSqlDatabase::drivers();
+     vvimDebug() << "drivers: "<< QSqlDatabase::drivers();
     /**
         ** maybe needed to be added later: **
 
@@ -167,7 +187,7 @@ bool Buurtijd_deelnemers::connectToDatabase()
         return false;
     }
 
-    qDebug() << "Connected to database at " << HOST; // settings.value("db/host").toString();
+    vvimDebug() << "Connected to database at " << HOST; // settings.value("db/host").toString();
 
     return true;
 }
@@ -237,14 +257,14 @@ void Buurtijd_deelnemers::ChangeRow(QModelIndex new_index)
             && model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("soort_deelnemer"))).toInt() == 0)
     {
         /// -> 3) information for individuals only
-        qDebug() << model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("naam"))).toString() << "is een individu";
+        vvimDebug() << model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("naam"))).toString() << "is een individu";
         showInformationForIndividual(true);
         showInformationForOrganisation(false);
     }
     else
     {
         /// -> 4) information for organisations only
-        qDebug() << model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("naam"))).toString() << "is een organisatie";
+        vvimDebug() << model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("naam"))).toString() << "is een organisatie";
         showInformationForIndividual(false);
         showInformationForOrganisation(true);
     }
@@ -265,11 +285,11 @@ void Buurtijd_deelnemers::mapComboboxAndTableModel(QComboBox *combobox,QSqlRelat
     mapper->addMapping(combobox, t_deelnemers_fieldindex,"currentIndex");
 }
 
-
-void Buurtijd_deelnemers::mapListviewAndTableModel(QListView *listview,QSqlRelationalTableModel *model, QString table_name, int t_deelnemers_fieldindex)
+void Buurtijd_deelnemers::mapListviewAndTableModel(BTListView *listview, BTSqlTableModel *model, QString table_name, int t_deelnemers_fieldindex)
 {
-    model = new QSqlRelationalTableModel(listview);
-    model->setEditStrategy(QSqlTableModel::OnManualSubmit);
+    model = new BTSqlTableModel(listview);
+    //model->setEditStrategy(QSqlTableModel::OnManualSubmit);
+    listview->setEditTriggers(QAbstractItemView::NoEditTriggers);
     model->setTable(table_name);
     if (!model->select())
     {
@@ -279,10 +299,10 @@ void Buurtijd_deelnemers::mapListviewAndTableModel(QListView *listview,QSqlRelat
     listview->setModel(model);
     listview->setModelColumn(1);
     listview->setSelectionBehavior(QAbstractItemView::SelectRows);     // http://doc.qt.io/qt-4.8/qabstractitemview.html#SelectionBehavior-enum
-    listview->setSelectionMode(QAbstractItemView::MultiSelection);      //http://doc.qt.io/qt-4.8/qabstractitemview.html#SelectionMode-enum
+    //listview->setSelectionMode(QAbstractItemView::MultiSelection);      //http://doc.qt.io/qt-4.8/qabstractitemview.html#SelectionMode-enum
+    listview->setSelectionMode(QAbstractItemView::ExtendedSelection);      //http://doc.qt.io/qt-4.8/qabstractitemview.html#SelectionMode-enum
     // see issue #1 https://github.com/vvim/BT_deelnemers/issues/1
-    listview->selectAll();
-    mapper->addMapping(listview, t_deelnemers_fieldindex,"currentIndex");
+    mapper->addMapping(listview, t_deelnemers_fieldindex,"selectedItemsList");
 }
 
 void Buurtijd_deelnemers::showInformationForOfficialMember(bool make_visible)
@@ -337,4 +357,57 @@ void Buurtijd_deelnemers::showInformationForOrganisation(bool make_visible)
     ui->listView_domein->setVisible(make_visible);
     ui->label_doelgroep->setVisible(make_visible);
     ui->listView_doelgroep->setVisible(make_visible);
+}
+
+void Buurtijd_deelnemers::on_saveButton_clicked()
+{
+    vvimDebug() << "saving";
+    model_deelnemers->database().transaction();
+
+    if(model_deelnemers->submitAll())
+    {
+        vvimDebug() << "submitAll is successful, committing";
+        model_deelnemers->database().commit();
+    }
+    else
+    {
+        vvimDebug() << "submitAll FAILED, rollback";
+        model_deelnemers->database().rollback();
+    }
+}
+
+void Buurtijd_deelnemers::loadCompleter()
+{
+    if(completer)
+        delete completer;
+/*
+    deelnemers_map.clear();
+    QStringList words; // "don't come easy, to me, la la la laaa la la"
+    /// FOR ALL DEELNEMERS - via model_deelnemers?
+    words << "Alfa Malfa user1";
+    words << "bETA mALfA user2";
+    words << "alfa alfa beta later old user user224";
+    words << "so much malfa malfa donald user230";
+    completer = new MyCompleter(words, this);
+    completer->setCaseSensitivity(Qt::CaseInsensitive);
+
+    deelnemers_map["Alfa Malfa user1"] = 1;
+    deelnemers_map["bETA mALfA user2"] = 2;
+    deelnemers_map["alfa alfa beta later old user user224"] = 224;
+    deelnemers_map["so much malfa malfa donald user230"] = 230;
+    ui->le_zoekDeelnemer->setCompleter(completer);
+    vvimDebug() << "done, completer (re)loaded.";
+
+*/
+    completer = new QCompleter(model_deelnemers, this);
+    completer->setCompletionColumn(model_deelnemers->fieldIndex("naam"));
+    ui->le_zoekDeelnemer->setCompleter(completer);
+}
+
+void Buurtijd_deelnemers::on_pushButton_showDeelnemer_clicked()
+{
+        vvimDebug() << "toon user" << ui->le_zoekDeelnemer->text();
+        // see http://www.qtcentre.org/threads/36071-How-to-move-QDataWidgetMapper-to-a-specific-record
+        model_deelnemers->setFilter( QString(" naam = \"%1\" ").arg(ui->le_zoekDeelnemer->text()));
+        mapper->toFirst();
 }

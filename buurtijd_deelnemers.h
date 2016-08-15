@@ -9,7 +9,10 @@
 #include <QSqlRelationalTableModel>
 #include <QDataWidgetMapper>
 #include <QComboBox>
-#include <QListView>
+#include <QMap>
+#include "btlistview.h"
+#include "btsqltablemodel.h"
+#include "mylineedit.h"
 
 namespace Ui {
 class Buurtijd_deelnemers;
@@ -29,17 +32,23 @@ private:
     bool connectToDatabase();
     QSqlDatabase db;
     // as we do not use relations amongst the tables, maybe better to use the simpler QSqlTableModel ???
-    QSqlRelationalTableModel *model_deelnemers, *model_contactVoorkeur, *model_doelgroep, *model_domein, *model_geslacht, *model_hoeLerenKennen, *model_ingeschrevenDoor, *model_niveauNl, *model_soortDeelnemer, *model_statuut, *model_soort;
+    QSqlRelationalTableModel *model_deelnemers, *model_contactVoorkeur, *model_geslacht, *model_hoeLerenKennen, *model_ingeschrevenDoor, *model_niveauNl, *model_soortDeelnemer, *model_statuut, *model_soort;
+    BTSqlTableModel *model_doelgroep, *model_domein;
     QDataWidgetMapper *mapper;
     void mapComboboxAndTableModel(QComboBox *combobox, QSqlRelationalTableModel *model, QString table_name, int t_deelnemers_fieldindex);
-    void mapListviewAndTableModel(QListView *listview, QSqlRelationalTableModel *model, QString table_name, int t_deelnemers_fieldindex);
+    void mapListviewAndTableModel(BTListView *listview, BTSqlTableModel *model, QString table_name, int t_deelnemers_fieldindex);
     void showInformationForOfficialMember(bool make_visible);
     void showInformationForOfficialMemberHasQuit(bool make_visible);
     void showInformationForIndividual(bool make_visible);
     void showInformationForOrganisation(bool make_visible);
+    QCompleter *completer;
+    void loadCompleter();
+    QMap<QString, int> deelnemers_map;
 
 private slots:
     void ChangeRow(QModelIndex new_index);
+    void on_saveButton_clicked();
+    void on_pushButton_showDeelnemer_clicked();
 };
 
 #endif // BUURTIJD_DEELNEMERS_H
