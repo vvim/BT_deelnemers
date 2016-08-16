@@ -38,14 +38,17 @@ SOURCES += main.cpp\
         buurtijd_deelnemers.cpp \
     btlistview.cpp \
     btsqltablemodel.cpp \
-    mylineedit.cpp
+    mylineedit.cpp \
+    deelnemer_location.cpp
 
 HEADERS  += buurtijd_deelnemers.h \
     btlistview.h \
     btsqltablemodel.h \
-    mylineedit.h
+    mylineedit.h \
+    deelnemer_location.h
 
-FORMS    += buurtijd_deelnemers.ui
+FORMS    += buurtijd_deelnemers.ui \
+    deelnemer_location.ui
 
 RESOURCES += \
     buurtijd_deelnemers.qrc
