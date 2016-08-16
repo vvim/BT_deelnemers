@@ -50,6 +50,7 @@ private slots:
     void ChangeRow(QModelIndex new_index);
     void on_saveButton_clicked();
     void on_pushButton_showDeelnemer_clicked();
+    void on_pushButton_showMaps_clicked();
 };
 
 #endif // BUURTIJD_DEELNEMERS_H

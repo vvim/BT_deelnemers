@@ -457,3 +457,8 @@ void Buurtijd_deelnemers::on_pushButton_showDeelnemer_clicked()
         vvimDebug() << "no such user" << ui->le_zoekDeelnemer->text() << "invalid QModelIndex:" << deelnemer_idx << "should look like (QModelIndex(-1,-1,)";
     }
 }
+
+void Buurtijd_deelnemers::on_pushButton_showMaps_clicked()
+{
+    vvimDebug() << "show GoogleMaps";
+}
