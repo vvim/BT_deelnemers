@@ -15,7 +15,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
+    <layout class="QHBoxLayout" name="horizontalLayout_top">
      <item>
       <widget class="QLabel" name="label_zoekDeelnemer">
        <property name="text">
@@ -462,7 +462,7 @@
     </spacer>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
+    <layout class="QHBoxLayout" name="horizontalLayout_bottom">
      <item>
       <spacer name="horizontalSpacer">
        <property name="orientation">
