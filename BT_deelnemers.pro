@@ -28,3 +28,6 @@ HEADERS  += buurtijd_deelnemers.h \
     mylineedit.h
 
 FORMS    += buurtijd_deelnemers.ui
+
+RESOURCES += \
+    buurtijd_deelnemers.qrc

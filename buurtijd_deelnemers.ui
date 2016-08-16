@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>750</width>
-    <height>819</height>
+    <height>821</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -443,6 +443,18 @@
       <widget class="QLabel" name="label_domein">
        <property name="text">
         <string>Domein</string>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="4" colspan="2">
+      <widget class="QPushButton" name="pushButton_showMaps">
+       <property name="text">
+        <string>Kaartje</string>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normalon>:/icons/icons/map.png</normalon>
+        </iconset>
        </property>
       </widget>
      </item>
