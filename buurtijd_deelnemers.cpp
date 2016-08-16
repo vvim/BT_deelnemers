@@ -14,9 +14,13 @@ Buurtijd_deelnemers::Buurtijd_deelnemers(QWidget *parent) :
     ui(new Ui::Buurtijd_deelnemers)
 {
     completer = NULL;
+
     ui->setupUi(this);
+    ui->deelnemersTable->setVisible(false); // only keeping it for debugging reasons, it has no use of the user
+
     ui->saveButton->setAutoFillBackground(true);
     ui->saveButton->setStyleSheet("background-color: rgb(255, 0, 0); color: rgb(255, 255, 255)");
+
     db = QSqlDatabase::addDatabase("QMYSQL");
     connectToDatabase();
 
