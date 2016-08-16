@@ -205,6 +205,22 @@ void Buurtijd_deelnemers::showError(const QSqlError &err)
 
 void Buurtijd_deelnemers::ChangeRow(QModelIndex new_index)
 {
+    if(!new_index.isValid())
+    {
+        vvimDebug() << "invalid index" << new_index;
+
+        if(last_known_index.isValid())
+        {
+            // when new_index is not a valid index, but last_known_index is, we will continue with last_known_index (the last known valid index)
+            vvimDebug() << "changed index to ``" << last_known_index << "and show that entry";
+            new_index = last_known_index;
+        }
+        else
+        {
+            vvimDebug() << "last_known_index is also not valid" << last_known_index << "ABORT function";
+            return;
+        }
+    }
     int currentRow = new_index.row();
 
     /* !! zodra je van fiche verandert , vraag aan de gebruiker "wijzigingen opslaan"? submitAll / Rollback
@@ -238,6 +254,8 @@ void Buurtijd_deelnemers::ChangeRow(QModelIndex new_index)
     **/
 
     mapper->setCurrentModelIndex(new_index);
+    last_known_index = new_index;
+    vvimDebug() << "huidige index gewijzigd naar" << last_known_index;
 
     /* 4) kiezen wat zichtbaar is en wat niet */
 
@@ -378,6 +396,11 @@ void Buurtijd_deelnemers::on_saveButton_clicked()
         vvimDebug() << "submitAll FAILED, rollback";
         model_deelnemers->database().rollback();
     }
+
+    if(last_known_index.isValid())
+        ChangeRow(last_known_index);
+    else
+        vvimDebug() << "last known index invalid?" << last_known_index;
 }
 
 void Buurtijd_deelnemers::loadCompleter()

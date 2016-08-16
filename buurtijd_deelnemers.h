@@ -44,6 +44,7 @@ private:
     MyCompleter *completer;
     void loadCompleter();
     QMap<QString, QModelIndex> deelnemers_map;
+    QModelIndex last_known_index;
 
 private slots:
     void ChangeRow(QModelIndex new_index);
