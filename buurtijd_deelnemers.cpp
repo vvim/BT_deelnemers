@@ -390,6 +390,8 @@ void Buurtijd_deelnemers::on_saveButton_clicked()
     {
         vvimDebug() << "submitAll is successful, committing";
         model_deelnemers->database().commit();
+        vvimDebug() << "reload the completer";
+        loadCompleter();
     }
     else
     {
