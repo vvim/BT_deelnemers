@@ -43,7 +43,7 @@ private:
     void showInformationForOrganisation(bool make_visible);
     MyCompleter *completer;
     void loadCompleter();
-    QMap<QString, int> deelnemers_map;
+    QMap<QString, QModelIndex> deelnemers_map;
 
 private slots:
     void ChangeRow(QModelIndex new_index);

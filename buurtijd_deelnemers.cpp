@@ -405,7 +405,7 @@ void Buurtijd_deelnemers::loadCompleter()
             dlnmr.append(QString(" (id %1)").arg(model_deelnemers->index( i, idIdx ).data().toString()));
         }
         deelnemers_list << dlnmr;
-        deelnemers_map[dlnmr] = model_deelnemers->index( i, idIdx ).data().toInt();
+        deelnemers_map[dlnmr] = model_deelnemers->index( i, idIdx );
     }
 
     deelnemers_list.sort();
@@ -417,12 +417,14 @@ void Buurtijd_deelnemers::loadCompleter()
 
 void Buurtijd_deelnemers::on_pushButton_showDeelnemer_clicked()
 {
-    int deelnemer_id = deelnemers_map[ui->le_zoekDeelnemer->text()];
-    if (deelnemer_id > 0) // else no match
+    QModelIndex deelnemer_idx = deelnemers_map[ui->le_zoekDeelnemer->text()];
+    if (deelnemer_idx.isValid()) // else no match
     {
-        vvimDebug() << "toon user" << deelnemers_map[ui->le_zoekDeelnemer->text()];
-        // see http://www.qtcentre.org/threads/36071-How-to-move-QDataWidgetMapper-to-a-specific-record
-        model_deelnemers->setFilter( QString(" id = %1 ").arg(deelnemer_id));
-        mapper->toFirst();
+        vvimDebug() << "toon user" << deelnemer_idx.data().toInt();
+        ChangeRow(deelnemer_idx);
+    }
+    else
+    {
+        vvimDebug() << "no such user" << ui->le_zoekDeelnemer->text() << "invalid QModelIndex:" << deelnemer_idx << "should look like (QModelIndex(-1,-1,)";
     }
 }
