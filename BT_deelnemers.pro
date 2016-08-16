@@ -4,8 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui network
-QT           += sql
+QT       += core gui webkit network sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
