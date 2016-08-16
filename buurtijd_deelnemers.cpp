@@ -14,6 +14,7 @@ Buurtijd_deelnemers::Buurtijd_deelnemers(QWidget *parent) :
     ui(new Ui::Buurtijd_deelnemers)
 {
     completer = NULL;
+    deelnemer_information_changed = false;
 
     ui->setupUi(this);
     ui->deelnemersTable->setVisible(false); // only keeping it for debugging reasons, it has no use of the user
@@ -290,6 +291,7 @@ void Buurtijd_deelnemers::ChangeRow(QModelIndex new_index)
         showInformationForIndividual(false);
         showInformationForOrganisation(true);
     }
+    deelnemer_information_changed = false;
 }
 
 void Buurtijd_deelnemers::mapComboboxAndTableModel(QComboBox *combobox,QSqlRelationalTableModel *model, QString table_name, int t_deelnemers_fieldindex)
@@ -305,6 +307,7 @@ void Buurtijd_deelnemers::mapComboboxAndTableModel(QComboBox *combobox,QSqlRelat
     combobox->setModel(model);
     combobox->setModelColumn(1);
     mapper->addMapping(combobox, t_deelnemers_fieldindex,"currentIndex");
+    connect(combobox, SIGNAL(currentIndexChanged(int)), this, SLOT(userChangesInformation()));
 }
 
 void Buurtijd_deelnemers::mapListviewAndTableModel(BTListView *listview, BTSqlTableModel *model, QString table_name, int t_deelnemers_fieldindex)
@@ -325,6 +328,7 @@ void Buurtijd_deelnemers::mapListviewAndTableModel(BTListView *listview, BTSqlTa
     listview->setSelectionMode(QAbstractItemView::ExtendedSelection);      //http://doc.qt.io/qt-4.8/qabstractitemview.html#SelectionMode-enum
     // see issue #1 https://github.com/vvim/BT_deelnemers/issues/1
     mapper->addMapping(listview, t_deelnemers_fieldindex,"selectedItemsList");
+    connect(listview, SIGNAL(clicked(QModelIndex)), this, SLOT(userChangesInformation()));
 }
 
 void Buurtijd_deelnemers::showInformationForOfficialMember(bool make_visible)
@@ -456,4 +460,10 @@ void Buurtijd_deelnemers::on_pushButton_showDeelnemer_clicked()
     {
         vvimDebug() << "no such user" << ui->le_zoekDeelnemer->text() << "invalid QModelIndex:" << deelnemer_idx << "should look like (QModelIndex(-1,-1,)";
     }
+}
+
+void Buurtijd_deelnemers::userChangesInformation()
+{
+    vvimDebug() << "user changes information from" << this->sender()->objectName();
+    deelnemer_information_changed = true;
 }

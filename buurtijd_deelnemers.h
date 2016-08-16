@@ -45,11 +45,13 @@ private:
     void loadCompleter();
     QMap<QString, QModelIndex> deelnemers_map;
     QModelIndex last_known_index;
+    bool deelnemer_information_changed;
 
 private slots:
     void ChangeRow(QModelIndex new_index);
     void on_saveButton_clicked();
     void on_pushButton_showDeelnemer_clicked();
+    void userChangesInformation();
 };
 
 #endif // BUURTIJD_DEELNEMERS_H
