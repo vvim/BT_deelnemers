@@ -45,7 +45,8 @@ HEADERS  += buurtijd_deelnemers.h \
     btlistview.h \
     btsqltablemodel.h \
     mylineedit.h \
-    deelnemer_location.h
+    deelnemer_location.h \
+    sdeelnemermarker.h
 
 FORMS    += buurtijd_deelnemers.ui \
     deelnemer_location.ui

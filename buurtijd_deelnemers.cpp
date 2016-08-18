@@ -1,5 +1,6 @@
 #include "buurtijd_deelnemers.h"
 #include "ui_buurtijd_deelnemers.h"
+#include "sdeelnemermarker.h"
 
 #define vvimDebug()\
     qDebug() << "[" << Q_FUNC_INFO << "]"
@@ -453,10 +454,22 @@ void Buurtijd_deelnemers::on_pushButton_showMaps_clicked()
         delete location;
 
     int currentRow = last_known_index.row();
-    QString latitude = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("lat"))).toString();
-    QString longitude = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("lng"))).toString();
+    double latitude = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("lat"))).toDouble();
+    double longitude = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("lng"))).toDouble();
+    QString name = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("naam"))).toString();
 
-    location = new DeelnemerLocation(latitude,longitude);
+    // NULL.toString() = "" ?
+    QString straat = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("straat"))).toString();
+    QString huisnr = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("huisnr"))).toString();
+    QString busnr = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("busnr"))).toString();
+    QString postcode = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("postcode"))).toString();
+    QString plaats = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("plaats"))).toString();
+
+    QString address = QString("%1 %2 %3 - %4 %5").arg(ui->le_straat->text()).arg(ui->le_huisnr->text()).arg(ui->le_busnr->text()).arg(ui->le_postcode->text()).arg(ui->le_plaats->text());
+
+    SDeelnemerMarker *deelnemer = new SDeelnemerMarker(latitude, longitude, name, address);
+
+    location = new DeelnemerLocation(deelnemer);
     location->show();
     vvimDebug() << "showing" << latitude << longitude;
 }

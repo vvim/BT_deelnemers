@@ -1,15 +1,17 @@
+#include <QDebug>
+#include <QtWebKit>
 #include "deelnemer_location.h"
 #include "ui_deelnemer_location.h"
-#include <QDebug>
 
 #define vvimDebug()\
     qDebug() << "[" << Q_FUNC_INFO << "]"
 
-DeelnemerLocation::DeelnemerLocation(QString latitude, QString longitude, int zoom, QWidget *parent) :
+DeelnemerLocation::DeelnemerLocation(SDeelnemerMarker *_deelnemer, int zoom, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::deelnemer_location)
 {
     settings = new QSettings("settings.ini", QSettings::IniFormat);
+    deelnemerMarker = _deelnemer;
 
     vvimDebug() << "[TODO]" << "should we test if latitude / longitude are valid coordinates?";
 
@@ -19,6 +21,7 @@ DeelnemerLocation::DeelnemerLocation(QString latitude, QString longitude, int zo
 
 DeelnemerLocation::~DeelnemerLocation()
 {
+    delete deelnemerMarker;
     delete settings;
     delete ui;
 }
