@@ -149,14 +149,7 @@ Buurtijd_deelnemers::~Buurtijd_deelnemers()
     db.close();
     vvimDebug() << "database closed";
 
-    if(completer)
-    {
-        vvimDebug() << "completer _not_ NULL";
-        delete completer;
-    }
-    else
-        vvimDebug() << "completer == NULL";
-    vvimDebug() << "OphaalpuntenWidget() deconstructed";
+    delete completer;
 
     delete ui;
 
