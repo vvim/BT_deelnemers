@@ -1,11 +1,6 @@
 #include "buurtijd_deelnemers.h"
 #include "ui_buurtijd_deelnemers.h"
 
-#define HOST "localhost"
-#define DATABASE "buurtijd_test"
-#define USER "testuser"
-#define PASSWORD "HiDrNick!"
-
 #define vvimDebug()\
     qDebug() << "[" << Q_FUNC_INFO << "]"
 
@@ -15,6 +10,7 @@ Buurtijd_deelnemers::Buurtijd_deelnemers(QWidget *parent) :
 {
     completer = NULL;
     deelnemer_information_changed = false;
+    settings = new QSettings("settings.ini", QSettings::IniFormat);
 
     ui->setupUi(this);
     ui->deelnemersTable->setVisible(false); // only keeping it for debugging reasons, it has no use of the user
@@ -150,6 +146,7 @@ Buurtijd_deelnemers::~Buurtijd_deelnemers()
     vvimDebug() << "database closed";
 
     delete completer;
+    delete settings;
 
     delete ui;
 
@@ -171,11 +168,10 @@ bool Buurtijd_deelnemers::connectToDatabase()
         QLocale::setDefault(curLocale);
     **/
 
-    // when using a config file, use -->  settings.value("db/host").toString()
-    db.setHostName(HOST);
-    db.setDatabaseName(DATABASE);
-    db.setUserName(USER);
-    db.setPassword(PASSWORD);
+    db.setHostName(settings->value("db/host").toString());
+    db.setDatabaseName(settings->value("db/databasename").toString());
+    db.setUserName(settings->value("db/username").toString() );
+    db.setPassword(settings->value("db/password").toString());
     db.setConnectOptions( "MYSQL_OPT_RECONNECT=true;" ) ;
 
     if( !db.open() )
@@ -185,7 +181,7 @@ bool Buurtijd_deelnemers::connectToDatabase()
         return false;
     }
 
-    vvimDebug() << "Connected to database at " << HOST; // settings.value("db/host").toString();
+    vvimDebug() << "Connected to database at " << settings->value("db/host").toString();
 
     return true;
 }
