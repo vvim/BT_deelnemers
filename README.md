@@ -31,7 +31,18 @@ Zoals hierboven vermeld, zie http://stackoverflow.com/a/38720029/707700 voor het
 
 Now you can surf to http://localhost/phpmyadmin .
 
-Create a new user `testuser` with  `HiDrNick!` as password and all privileges to database `buurtijd_test.`
+Create a new user `testuser` with  `HiDrNick!` as password and all privileges to database `buurtijd_test`.
+
+The code uses a QSettings INI-file to connect to the database. Create a file called `settings.ini` and put it in the build directory of your Qt Project (probably something like `../build-BT_deelnemers-Desktop-Debug/`).
+
+This file should contain the information to connect to the database. Mos basic example:
+
+    [db]
+    host=localhost
+    username=testuser
+    password=HiDrNick!
+    databasename=buurtijd_test
+
 
 
 ## 3] For installing QJSON:
