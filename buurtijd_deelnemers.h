@@ -13,6 +13,7 @@
 #include "btlistview.h"
 #include "btsqltablemodel.h"
 #include "mylineedit.h"
+#include "deelnemer_location.h"
 
 namespace Ui {
 class Buurtijd_deelnemers;
@@ -45,6 +46,7 @@ private:
     void loadCompleter();
     QMap<QString, QModelIndex> deelnemers_map;
     QModelIndex last_known_index;
+    DeelnemerLocation *location;
 
 private slots:
     void ChangeRow(QModelIndex new_index);

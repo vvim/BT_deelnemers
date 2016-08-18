@@ -14,6 +14,7 @@ Buurtijd_deelnemers::Buurtijd_deelnemers(QWidget *parent) :
     ui(new Ui::Buurtijd_deelnemers)
 {
     completer = NULL;
+    location = NULL;
 
     ui->setupUi(this);
     ui->deelnemersTable->setVisible(false); // only keeping it for debugging reasons, it has no use of the user
@@ -157,6 +158,7 @@ Buurtijd_deelnemers::~Buurtijd_deelnemers()
         vvimDebug() << "completer == NULL";
     vvimDebug() << "OphaalpuntenWidget() deconstructed";
 
+    delete location;
     delete ui;
 
     vvimDebug() << "[TODO]" << "delete alle modellen";
@@ -461,4 +463,11 @@ void Buurtijd_deelnemers::on_pushButton_showDeelnemer_clicked()
 void Buurtijd_deelnemers::on_pushButton_showMaps_clicked()
 {
     vvimDebug() << "show GoogleMaps";
+    if(location)
+        delete location;
+
+    // eigen constructie maken om adres bij te houden? een STRUCT (zie smarkers.h) ?
+    QString address = QString("%1<br/>%2 %3 %4<br/>%5 %6").arg(ui->le_naam->text()).arg(ui->le_straat->text()).arg(ui->le_huisnr->text()).arg(ui->le_busnr->text()).arg(ui->le_postcode->text()).arg(ui->le_plaats->text());
+    location = new DeelnemerLocation(address);
+    location->show();
 }
