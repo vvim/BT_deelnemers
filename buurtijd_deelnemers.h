@@ -10,6 +10,7 @@
 #include <QDataWidgetMapper>
 #include <QComboBox>
 #include <QMap>
+#include <QSettings>
 #include "btlistview.h"
 #include "btsqltablemodel.h"
 #include "mylineedit.h"
@@ -45,6 +46,7 @@ private:
     void loadCompleter();
     QMap<QString, QModelIndex> deelnemers_map;
     QModelIndex last_known_index;
+    QSettings *settings;
 
 private slots:
     void ChangeRow(QModelIndex new_index);
