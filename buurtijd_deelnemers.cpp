@@ -457,6 +457,6 @@ void Buurtijd_deelnemers::on_pushButton_showMaps_clicked()
 
     // eigen constructie maken om adres bij te houden? een STRUCT (zie smarkers.h) ?
     QString address = QString("%1<br/>%2 %3 %4<br/>%5 %6").arg(ui->le_naam->text()).arg(ui->le_straat->text()).arg(ui->le_huisnr->text()).arg(ui->le_busnr->text()).arg(ui->le_postcode->text()).arg(ui->le_plaats->text());
-    location = new DeelnemerLocation(address);
+    location = new DeelnemerLocation("latitude","longitude");
     location->show();
 }
