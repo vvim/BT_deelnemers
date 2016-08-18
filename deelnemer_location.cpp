@@ -1,5 +1,9 @@
 #include "deelnemer_location.h"
 #include "ui_deelnemer_location.h"
+#include <QDebug>
+
+#define vvimDebug()\
+    qDebug() << "[" << Q_FUNC_INFO << "]"
 
 DeelnemerLocation::DeelnemerLocation(QString address, QWidget *parent) :
     QWidget(parent),

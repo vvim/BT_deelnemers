@@ -2,7 +2,6 @@
 #define DEELNEMER_LOCATION_H
 
 #include <QWidget>
-#include <QtWebKit>
 
 namespace Ui {
 class deelnemer_location;
