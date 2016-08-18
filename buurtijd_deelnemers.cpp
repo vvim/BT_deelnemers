@@ -115,11 +115,6 @@ Buurtijd_deelnemers::Buurtijd_deelnemers(QWidget *parent) :
      *    "doelgroep"
      **/
 
-    //mapper->addMapping(ui->le_, model_deelnemers->fieldIndex(""));
-
-    //connect(ui->deelnemersTable->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),
-    //        mapper, SLOT(setCurrentModelIndex(QModelIndex)));
-
     connect(ui->deelnemersTable->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),
             this, SLOT(ChangeRow(QModelIndex)));
 
@@ -451,12 +446,17 @@ void Buurtijd_deelnemers::on_pushButton_showDeelnemer_clicked()
 
 void Buurtijd_deelnemers::on_pushButton_showMaps_clicked()
 {
+    // !! IF lat/lng are valid? what if they are NULL? QPushButton should not been enabled
+
     vvimDebug() << "show GoogleMaps";
     if(location)
         delete location;
 
-    // eigen constructie maken om adres bij te houden? een STRUCT (zie smarkers.h) ?
-    QString address = QString("%1<br/>%2 %3 %4<br/>%5 %6").arg(ui->le_naam->text()).arg(ui->le_straat->text()).arg(ui->le_huisnr->text()).arg(ui->le_busnr->text()).arg(ui->le_postcode->text()).arg(ui->le_plaats->text());
-    location = new DeelnemerLocation("latitude","longitude");
+    int currentRow = last_known_index.row();
+    QString latitude = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("lat"))).toString();
+    QString longitude = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("lng"))).toString();
+
+    location = new DeelnemerLocation(latitude,longitude);
     location->show();
+    vvimDebug() << "showing" << latitude << longitude;
 }
