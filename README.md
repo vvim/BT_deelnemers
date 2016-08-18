@@ -35,7 +35,7 @@ Create a new user `testuser` with  `HiDrNick!` as password and all privileges to
 
 The code uses a QSettings INI-file to connect to the database. Create a file called `settings.ini` and put it in the build directory of your Qt Project (probably something like `../build-BT_deelnemers-Desktop-Debug/`).
 
-This file should contain the information to conenct to the database. Mos basic example:
+This file should contain the information to connect to the database. Mos basic example:
 
     [db]
     host=localhost
