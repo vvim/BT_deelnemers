@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Aug 15, 2016 at 03:27 PM
+-- Generation Time: Aug 18, 2016 at 02:30 PM
 -- Server version: 5.5.50-0+deb8u1
 -- PHP Version: 5.6.24-0+deb8u1
 
@@ -66,7 +66,9 @@ CREATE TABLE IF NOT EXISTS `t_deelnemers` (
   `stop_datum` date DEFAULT NULL,
   `stop_reden` varchar(250) DEFAULT NULL,
   `soort_deelnemer` tinyint(3) unsigned NOT NULL,
-  `varia` varchar(1000) DEFAULT NULL
+  `varia` varchar(1000) DEFAULT NULL,
+  `lat` decimal(10,6) DEFAULT NULL COMMENT 'latitude up to 6 decimals (accuracy to 1 meter)',
+  `lng` decimal(10,6) DEFAULT NULL COMMENT 'longitude up to 6 decimals (accuracy to 1 meter)'
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 --
