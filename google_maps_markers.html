@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>BT_deelnemers Marker</title>
+    <!-- example from https://developers.google.com/maps/documentation/javascript/examples/marker-simple -->
+    <!-- and https://developers.google.com/maps/documentation/javascript/examples/infowindow-simple -->
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script>
+      var deelnemers = [
+      %6
+      ];
+
+
+      function initMap() {
+        var myLatLng = {lat: %2, lng: %3};
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: %4,
+          center: myLatLng
+        });
+
+        var infowindow = new google.maps.InfoWindow({
+                  content: '%5'
+                });
+
+        var marker = new google.maps.Marker({
+          position: myLatLng,
+          map: map
+        });
+        marker.addListener('click', function() {
+          infowindow.open(map, marker);
+        });
+
+		for (var i = 0; i < deelnemers.length; i++) {
+			  var deelnemer = deelnemers[i];
+			  var extramarker = new google.maps.Marker({
+				  position: {lat: deelnemer[1], lng: deelnemer[2]},
+				  map: map,
+				  title: deelnemer[3],
+				  icon: deelnemer[4],
+				  zIndex: i
+				  });
+			  google.maps.event.addListener(extramarker, 'dblclick', (function(extramarker, i) {
+				  return function() {
+					VlaspitRoutetool.askMainProgramToShowOphaalpuntInfo(deelnemers[i][0]);
+			      }
+		      })(extramarker, i));
+	    }
+
+      }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=%1&callback=initMap">
+    </script>
+  </body>
+</html>

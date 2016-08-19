@@ -4,5 +4,6 @@
     </qresource>
     <qresource prefix="/html">
         <file>google_maps.html</file>
+        <file>google_maps_markers.html</file>
     </qresource>
 </RCC>
