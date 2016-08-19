@@ -27,6 +27,7 @@ DeelnemerLocation::DeelnemerLocation(SDeelnemerMarker *_deelnemer, int zoom, QWi
 
     ui->setupUi(this);
     ui->webView->setHtml(str.arg(settings->value("apiKey").toString()).arg(deelnemerMarker->lat).arg(deelnemerMarker->lng).arg(zoom).arg(deelnemerMarker->caption())  );
+    ui->label_deelnemer_location->setText(deelnemerMarker->name);
 
     qDebug() << endl << str.arg(settings->value("apiKey").toString()).arg(deelnemerMarker->lat).arg(deelnemerMarker->lng).arg(zoom).arg(deelnemerMarker->caption());
 }
