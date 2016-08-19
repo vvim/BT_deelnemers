@@ -78,6 +78,7 @@ void DeelnemerLocation::on_pushButton_showAllDeelnemers_clicked()
     int latIdx = model_deelnemers->fieldIndex("lat");
     int lngIdx = model_deelnemers->fieldIndex("lng");
     int nameIdx = model_deelnemers->fieldIndex("naam");
+    int familieNaamIdx = model_deelnemers->fieldIndex("familienaam");
     int idIdx = model_deelnemers->fieldIndex("id");
     int soortDeelnemerIdx = model_deelnemers->fieldIndex("soort_deelnemer");
 
@@ -97,13 +98,14 @@ void DeelnemerLocation::on_pushButton_showAllDeelnemers_clicked()
             if( model_deelnemers->index( i, soortDeelnemerIdx ).data().toInt() == model_INDIVIDUAL) // deelnemer is an individual
             {
                 iconcolor = "blue";
+                title.append(" ").append(model_deelnemers->index( i, familieNaamIdx ).data().toString());
             }
             else // deelnemer is an organisation
             {
                 iconcolor = "green";
             }
 
-            markers_js.append(str.arg(latitude).arg(longitude).arg(title).arg(iconcolor).arg(id));
+            markers_js.append(str.arg(latitude).arg(longitude).arg(JavaScriptEscape(title)).arg(iconcolor).arg(id));
         }
 
     }
