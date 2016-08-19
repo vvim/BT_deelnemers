@@ -470,6 +470,6 @@ void Buurtijd_deelnemers::on_pushButton_showMaps_clicked()
 
     SDeelnemerMarker *deelnemer = new SDeelnemerMarker(deelnemersId, latitude, longitude, name, address);
 
-    location = new DeelnemerLocation(deelnemer);
+    location = new DeelnemerLocation(deelnemer, model_deelnemers);
     location->show();
 }

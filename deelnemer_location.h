@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QSettings>
+#include <QSqlRelationalTableModel>
 #include "sdeelnemermarker.h"
 
 namespace Ui {
@@ -14,7 +15,7 @@ class DeelnemerLocation : public QWidget
     Q_OBJECT
 
 public:
-    explicit DeelnemerLocation(SDeelnemerMarker *_deelnemer, int _zoom = 15, QWidget *parent = 0);
+    explicit DeelnemerLocation(SDeelnemerMarker *_deelnemer, QSqlRelationalTableModel *_model_deelnemers, int _zoom = 15, QWidget *parent = 0);
     ~DeelnemerLocation();
 
 private slots:
@@ -24,6 +25,7 @@ private:
     Ui::deelnemer_location *ui;
     QSettings *settings;
     SDeelnemerMarker *deelnemerMarker;
+    QSqlRelationalTableModel *model_deelnemers;
     int zoom;
 };
 

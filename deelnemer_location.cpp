@@ -7,12 +7,13 @@
 #define vvimDebug()\
     qDebug() << "[" << Q_FUNC_INFO << "]"
 
-DeelnemerLocation::DeelnemerLocation(SDeelnemerMarker *_deelnemer, int _zoom, QWidget *parent) :
+DeelnemerLocation::DeelnemerLocation(SDeelnemerMarker *_deelnemer, QSqlRelationalTableModel *_model_deelnemers, int _zoom, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::deelnemer_location)
 {
     settings = new QSettings("settings.ini", QSettings::IniFormat);
     deelnemerMarker = _deelnemer;
+    model_deelnemers = _model_deelnemers;
     zoom = _zoom;
 
     vvimDebug() << "[TODO]" << "should we test if latitude / longitude are valid coordinates?";
@@ -41,6 +42,7 @@ DeelnemerLocation::~DeelnemerLocation()
     delete deelnemerMarker;
     delete settings;
     delete ui;
+    // DO NOT delete _model_deelnemers, we still need it in buurtijd_deelnemers.cpp
 }
 
 void DeelnemerLocation::on_pushButton_showAllDeelnemers_clicked()
