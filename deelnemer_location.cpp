@@ -1,5 +1,6 @@
 #include <QDebug>
 #include <QtWebKit>
+#include <QMessageBox>
 #include "deelnemer_location.h"
 #include "ui_deelnemer_location.h"
 
@@ -20,6 +21,10 @@ DeelnemerLocation::DeelnemerLocation(SDeelnemerMarker *_deelnemer, int zoom, QWi
     if (!f.open(QFile::ReadOnly | QFile::Text))
     {
         vvimDebug() << "whoops, cannot read HTML-file";
+        QMessageBox messageBox;
+        messageBox.critical(0,"Error",tr("Kan HTML-bestand niet lezen"));
+        messageBox.setFixedSize(500,200);
+        return;
     }
     QTextStream in(&f);
     QString str = in.readAll();
@@ -28,8 +33,6 @@ DeelnemerLocation::DeelnemerLocation(SDeelnemerMarker *_deelnemer, int zoom, QWi
     ui->setupUi(this);
     ui->webView->setHtml(str.arg(settings->value("apiKey").toString()).arg(deelnemerMarker->lat).arg(deelnemerMarker->lng).arg(zoom).arg(deelnemerMarker->caption())  );
     ui->label_deelnemer_location->setText(deelnemerMarker->name);
-
-    qDebug() << endl << str.arg(settings->value("apiKey").toString()).arg(deelnemerMarker->lat).arg(deelnemerMarker->lng).arg(zoom).arg(deelnemerMarker->caption());
 }
 
 DeelnemerLocation::~DeelnemerLocation()
