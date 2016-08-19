@@ -69,7 +69,8 @@ void DeelnemerLocation::on_pushButton_showAllDeelnemers_clicked()
     for ( int i = 0 ; i < model_deelnemers->rowCount() ; ++i )
     {
         // [TODO] markers_js.append(str.arg(latitude).arg(longitude).arg(title).arg(iconcolor).arg(id));
-        if( model_deelnemers->index( i, lidIdx ).data().toInt() == 1 )  // NULL toInt() == 0
+        if( ( model_deelnemers->index( i, lidIdx ).data().toInt() == 1 )  // NULL toInt() == 0
+                && (model_deelnemers->index( i, idIdx ).data().toInt() != deelnemerMarker->id) ) // we do not have to show the main marker twice
         {
             // we only show markers if the corresponding deelnemer is an official member, so lidIdx should be 1
             double latitude = model_deelnemers->index( i, latIdx ).data().toDouble();
