@@ -14,6 +14,7 @@ struct SDeelnemerMarker
 {
     SDeelnemerMarker()
     {
+        id = -1;
         lat = 0;
         lng = 0;
         name = "";
@@ -21,27 +22,27 @@ struct SDeelnemerMarker
 		// add later if useful:
 		//    individu = false;
 		//    organisatie = false;
-    };
+    }
 
-    SDeelnemerMarker(double _lat, double _lng, QString _name, QString _address)
+    SDeelnemerMarker(int _id, double _lat, double _lng, QString _name, QString _address)
     {
-        lat = _lat; lng = _lng; name = _name; address = _address;
+        id = _id; lat = _lat; lng = _lng; name = _name; address = _address;
 		// add later if useful:
 		//    individu = false;
 		//    organisatie = false;
-    };
+    }
 
 	/** add later if useful:
-    SDeelnemerMarker(double _lat, double _lng, SDeelnemerIndividu _Individu)
+    SDeelnemerMarker(int _id, double _lat, double _lng, SDeelnemerIndividu _Individu)
     {
-        lat = _lat; lng = _lng; caption = _Individu.getNameAndAddress(); Individu = _Individu;
+        id = _id; lat = _lat; lng = _lng; caption = _Individu.getNameAndAddress(); Individu = _Individu;
         individu = true; organisatie = false;
-    };
+    }
     **/
 
     void PrintInformation()
     {
-        qDebug() << "." << name << address << "(" << lat << lng << ")";
+        qDebug() << "." << id << name << address << "(" << lat << lng << ")";
 		/** add later if useful:
         if((!individu) && (!organisatie))
         {
@@ -52,7 +53,7 @@ struct SDeelnemerMarker
             Organisatie.PrintInformation();
         }
         **/
-    };
+    }
 
     QString caption()
     {
@@ -76,6 +77,7 @@ struct SDeelnemerMarker
     }
     **/
 
+    int id;
     double lat;
     double lng;
     QString name;

@@ -454,6 +454,7 @@ void Buurtijd_deelnemers::on_pushButton_showMaps_clicked()
         delete location;
 
     int currentRow = last_known_index.row();
+    int deelnemersId = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("id"))).toInt();
     double latitude = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("lat"))).toDouble();
     double longitude = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("lng"))).toDouble();
     QString name = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("naam"))).toString();
@@ -467,9 +468,8 @@ void Buurtijd_deelnemers::on_pushButton_showMaps_clicked()
 
     QString address = QString("%1 %2 %3 - %4 %5").arg(ui->le_straat->text()).arg(ui->le_huisnr->text()).arg(ui->le_busnr->text()).arg(ui->le_postcode->text()).arg(ui->le_plaats->text());
 
-    SDeelnemerMarker *deelnemer = new SDeelnemerMarker(latitude, longitude, name, address);
+    SDeelnemerMarker *deelnemer = new SDeelnemerMarker(deelnemersId, latitude, longitude, name, address);
 
     location = new DeelnemerLocation(deelnemer);
     location->show();
-    vvimDebug() << "showing" << latitude << longitude;
 }
