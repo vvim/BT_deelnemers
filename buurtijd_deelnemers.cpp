@@ -466,7 +466,7 @@ void Buurtijd_deelnemers::on_pushButton_showMaps_clicked()
     QString postcode = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("postcode"))).toString();
     QString plaats = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("plaats"))).toString();
 
-    QString address = QString("%1 %2 %3 - %4 %5").arg(ui->le_straat->text()).arg(ui->le_huisnr->text()).arg(ui->le_busnr->text()).arg(ui->le_postcode->text()).arg(ui->le_plaats->text());
+    QString address = QString("%1 %2 %3 - %4 %5").arg(straat).arg(huisnr).arg(busnr).arg(postcode).arg(plaats);
 
     SDeelnemerMarker *deelnemer = new SDeelnemerMarker(deelnemersId, latitude, longitude, name, address);
 
