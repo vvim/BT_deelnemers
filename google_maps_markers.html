@@ -54,6 +54,15 @@
 				  icon: deelnemer[4],
 				  zIndex: i
 				  });
+
+                           google.maps.event.addListener(extramarker, 'click', (function(extramarker, i) {
+                                  return function() {
+                                          var infowindow = new google.maps.InfoWindow({ content: deelnemers[i][3] });
+                                          infowindow.open(map, extramarker);
+                                      }
+                              })(extramarker, i));
+
+
 			  google.maps.event.addListener(extramarker, 'dblclick', (function(extramarker, i) {
 				  return function() {
 					VlaspitRoutetool.askMainProgramToShowOphaalpuntInfo(deelnemers[i][0]);
