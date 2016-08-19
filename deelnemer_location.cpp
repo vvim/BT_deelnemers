@@ -105,6 +105,17 @@ void DeelnemerLocation::on_pushButton_showAllDeelnemers_clicked()
                 iconcolor = "green";
             }
 
+            // add address to title:
+            QString straat = model_deelnemers->data(model_deelnemers->index(i,model_deelnemers->fieldIndex("straat"))).toString();
+            QString huisnr = model_deelnemers->data(model_deelnemers->index(i,model_deelnemers->fieldIndex("huisnr"))).toString();
+            QString busnr = model_deelnemers->data(model_deelnemers->index(i,model_deelnemers->fieldIndex("busnr"))).toString();
+            QString postcode = model_deelnemers->data(model_deelnemers->index(i,model_deelnemers->fieldIndex("postcode"))).toString();
+            QString plaats = model_deelnemers->data(model_deelnemers->index(i,model_deelnemers->fieldIndex("plaats"))).toString();
+
+            QString address = QString("%1 %2 %3 te %4 %5").arg(straat).arg(huisnr).arg(busnr).arg(postcode).arg(plaats);
+            title.append(": ").append(address);
+
+
             markers_js.append(str.arg(latitude).arg(longitude).arg(JavaScriptEscape(title)).arg(iconcolor).arg(id));
         }
 
