@@ -7,12 +7,13 @@
 #define vvimDebug()\
     qDebug() << "[" << Q_FUNC_INFO << "]"
 
-DeelnemerLocation::DeelnemerLocation(SDeelnemerMarker *_deelnemer, int zoom, QWidget *parent) :
+DeelnemerLocation::DeelnemerLocation(SDeelnemerMarker *_deelnemer, int _zoom, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::deelnemer_location)
 {
     settings = new QSettings("settings.ini", QSettings::IniFormat);
     deelnemerMarker = _deelnemer;
+    zoom = _zoom;
 
     vvimDebug() << "[TODO]" << "should we test if latitude / longitude are valid coordinates?";
 
