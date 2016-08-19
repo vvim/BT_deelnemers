@@ -48,7 +48,8 @@
 
 		for (var i = 0; i < deelnemers.length; i++) {
 			  var deelnemer = deelnemers[i];
-                          infowindows.push(false);
+                          var infowindow = new google.maps.InfoWindow({ content: deelnemers[i][3] });
+                          infowindows.push([infowindow,false]);
 			  var extramarker = new google.maps.Marker({
 				  position: {lat: deelnemer[1], lng: deelnemer[2]},
 				  map: map,
@@ -59,11 +60,15 @@
 
                            google.maps.event.addListener(extramarker, 'click', (function(extramarker, i) {
                                   return function() {
-                                      if (!infowindows[i])
+                                      if (infowindows[i][1])
                                       {
-                                          var infowindow = new google.maps.InfoWindow({ content: deelnemers[i][3] });
-                                          infowindow.open(map, extramarker);
-                                          infowindows[i] = true;
+                                          infowindows[i][0].close();
+                                          infowindows[i][1] = false;
+                                      }
+                                      else
+                                      {
+                                          infowindows[i][0].open(map, extramarker);
+                                          infowindows[i][1] = true;
                                       }
                                   }
                               })(extramarker, i));
