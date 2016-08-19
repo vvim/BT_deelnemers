@@ -10,6 +10,17 @@
 #define vvimDebug()\
     qDebug() << "[" << Q_FUNC_INFO << "]"
 
+
+QString JavaScriptEscape(QString plaintext)
+{
+    // escape QString to be used as a string in JavaScript. Should not contain '
+    // regular Qt::escape() from #include <QtGui/qtextdocument.h> will not escape the '
+
+    QString javascriptversion = plaintext.replace("\n"," ").replace("'","\\'");
+    javascriptversion.replace("\\\\'","\\'");
+    return javascriptversion;
+}
+
 DeelnemerLocation::DeelnemerLocation(SDeelnemerMarker *_deelnemer, QSqlRelationalTableModel *_model_deelnemers, int _zoom, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::deelnemer_location)
@@ -36,7 +47,7 @@ DeelnemerLocation::DeelnemerLocation(SDeelnemerMarker *_deelnemer, QSqlRelationa
     f.close();
 
     ui->setupUi(this);
-    ui->webView->setHtml(htmlToLoad.arg(settings->value("apiKey").toString()).arg(deelnemerMarker->lat).arg(deelnemerMarker->lng).arg(zoom).arg(deelnemerMarker->caption())  );
+    ui->webView->setHtml(htmlToLoad.arg(settings->value("apiKey").toString()).arg(deelnemerMarker->lat).arg(deelnemerMarker->lng).arg(zoom).arg(JavaScriptEscape(deelnemerMarker->caption()))  );
     ui->label_deelnemer_location->setText(deelnemerMarker->name);
 }
 

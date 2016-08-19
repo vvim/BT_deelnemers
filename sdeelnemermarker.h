@@ -57,12 +57,7 @@ struct SDeelnemerMarker
 
     QString caption()
     {
-        QString cap;
-        cap = QString("%1<br/>%2").arg(name).arg(address);
-        // escape QString to be used as a caption in JavaScript. Should not contain '
-        // regular Qt::escape() from #include <QtGui/qtextdocument.h> will not escape the '
-        // should we also check for \\\\' ? (as this could result in a \\' , escaping the \ but not the ')
-        return cap.replace("'", "\\'");
+        return QString("%1<br/>%2").arg(name).arg(address);
     }
 
 	/** add later if useful:
