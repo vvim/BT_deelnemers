@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <title>BT_deelnemers Marker</title>
     <!-- example from https://developers.google.com/maps/documentation/javascript/examples/marker-simple -->
+    <!-- and https://developers.google.com/maps/documentation/javascript/examples/infowindow-simple -->
     <style>
       html, body {
         height: 100%;
@@ -30,10 +31,16 @@
           center: myLatLng
         });
 
+        var infowindow = new google.maps.InfoWindow({
+                  content: '%5'
+                });
+
         var marker = new google.maps.Marker({
           position: myLatLng,
-          map: map,
-          title: '%5'
+          map: map
+        });
+        marker.addListener('click', function() {
+          infowindow.open(map, marker);
         });
       }
     </script>
