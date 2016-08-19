@@ -28,11 +28,11 @@ DeelnemerLocation::DeelnemerLocation(SDeelnemerMarker *_deelnemer, int _zoom, QW
         return;
     }
     QTextStream in(&f);
-    QString str = in.readAll();
+    QString htmlToLoad = in.readAll();
     f.close();
 
     ui->setupUi(this);
-    ui->webView->setHtml(str.arg(settings->value("apiKey").toString()).arg(deelnemerMarker->lat).arg(deelnemerMarker->lng).arg(zoom).arg(deelnemerMarker->caption())  );
+    ui->webView->setHtml(htmlToLoad.arg(settings->value("apiKey").toString()).arg(deelnemerMarker->lat).arg(deelnemerMarker->lng).arg(zoom).arg(deelnemerMarker->caption())  );
     ui->label_deelnemer_location->setText(deelnemerMarker->name);
 }
 
