@@ -41,3 +41,8 @@ DeelnemerLocation::~DeelnemerLocation()
     delete settings;
     delete ui;
 }
+
+void DeelnemerLocation::on_pushButton_showAllDeelnemers_clicked()
+{
+
+}

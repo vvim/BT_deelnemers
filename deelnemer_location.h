@@ -17,6 +17,9 @@ public:
     explicit DeelnemerLocation(SDeelnemerMarker *_deelnemer, int zoom = 15, QWidget *parent = 0);
     ~DeelnemerLocation();
 
+private slots:
+    void on_pushButton_showAllDeelnemers_clicked();
+
 private:
     Ui::deelnemer_location *ui;
     QSettings *settings;

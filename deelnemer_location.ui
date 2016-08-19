@@ -36,6 +36,13 @@
      </property>
     </widget>
    </item>
+   <item alignment="Qt::AlignRight">
+    <widget class="QPushButton" name="pushButton_showAllDeelnemers">
+     <property name="text">
+      <string>Toon alle deelnemers</string>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <customwidgets>
