@@ -15,8 +15,20 @@ DeelnemerLocation::DeelnemerLocation(SDeelnemerMarker *_deelnemer, int zoom, QWi
 
     vvimDebug() << "[TODO]" << "should we test if latitude / longitude are valid coordinates?";
 
+    // read HTML file containing Google Maps
+    QFile f(":/html/google_maps.html");
+    if (!f.open(QFile::ReadOnly | QFile::Text))
+    {
+        vvimDebug() << "whoops, cannot read HTML-file";
+    }
+    QTextStream in(&f);
+    QString str = in.readAll();
+    f.close();
+
     ui->setupUi(this);
-    ui->webView->setHtml(QString("<!DOCTYPE html><html><head><meta name=\"viewport\" content=\"initial-scale=1.0, user-scalable=no\" /><style type=\"text/css\">html { height: 100% } body { height: 100%; margin: 0; padding: 0 } #map_canvas { height: 100% } </style> <script src=\"https://maps.googleapis.com/maps/api/js?v=3&key=%1\"> </script> <script> var map; var markers = []; function initialize() { var myOptions = { center: new google.maps.LatLng(%2, %3), zoom: %4, mapTypeId: google.maps.MapTypeId.ROADMAP, panControl: true }; map = new google.maps.Map(document.getElementById(\"map_canvas\"), myOptions); } </script> </head> <body onload=\"initialize()\"> <div id=\"map_canvas\" style=\"width:100%; height:100%\"></div> </body></html>").arg(settings->value("General\apiKey").toString()).arg(latitude).arg(longitude).arg(zoom)  );
+    ui->webView->setHtml(str.arg(settings->value("apiKey").toString()).arg(deelnemerMarker->lat).arg(deelnemerMarker->lng).arg(zoom).arg(deelnemerMarker->caption())  );
+
+    qDebug() << endl << str.arg(settings->value("apiKey").toString()).arg(deelnemerMarker->lat).arg(deelnemerMarker->lng).arg(zoom).arg(deelnemerMarker->caption());
 }
 
 DeelnemerLocation::~DeelnemerLocation()
