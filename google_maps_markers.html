@@ -23,6 +23,7 @@
       var deelnemers = [
       %6
       ];
+      var infowindows = [];
 
 
       function initMap() {
@@ -47,6 +48,7 @@
 
 		for (var i = 0; i < deelnemers.length; i++) {
 			  var deelnemer = deelnemers[i];
+                          infowindows.push(false);
 			  var extramarker = new google.maps.Marker({
 				  position: {lat: deelnemer[1], lng: deelnemer[2]},
 				  map: map,
@@ -57,9 +59,13 @@
 
                            google.maps.event.addListener(extramarker, 'click', (function(extramarker, i) {
                                   return function() {
+                                      if (!infowindows[i])
+                                      {
                                           var infowindow = new google.maps.InfoWindow({ content: deelnemers[i][3] });
                                           infowindow.open(map, extramarker);
+                                          infowindows[i] = true;
                                       }
+                                  }
                               })(extramarker, i));
 
 
