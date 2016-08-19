@@ -4,6 +4,9 @@
 #include "deelnemer_location.h"
 #include "ui_deelnemer_location.h"
 
+#define model_INDIVIDUAL 0
+#define model_LID 1
+
 #define vvimDebug()\
     qDebug() << "[" << Q_FUNC_INFO << "]"
 
@@ -65,11 +68,12 @@ void DeelnemerLocation::on_pushButton_showAllDeelnemers_clicked()
     int lngIdx = model_deelnemers->fieldIndex("lng");
     int nameIdx = model_deelnemers->fieldIndex("naam");
     int idIdx = model_deelnemers->fieldIndex("id");
+    int soortDeelnemerIdx = model_deelnemers->fieldIndex("soort_deelnemer");
 
     for ( int i = 0 ; i < model_deelnemers->rowCount() ; ++i )
     {
         // [TODO] markers_js.append(str.arg(latitude).arg(longitude).arg(title).arg(iconcolor).arg(id));
-        if( ( model_deelnemers->index( i, lidIdx ).data().toInt() == 1 )  // NULL toInt() == 0
+        if( ( model_deelnemers->index( i, lidIdx ).data().toInt() == model_LID )  // NULL toInt() == 0
                 && (model_deelnemers->index( i, idIdx ).data().toInt() != deelnemerMarker->id) ) // we do not have to show the main marker twice
         {
             // we only show markers if the corresponding deelnemer is an official member, so lidIdx should be 1
@@ -77,8 +81,17 @@ void DeelnemerLocation::on_pushButton_showAllDeelnemers_clicked()
             double longitude = model_deelnemers->index( i, lngIdx ).data().toDouble();
             QString title = model_deelnemers->index( i, nameIdx ).data().toString();
             int id = model_deelnemers->index( i, idIdx ).data().toInt();
+            QString iconcolor;
 
-            QString iconcolor = "blue";
+            if( model_deelnemers->index( i, soortDeelnemerIdx ).data().toInt() == model_INDIVIDUAL) // deelnemer is an individual
+            {
+                iconcolor = "blue";
+            }
+            else // deelnemer is an organisation
+            {
+                iconcolor = "green";
+            }
+
             markers_js.append(str.arg(latitude).arg(longitude).arg(title).arg(iconcolor).arg(id));
         }
 
