@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Aug 18, 2016 at 02:30 PM
+-- Generation Time: Aug 22, 2016 at 12:26 PM
 -- Server version: 5.5.50-0+deb8u1
 -- PHP Version: 5.6.24-0+deb8u1
 
@@ -38,8 +38,8 @@ CREATE TABLE IF NOT EXISTS `t_deelnemers` (
   `plaats` varchar(30) DEFAULT NULL,
   `telefoon` varchar(15) DEFAULT NULL,
   `gsm` varchar(15) DEFAULT NULL,
-  `email1` varchar(30) DEFAULT NULL,
-  `email2` varchar(30) DEFAULT NULL,
+  `email1` varchar(50) DEFAULT NULL,
+  `email2` varchar(50) DEFAULT NULL,
   `geslacht` tinyint(3) unsigned DEFAULT NULL,
   `geboortedatum` date DEFAULT NULL,
   `afkomst` varchar(30) DEFAULT NULL,
