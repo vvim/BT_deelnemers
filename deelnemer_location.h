@@ -30,6 +30,8 @@ public:
 private slots:
     void on_pushButton_showAllDeelnemers_clicked();
 
+    void on_pushButton_TestButton_clicked();
+
 private:
     Ui::deelnemer_location *ui;
     QSettings *settings;

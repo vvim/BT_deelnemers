@@ -146,3 +146,8 @@ void DeelnemerLocation::on_pushButton_showAllDeelnemers_clicked()
 
     ui->webView->setHtml(htmlToLoad.arg(settings->value("apiKey").toString()).arg(deelnemerMarker->lat).arg(deelnemerMarker->lng).arg(zoom).arg(deelnemerMarker->caption()).arg(markers_js)  );
 }
+
+void DeelnemerLocation::on_pushButton_TestButton_clicked()
+{
+    ui->webView->setHtml("<H3>Hello World</H3>");
+}
