@@ -15,6 +15,7 @@ Buurtijd_deelnemers::Buurtijd_deelnemers(QWidget *parent) :
 
     ui->setupUi(this);
     ui->deelnemersTable->setVisible(false); // only keeping it for debugging reasons, it has no use of the user
+    ui->label_feedback->clear();
 
     ui->saveButton->setAutoFillBackground(true);
     ui->saveButton->setStyleSheet("background-color: rgb(255, 0, 0); color: rgb(255, 255, 255)");
@@ -384,11 +385,16 @@ void Buurtijd_deelnemers::on_saveButton_clicked()
         model_deelnemers->database().commit();
         vvimDebug() << "reload the completer";
         loadCompleter();
+        QString feedback = QString(ui->le_naam->text());
+        ui->label_feedback->setText(feedback.append(" opgeslagen"));
+        ui->label_feedback->setStyleSheet("font-style: italic; color: green");
     }
     else
     {
         vvimDebug() << "submitAll FAILED, rollback";
         model_deelnemers->database().rollback();
+        ui->label_feedback->setText("Er ging iets mis, wijzigingen niet opgeslagen");
+        ui->label_feedback->setStyleSheet("font-weight: bold; color: red");
     }
 
     if(last_known_index.isValid())
@@ -438,6 +444,7 @@ void Buurtijd_deelnemers::loadCompleter()
 
 void Buurtijd_deelnemers::on_pushButton_showDeelnemer_clicked()
 {
+    ui->label_feedback->clear();
     QModelIndex deelnemer_idx = deelnemers_map[ui->le_zoekDeelnemer->text()];
     if (deelnemer_idx.isValid()) // else no match
     {
