@@ -6,6 +6,8 @@
 #include <QSettings>
 #include <QSqlRelationalTableModel>
 #include "sdeelnemermarker.h"
+#include <QNetworkReply>
+#include <QSslConfiguration>
 
 namespace Ui {
 class deelnemer_location;
@@ -34,6 +36,8 @@ private slots:
     void on_pushButton_loadHTML_clicked();
 
     void on_pushButton_getJavaVersion_clicked();
+
+    void sslErrorHandler(QNetworkReply* qnr, const QList<QSslError> & errlist);
 
 private:
     Ui::deelnemer_location *ui;
