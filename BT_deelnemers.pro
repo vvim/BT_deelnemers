@@ -10,8 +10,6 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 INCLUDEPATH += ../qjson/include
 
-QTPLUGIN += qsqlmysql
-
 TARGET = BT_deelnemers
 TEMPLATE = app
 
@@ -23,15 +21,15 @@ linux* {
 win32-g++ {
     LIBS += ../qjson/build/lib/qjson0.dll
     LIBS += ../qjson/build/lib/libqjson.dll
-    #LIBS += ...\\MySQLServer55\\lib\\libmysql.dll
-    #LIBS += ...\\MySQL\\MySQLServer55\\lib\\libmysql.lib
+    LIBS += C:\\Wim\\MySQL\\MySQLServer55\\lib\\libmysql.dll
+    LIBS += C:\\Wim\\MySQL\\MySQLServer55\\lib\\libmysql.lib
 }
 
 win32-msvc* {
     LIBS += ../qjson/build/lib/qjson0.lib
     LIBS += ../qjson/build/lib/libqjson.dll
-    #LIBS += ...\\MySQLServer55\\lib\\libmysql.dll
-    #LIBS += ...\\MySQL\\MySQLServer55\\lib\\libmysql.lib
+    LIBS += C:\\Wim\\MySQL\\MySQLServer55\\lib\\libmysql.dll
+    LIBS += C:\\Wim\\MySQL\\MySQLServer55\\lib\\libmysql.lib
 }
 
 SOURCES += main.cpp\

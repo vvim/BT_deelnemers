@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Aug 22, 2016 at 04:12 PM
+-- Generation Time: Aug 23, 2016 at 03:51 PM
 -- Server version: 5.5.50-0+deb8u1
 -- PHP Version: 5.6.24-0+deb8u1
 
@@ -70,6 +70,9 @@ CREATE TABLE IF NOT EXISTS `t_deelnemers` (
   `lat` decimal(10,6) DEFAULT NULL COMMENT 'latitude up to 6 decimals (accuracy to 1 meter)',
   `lng` decimal(10,6) DEFAULT NULL COMMENT 'longitude up to 6 decimals (accuracy to 1 meter)'
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `t_deelnemer_contact_voorkeur`
@@ -239,6 +242,19 @@ INSERT INTO `t_deelnemer_niv_nederlands` (`id`, `niveau`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `t_deelnemer_notas`
+--
+
+CREATE TABLE IF NOT EXISTS `t_deelnemer_notas` (
+`id` int(10) unsigned NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `nota` text CHARACTER SET utf8 NOT NULL COMMENT 'see http://stackoverflow.com/a/13182846/',
+  `deelnemer_id` int(10) unsigned NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `t_deelnemer_soort`
 --
 
@@ -357,6 +373,12 @@ ALTER TABLE `t_deelnemer_niv_nederlands`
  ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `t_deelnemer_notas`
+--
+ALTER TABLE `t_deelnemer_notas`
+ ADD PRIMARY KEY (`id`), ADD KEY `fk_deelnemer_id` (`deelnemer_id`);
+
+--
 -- Indexes for table `t_deelnemer_soort_deelnemer`
 --
 ALTER TABLE `t_deelnemer_soort_deelnemer`
@@ -377,6 +399,21 @@ ALTER TABLE `t_deelnemer_statuut`
 --
 ALTER TABLE `t_deelnemers`
 MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1;
+--
+-- AUTO_INCREMENT for table `t_deelnemer_notas`
+--
+ALTER TABLE `t_deelnemer_notas`
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `t_deelnemer_notas`
+--
+ALTER TABLE `t_deelnemer_notas`
+ADD CONSTRAINT `fk_deelnemer_id` FOREIGN KEY (`deelnemer_id`) REFERENCES `t_deelnemers` (`id`);
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
