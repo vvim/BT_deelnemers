@@ -57,12 +57,13 @@ DeelnemerLocation::DeelnemerLocation(SDeelnemerMarker *_deelnemer, QSqlRelationa
     sslCfg.setProtocol(QSsl::AnyProtocol);
     QSslConfiguration::setDefaultConfiguration(sslCfg);
 
+    ui->webView->setPage(new myWebPage());
+
     connect(ui->webView->page()->networkAccessManager(),
             SIGNAL(sslErrors(QNetworkReply*, const QList<QSslError> & )),
             this,
             SLOT(sslErrorHandler(QNetworkReply*, const QList<QSslError> & )));
 
-//    ui->webView->setPage(new myWebPage());
     ui->webView->setHtml(htmlToLoad.arg(settings->value("apiKey").toString()).arg(deelnemerMarker->lat).arg(deelnemerMarker->lng).arg(zoom).arg(JavaScriptEscape(deelnemerMarker->caption()))  );
     ui->plainTextEdit_HTML->setPlainText(htmlToLoad.arg(settings->value("apiKey").toString()).arg(deelnemerMarker->lat).arg(deelnemerMarker->lng).arg(zoom).arg(JavaScriptEscape(deelnemerMarker->caption()))  );
     ui->label_deelnemer_location->setText(deelnemerMarker->name);
