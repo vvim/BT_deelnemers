@@ -47,23 +47,7 @@ DeelnemerLocation::DeelnemerLocation(SDeelnemerMarker *_deelnemer, QSqlRelationa
     f.close();
 
     ui->setupUi(this);
-
-
-    QSslConfiguration sslCfg = QSslConfiguration::defaultConfiguration();
-    QList<QSslCertificate> ca_list = sslCfg.caCertificates();
-    QList<QSslCertificate> ca_new = QSslCertificate::fromData("CaCertificates");
-    ca_list += ca_new;
-    sslCfg.setCaCertificates(ca_list);
-    sslCfg.setProtocol(QSsl::AnyProtocol);
-    QSslConfiguration::setDefaultConfiguration(sslCfg);
-
     ui->webView->setPage(new myWebPage());
-
-    connect(ui->webView->page()->networkAccessManager(),
-            SIGNAL(sslErrors(QNetworkReply*, const QList<QSslError> & )),
-            this,
-            SLOT(sslErrorHandler(QNetworkReply*, const QList<QSslError> & )));
-
     ui->webView->setHtml(htmlToLoad.arg(settings->value("apiKey").toString()).arg(deelnemerMarker->lat).arg(deelnemerMarker->lng).arg(zoom).arg(JavaScriptEscape(deelnemerMarker->caption()))  );
     ui->plainTextEdit_HTML->setPlainText(htmlToLoad.arg(settings->value("apiKey").toString()).arg(deelnemerMarker->lat).arg(deelnemerMarker->lng).arg(zoom).arg(JavaScriptEscape(deelnemerMarker->caption()))  );
     ui->label_deelnemer_location->setText(deelnemerMarker->name);
@@ -177,16 +161,4 @@ void DeelnemerLocation::on_pushButton_loadHTML_clicked()
 void DeelnemerLocation::on_pushButton_getJavaVersion_clicked()
 {
     ui->webView->load(QUrl("http://jsfiddle.net/Ac6CT/")); // get JS version, see http://stackoverflow.com/a/4271622
-}
-
-
-void DeelnemerLocation::sslErrorHandler(QNetworkReply* qnr, const QList<QSslError> & errlist)
-{
-  qDebug() << "SSL error handling";
-  qDebug() << "---frmBuyIt::sslErrorHandler: ";
-  // show list of all ssl errors
-  foreach (QSslError err, errlist)
-    qDebug() << "ssl error: " << err;
-
-  qnr->ignoreSslErrors();
 }
