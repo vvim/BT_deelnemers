@@ -49,6 +49,7 @@ DeelnemerLocation::DeelnemerLocation(SDeelnemerMarker *_deelnemer, QSqlRelationa
     ui->setupUi(this);
     ui->webView->setPage(new myWebPage());
     ui->webView->setHtml(htmlToLoad.arg(settings->value("apiKey").toString()).arg(deelnemerMarker->lat).arg(deelnemerMarker->lng).arg(zoom).arg(JavaScriptEscape(deelnemerMarker->caption()))  );
+    ui->plainTextEdit_HTML->setPlainText(htmlToLoad.arg(settings->value("apiKey").toString()).arg(deelnemerMarker->lat).arg(deelnemerMarker->lng).arg(zoom).arg(JavaScriptEscape(deelnemerMarker->caption()))  );
     ui->label_deelnemer_location->setText(deelnemerMarker->name);
 }
 
@@ -149,5 +150,15 @@ void DeelnemerLocation::on_pushButton_showAllDeelnemers_clicked()
 
 void DeelnemerLocation::on_pushButton_TestButton_clicked()
 {
-    ui->webView->setHtml("<H3>Hello World</H3>");
+    ui->webView->load(ui->lineEdit_url->text());
+}
+
+void DeelnemerLocation::on_pushButton_loadHTML_clicked()
+{
+    ui->webView->setHtml(ui->plainTextEdit_HTML->toPlainText());
+}
+
+void DeelnemerLocation::on_pushButton_getJavaVersion_clicked()
+{
+    ui->webView->load("http://jsfiddle.net/Ac6CT/"); // get JS version, see http://stackoverflow.com/a/4271622
 }
