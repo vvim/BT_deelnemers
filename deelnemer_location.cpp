@@ -160,5 +160,5 @@ void DeelnemerLocation::on_pushButton_loadHTML_clicked()
 
 void DeelnemerLocation::on_pushButton_getJavaVersion_clicked()
 {
-    ui->webView->load("http://jsfiddle.net/Ac6CT/"); // get JS version, see http://stackoverflow.com/a/4271622
+    ui->webView->load(QUrl("http://jsfiddle.net/Ac6CT/")); // get JS version, see http://stackoverflow.com/a/4271622
 }

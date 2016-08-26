@@ -51,7 +51,14 @@
      <item>
       <widget class="QPushButton" name="pushButton_TestButton">
        <property name="text">
-        <string>show url in QWebView</string>
+        <string>show url</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_getJavaVersion">
+       <property name="text">
+        <string>JS version</string>
        </property>
       </widget>
      </item>

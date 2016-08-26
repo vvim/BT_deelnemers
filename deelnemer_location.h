@@ -33,6 +33,8 @@ private slots:
 
     void on_pushButton_loadHTML_clicked();
 
+    void on_pushButton_getJavaVersion_clicked();
+
 private:
     Ui::deelnemer_location *ui;
     QSettings *settings;
