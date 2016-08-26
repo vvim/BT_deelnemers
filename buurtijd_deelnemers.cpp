@@ -19,6 +19,11 @@ Buurtijd_deelnemers::Buurtijd_deelnemers(QWidget *parent) :
     ui->saveButton->setAutoFillBackground(true);
     ui->saveButton->setStyleSheet("background-color: rgb(255, 0, 0); color: rgb(255, 255, 255)");
 
+    QPalette p = ui->plainTextEdit_varia->palette();
+    p.setColor(QPalette::Active, QPalette::Base, QColor("#ffffb2"));
+    p.setColor(QPalette::Inactive, QPalette::Base, QColor("#ffffb2"));
+    ui->plainTextEdit_varia->setPalette(p);
+
     db = QSqlDatabase::addDatabase("QMYSQL");
     connectToDatabase();
 
