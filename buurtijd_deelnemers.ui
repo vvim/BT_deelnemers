@@ -355,18 +355,6 @@
        </property>
       </widget>
      </item>
-     <item row="7" column="4" colspan="2">
-      <widget class="QPushButton" name="pushButton_showMaps">
-       <property name="text">
-        <string>Kaartje</string>
-       </property>
-       <property name="icon">
-        <iconset>
-         <normalon>:/icons/icons/map.png</normalon>
-        </iconset>
-       </property>
-      </widget>
-     </item>
      <item row="11" column="1">
       <widget class="QDateEdit" name="dateEdit_stop_datum"/>
      </item>
@@ -458,6 +446,29 @@
        </property>
       </widget>
      </item>
+     <item row="12" column="3">
+      <widget class="QPushButton" name="pushButton_showMaps">
+       <property name="text">
+        <string>Kaartje</string>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normalon>:/icons/icons/map.png</normalon>
+        </iconset>
+       </property>
+      </widget>
+     </item>
+     <item row="12" column="4" colspan="2">
+      <widget class="QPushButton" name="pushButton_showNotes">
+       <property name="text">
+        <string>Notas</string>
+       </property>
+       <property name="icon">
+        <iconset resource="buurtijd_deelnemers.qrc">
+         <normaloff>:/icons/icons/note.png</normaloff>:/icons/icons/note.png</iconset>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
    <item>
@@ -526,6 +537,8 @@
    <header>mylineedit.h</header>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="buurtijd_deelnemers.qrc"/>
+ </resources>
  <connections/>
 </ui>

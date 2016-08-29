@@ -491,3 +491,26 @@ void Buurtijd_deelnemers::on_cancelButton_clicked()
     QMessageBox::information(this, "Knop werkt nog niet",
                 "De knop 'Bewerkingen annuleren' werkt nog niet, dit komt later.");
 }
+
+void Buurtijd_deelnemers::on_pushButton_showNotes_clicked()
+{
+    QMessageBox::information(this, "Toon notities",
+                "Deze knop werkt nog niet, dit komt later.");
+
+    /***
+     * idea:
+     *
+     * +------------------------+
+     * |    |                   |
+     * |    |                   |
+     * | A  |         B         |
+     * |    |                   |
+     * |    |                   |
+     * |    |                   |
+     * +------------------------+
+     *
+     * A: will be a list of notes (ordered by date, DESC)
+     * B: will show the content of selected note
+     *
+     **/
+}
