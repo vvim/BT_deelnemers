@@ -485,3 +485,9 @@ void Buurtijd_deelnemers::on_pushButton_showMaps_clicked()
     location = new DeelnemerLocation(deelnemer, model_deelnemers);
     location->show();
 }
+
+void Buurtijd_deelnemers::on_cancelButton_clicked()
+{
+    QMessageBox::information(this, "Knop werkt nog niet",
+                "De knop 'Bewerkingen annuleren' werkt nog niet, dit komt later.");
+}

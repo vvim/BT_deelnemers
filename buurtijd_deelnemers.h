@@ -55,6 +55,7 @@ private slots:
     void on_saveButton_clicked();
     void on_pushButton_showDeelnemer_clicked();
     void on_pushButton_showMaps_clicked();
+    void on_cancelButton_clicked();
 };
 
 #endif // BUURTIJD_DEELNEMERS_H
