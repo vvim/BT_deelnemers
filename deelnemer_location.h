@@ -11,13 +11,6 @@ namespace Ui {
 class deelnemer_location;
 }
 
-class myWebPage : public QWebPage
-{
-    virtual QString userAgentForUrl(const QUrl& url) const {
-        return "Chrome/1.0"; // see https://wiki.qt.io/How_to_set_user_agent_in_Qt_application
-    }
-};
-
 class DeelnemerLocation : public QWidget
 {
     Q_OBJECT
@@ -28,12 +21,6 @@ public:
 
 private slots:
     void on_pushButton_showAllDeelnemers_clicked();
-
-    void on_pushButton_TestButton_clicked();
-
-    void on_pushButton_loadHTML_clicked();
-
-    void on_pushButton_getJavaVersion_clicked();
 
 private:
     Ui::deelnemer_location *ui;

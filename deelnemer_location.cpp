@@ -89,9 +89,6 @@ DeelnemerLocation::DeelnemerLocation(SDeelnemerMarker *_deelnemer, QSqlRelationa
 #else
         ui->webView->setHtml(htmlToLoad.arg(settings->value("apiKey").toString()).arg(deelnemerMarker->lat).arg(deelnemerMarker->lng).arg(zoom).arg(JavaScriptEscape(deelnemerMarker->caption()))  );
 #endif
-
-    ui->plainTextEdit_HTML->setPlainText(htmlToLoad.arg(settings->value("apiKey").toString()).arg(deelnemerMarker->lat).arg(deelnemerMarker->lng).arg(zoom).arg(JavaScriptEscape(deelnemerMarker->caption()))  );
-    ui->label_deelnemer_location->setText(deelnemerMarker->name);
 }
 
 DeelnemerLocation::~DeelnemerLocation()
@@ -214,19 +211,4 @@ void DeelnemerLocation::on_pushButton_showAllDeelnemers_clicked()
 #else
     ui->webView->setHtml(htmlToLoad.arg(settings->value("apiKey").toString()).arg(deelnemerMarker->lat).arg(deelnemerMarker->lng).arg(zoom).arg(deelnemerMarker->caption()).arg(markers_js)  );
 #endif
-}
-
-void DeelnemerLocation::on_pushButton_TestButton_clicked()
-{
-    ui->webView->load(ui->lineEdit_url->text());
-}
-
-void DeelnemerLocation::on_pushButton_loadHTML_clicked()
-{
-    ui->webView->setHtml(ui->plainTextEdit_HTML->toPlainText());
-}
-
-void DeelnemerLocation::on_pushButton_getJavaVersion_clicked()
-{
-    ui->webView->load(QUrl("http://jsfiddle.net/Ac6CT/")); // get JS version, see http://stackoverflow.com/a/4271622
 }
