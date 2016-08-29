@@ -61,6 +61,7 @@ DeelnemerLocation::DeelnemerLocation(SDeelnemerMarker *_deelnemer, QSqlRelationa
     f.close();
 
     ui->setupUi(this);
+    ui->label_deelnemer_location->setText(deelnemerMarker->name);
 
 #ifdef  GOOGLEMAPS_IN_BROWSER
         vvimDebug() << "writing HTML-file to be opened by a browser instead of using QWebView";
