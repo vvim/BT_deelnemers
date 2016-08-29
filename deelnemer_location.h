@@ -41,6 +41,7 @@ private:
     SDeelnemerMarker *deelnemerMarker;
     QSqlRelationalTableModel *model_deelnemers;
     int zoom;
+    QString browser;
 };
 
 #endif // DEELNEMER_LOCATION_H

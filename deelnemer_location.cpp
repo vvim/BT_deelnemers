@@ -7,9 +7,13 @@
 #define model_INDIVIDUAL 0
 #define model_LID 1
 
+#ifdef  GOOGLEMAPS_IN_BROWSER
+    #include <QProcess>
+    #define HTMLFILE "temp_browserfile.html"
+#endif
+
 #define vvimDebug()\
     qDebug() << "[" << Q_FUNC_INFO << "]"
-
 
 QString JavaScriptEscape(QString plaintext)
 {
@@ -26,6 +30,16 @@ DeelnemerLocation::DeelnemerLocation(SDeelnemerMarker *_deelnemer, QSqlRelationa
     ui(new Ui::deelnemer_location)
 {
     settings = new QSettings("settings.ini", QSettings::IniFormat);
+
+    #ifdef  GOOGLEMAPS_IN_BROWSER
+        vvimDebug() << "GOOGLEMAPS_IN_BROWSER ENABLED" << "we will load the html in a file and open the browser specified in settings.ini ";
+        browser = settings->value("browser").toString();
+        vvimDebug() << browser << HTMLFILE;
+    #else
+        vvimDebug() << "GOOGLEMAPS_IN_BROWSER is disabled" << "we will load the html in QWebView ";
+        browser = "";
+    #endif
+
     deelnemerMarker = _deelnemer;
     model_deelnemers = _model_deelnemers;
     zoom = _zoom;
@@ -47,14 +61,40 @@ DeelnemerLocation::DeelnemerLocation(SDeelnemerMarker *_deelnemer, QSqlRelationa
     f.close();
 
     ui->setupUi(this);
-    ui->webView->setPage(new myWebPage());
-    ui->webView->setHtml(htmlToLoad.arg(settings->value("apiKey").toString()).arg(deelnemerMarker->lat).arg(deelnemerMarker->lng).arg(zoom).arg(JavaScriptEscape(deelnemerMarker->caption()))  );
+
+#ifdef  GOOGLEMAPS_IN_BROWSER
+        vvimDebug() << "writing HTML-file to be opened by a browser instead of using QWebView";
+        ui->webView->setHtml("<p>A browser will open showing the location.</p>");
+        QFile htmlfile(HTMLFILE);
+        if (htmlfile.open(QFile::WriteOnly | QFile::Text))
+        {
+            QTextStream stream(&htmlfile);
+            stream << htmlToLoad.arg(settings->value("apiKey").toString()).arg(deelnemerMarker->lat).arg(deelnemerMarker->lng).arg(zoom).arg(JavaScriptEscape(deelnemerMarker->caption())) << endl;
+            htmlfile.close();
+        }
+        else
+        {
+            // something went wrong
+            vvimDebug() << "whoops, cannot read HTML-file";
+            QMessageBox messageBox;
+            messageBox.critical(0,"Error",tr("Kan HTML-bestand niet lezen"));
+            messageBox.setFixedSize(500,200);
+            messageBox.show();
+            return;
+        }
+        QProcess *proc = new QProcess();
+        proc->execute(browser,HTMLFILE);
+#else
+        ui->webView->setHtml(htmlToLoad.arg(settings->value("apiKey").toString()).arg(deelnemerMarker->lat).arg(deelnemerMarker->lng).arg(zoom).arg(JavaScriptEscape(deelnemerMarker->caption()))  );
+#endif
+
     ui->plainTextEdit_HTML->setPlainText(htmlToLoad.arg(settings->value("apiKey").toString()).arg(deelnemerMarker->lat).arg(deelnemerMarker->lng).arg(zoom).arg(JavaScriptEscape(deelnemerMarker->caption()))  );
     ui->label_deelnemer_location->setText(deelnemerMarker->name);
 }
 
 DeelnemerLocation::~DeelnemerLocation()
 {
+    vvimDebug() << "calling destructor";
     delete deelnemerMarker;
     delete settings;
     delete ui;
@@ -145,7 +185,31 @@ void DeelnemerLocation::on_pushButton_showAllDeelnemers_clicked()
     QString htmlToLoad = in.readAll();
     f.close();
 
+#ifdef  GOOGLEMAPS_IN_BROWSER
+        vvimDebug() << "writing HTML-file to be opened by a browser instead of using QWebView";
+        ui->webView->setHtml("<p>A browser will open showing the location of all participants.</p>");
+        QFile htmlfile(HTMLFILE);
+        if (htmlfile.open(QFile::WriteOnly | QFile::Text))
+        {
+            QTextStream stream(&htmlfile);
+            stream << htmlToLoad.arg(settings->value("apiKey").toString()).arg(deelnemerMarker->lat).arg(deelnemerMarker->lng).arg(zoom).arg(deelnemerMarker->caption()).arg(markers_js);
+            htmlfile.close();
+        }
+        else
+        {
+            // something went wrong
+            vvimDebug() << "whoops, cannot read HTML-file";
+            QMessageBox messageBox;
+            messageBox.critical(0,"Error",tr("Kan HTML-bestand niet lezen"));
+            messageBox.setFixedSize(500,200);
+            messageBox.show();
+            return;
+        }
+        QProcess *proc = new QProcess();
+        proc->execute(browser,HTMLFILE);
+#else
     ui->webView->setHtml(htmlToLoad.arg(settings->value("apiKey").toString()).arg(deelnemerMarker->lat).arg(deelnemerMarker->lng).arg(zoom).arg(deelnemerMarker->caption()).arg(markers_js)  );
+#endif
 }
 
 void DeelnemerLocation::on_pushButton_TestButton_clicked()

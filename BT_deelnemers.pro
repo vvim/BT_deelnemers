@@ -14,11 +14,13 @@ TARGET = BT_deelnemers
 TEMPLATE = app
 
 linux* {
+
     LIBS += /usr/lib/x86_64-linux-gnu/qt4/plugins/sqldrivers/libqsqlmysql.so
     LIBS += /usr/lib/libqjson.so.0
 }
 
 win32-g++ {
+    DEFINES += GOOGLEMAPS_IN_BROWSER
     LIBS += ../qjson/build/lib/qjson0.dll
     LIBS += ../qjson/build/lib/libqjson.dll
     LIBS += C:\\Wim\\MySQL\\MySQLServer55\\lib\\libmysql.dll
