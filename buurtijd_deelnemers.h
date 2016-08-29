@@ -15,7 +15,7 @@
 #include "btsqltablemodel.h"
 #include "mylineedit.h"
 #include "deelnemer_location.h"
-#include "deelnemer_notes.h"
+#include "deelnemernotes.h"
 
 namespace Ui {
 class Buurtijd_deelnemers;

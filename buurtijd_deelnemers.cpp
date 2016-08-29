@@ -496,9 +496,6 @@ void Buurtijd_deelnemers::on_cancelButton_clicked()
 
 void Buurtijd_deelnemers::on_pushButton_showNotes_clicked()
 {
-    QMessageBox::information(this, "Toon notities",
-                "Deze knop werkt nog niet, dit komt later.");
-
     /***
      * idea:
      *
@@ -511,7 +508,7 @@ void Buurtijd_deelnemers::on_pushButton_showNotes_clicked()
      * |    |                   |
      * +------------------------+
      *
-     * A: will be a list of notes (ordered by date, DESC)
+     * A: will be a list of notes (ordered by date, DESC) of this particular user
      * B: will show the content of selected note
      *
      **/
@@ -519,4 +516,13 @@ void Buurtijd_deelnemers::on_pushButton_showNotes_clicked()
     vvimDebug() << "show GoogleMaps";
     if(notes)
         delete notes;
+
+    // populate QListView A with the different notes from this user -> new model? Filter(user_id)
+
+    // B will be empty, but you can create a _new_ note or read/adapt a previous one
+    //  -> see http://qt.apidoc.info/4.8.5/demos-textedit.html
+    //  -> see http://stackoverflow.com/questions/6413901/how-to-implement-editor-using-qtextedit-with-toolbar
+
+    notes = new DeelnemerNotes(/*deelnemer, model_deelnemers*/);
+    notes->show();
 }
