@@ -15,6 +15,7 @@
 #include "btsqltablemodel.h"
 #include "mylineedit.h"
 #include "deelnemer_location.h"
+#include "deelnemer_notes.h"
 
 namespace Ui {
 class Buurtijd_deelnemers;
@@ -48,6 +49,7 @@ private:
     QMap<QString, QModelIndex> deelnemers_map;
     QModelIndex last_known_index;
     DeelnemerLocation *location;
+    DeelnemerNotes *notes;
     QSettings *settings;
 
 private slots:

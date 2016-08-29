@@ -11,6 +11,7 @@ Buurtijd_deelnemers::Buurtijd_deelnemers(QWidget *parent) :
 {
     completer = NULL;
     location = NULL;
+    notes = NULL;
     settings = new QSettings("settings.ini", QSettings::IniFormat);
 
     ui->setupUi(this);
@@ -151,6 +152,7 @@ Buurtijd_deelnemers::~Buurtijd_deelnemers()
     delete settings;
 
     delete location;
+    delete notes;
     delete ui;
 
     vvimDebug() << "[TODO]" << "delete alle modellen";
@@ -513,4 +515,8 @@ void Buurtijd_deelnemers::on_pushButton_showNotes_clicked()
      * B: will show the content of selected note
      *
      **/
+
+    vvimDebug() << "show GoogleMaps";
+    if(notes)
+        delete notes;
 }

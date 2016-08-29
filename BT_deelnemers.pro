@@ -39,17 +39,20 @@ SOURCES += main.cpp\
     btlistview.cpp \
     btsqltablemodel.cpp \
     mylineedit.cpp \
-    deelnemer_location.cpp
+    deelnemer_location.cpp \
+    deelnemernotes.cpp
 
 HEADERS  += buurtijd_deelnemers.h \
     btlistview.h \
     btsqltablemodel.h \
     mylineedit.h \
     deelnemer_location.h \
-    sdeelnemermarker.h
+    sdeelnemermarker.h \
+    deelnemernotes.h
 
 FORMS    += buurtijd_deelnemers.ui \
-    deelnemer_location.ui
+    deelnemer_location.ui \
+    deelnemernotes.ui
 
 RESOURCES += \
     buurtijd_deelnemers.qrc
