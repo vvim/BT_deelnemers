@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Aug 23, 2016 at 03:51 PM
+-- Generation Time: Aug 29, 2016 at 03:44 PM
 -- Server version: 5.5.50-0+deb8u1
 -- PHP Version: 5.6.24-0+deb8u1
 
@@ -70,7 +70,6 @@ CREATE TABLE IF NOT EXISTS `t_deelnemers` (
   `lat` decimal(10,6) DEFAULT NULL COMMENT 'latitude up to 6 decimals (accuracy to 1 meter)',
   `lng` decimal(10,6) DEFAULT NULL COMMENT 'longitude up to 6 decimals (accuracy to 1 meter)'
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-
 
 -- --------------------------------------------------------
 
@@ -248,9 +247,9 @@ INSERT INTO `t_deelnemer_niv_nederlands` (`id`, `niveau`) VALUES
 CREATE TABLE IF NOT EXISTS `t_deelnemer_notas` (
 `id` int(10) unsigned NOT NULL,
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `nota` text CHARACTER SET utf8 NOT NULL COMMENT 'see http://stackoverflow.com/a/13182846/',
+  `nota` text NOT NULL COMMENT 'see http://stackoverflow.com/a/13182846/',
   `deelnemer_id` int(10) unsigned NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -259,8 +258,8 @@ CREATE TABLE IF NOT EXISTS `t_deelnemer_notas` (
 --
 
 CREATE TABLE IF NOT EXISTS `t_deelnemer_soort` (
-  `id` int(11) NOT NULL,
-  `soort` varchar(30) NOT NULL
+  `id` tinyint(3) unsigned NOT NULL,
+  `soort` varchar(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -268,25 +267,6 @@ CREATE TABLE IF NOT EXISTS `t_deelnemer_soort` (
 --
 
 INSERT INTO `t_deelnemer_soort` (`id`, `soort`) VALUES
-(0, 'individu'),
-(1, 'organisatie');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `t_deelnemer_soort_deelnemer`
---
-
-CREATE TABLE IF NOT EXISTS `t_deelnemer_soort_deelnemer` (
-  `id` tinyint(3) unsigned NOT NULL,
-  `soort` varchar(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `t_deelnemer_soort_deelnemer`
---
-
-INSERT INTO `t_deelnemer_soort_deelnemer` (`id`, `soort`) VALUES
 (0, 'individu'),
 (1, 'organisatie');
 
@@ -379,9 +359,9 @@ ALTER TABLE `t_deelnemer_notas`
  ADD PRIMARY KEY (`id`), ADD KEY `fk_deelnemer_id` (`deelnemer_id`);
 
 --
--- Indexes for table `t_deelnemer_soort_deelnemer`
+-- Indexes for table `t_deelnemer_soort`
 --
-ALTER TABLE `t_deelnemer_soort_deelnemer`
+ALTER TABLE `t_deelnemer_soort`
  ADD PRIMARY KEY (`id`);
 
 --
