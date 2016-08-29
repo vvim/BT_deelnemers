@@ -83,7 +83,9 @@ DeelnemerLocation::DeelnemerLocation(SDeelnemerMarker *_deelnemer, QSqlRelationa
             return;
         }
         QProcess *proc = new QProcess();
-        proc->execute(browser,HTMLFILE);
+        QStringList openthis;
+        openthis.append(HTMLFILE);
+        proc->execute(browser,openthis);
 #else
         ui->webView->setHtml(htmlToLoad.arg(settings->value("apiKey").toString()).arg(deelnemerMarker->lat).arg(deelnemerMarker->lng).arg(zoom).arg(JavaScriptEscape(deelnemerMarker->caption()))  );
 #endif
@@ -206,7 +208,9 @@ void DeelnemerLocation::on_pushButton_showAllDeelnemers_clicked()
             return;
         }
         QProcess *proc = new QProcess();
-        proc->execute(browser,HTMLFILE);
+        QStringList openthis;
+        openthis.append(HTMLFILE);
+        proc->execute(browser,openthis);
 #else
     ui->webView->setHtml(htmlToLoad.arg(settings->value("apiKey").toString()).arg(deelnemerMarker->lat).arg(deelnemerMarker->lng).arg(zoom).arg(deelnemerMarker->caption()).arg(markers_js)  );
 #endif
