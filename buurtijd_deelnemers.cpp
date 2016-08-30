@@ -513,7 +513,7 @@ void Buurtijd_deelnemers::on_pushButton_showNotes_clicked()
      *
      **/
 
-    vvimDebug() << "show GoogleMaps";
+    vvimDebug() << "show Notes";
     if(notes)
         delete notes;
 
@@ -523,6 +523,24 @@ void Buurtijd_deelnemers::on_pushButton_showNotes_clicked()
     //  -> see http://qt.apidoc.info/4.8.5/demos-textedit.html
     //  -> see http://stackoverflow.com/questions/6413901/how-to-implement-editor-using-qtextedit-with-toolbar
 
-    notes = new DeelnemerNotes(/*deelnemer, model_deelnemers*/);
+    int deelnemersId = model_deelnemers->data(model_deelnemers->index(last_known_index.row(),model_deelnemers->fieldIndex("id"))).toInt();
+    vvimDebug() << "current deelnemer his id is:" << deelnemersId;
+    deelnemersId = 17; // first column of selected row in model
+    vvimDebug() << "but for testing we change it to:" << deelnemersId;
+
+    QSqlRelationalTableModel *model_deelnemernotes = new QSqlRelationalTableModel();
+    model_deelnemernotes->setEditStrategy(QSqlTableModel::OnManualSubmit);
+    model_deelnemernotes->setTable("t_deelnemer_notas");
+
+    // Populate the model
+    if (!model_deelnemernotes->select())
+    {
+        showError(model_deelnemernotes->lastError());
+        return;
+    }
+
+    model_deelnemernotes->setFilter(QString("deelnemer_id = %1").arg(deelnemersId));
+
+    notes = new DeelnemerNotes(deelnemersId, model_deelnemernotes);
     notes->show();
 }
