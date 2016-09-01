@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QSqlRelationalTableModel>
 #include <QDataWidgetMapper>
+#include "notaslistview.h"
 
 namespace Ui {
 class DeelnemerNotes;

@@ -528,12 +528,12 @@
  <customwidgets>
   <customwidget>
    <class>BTListView</class>
-   <extends>QWidget</extends>
+   <extends>QListView</extends>
    <header>btlistview.h</header>
   </customwidget>
   <customwidget>
    <class>MyLineEdit</class>
-   <extends>QWidget</extends>
+   <extends>QLineEdit</extends>
    <header>mylineedit.h</header>
   </customwidget>
  </customwidgets>

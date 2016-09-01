@@ -40,7 +40,8 @@ SOURCES += main.cpp\
     btsqltablemodel.cpp \
     mylineedit.cpp \
     deelnemer_location.cpp \
-    deelnemernotes.cpp
+    deelnemernotes.cpp \
+    notaslistview.cpp
 
 HEADERS  += buurtijd_deelnemers.h \
     btlistview.h \
@@ -48,7 +49,8 @@ HEADERS  += buurtijd_deelnemers.h \
     mylineedit.h \
     deelnemer_location.h \
     sdeelnemermarker.h \
-    deelnemernotes.h
+    deelnemernotes.h \
+    notaslistview.h
 
 FORMS    += buurtijd_deelnemers.ui \
     deelnemer_location.ui \
