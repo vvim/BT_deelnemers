@@ -47,6 +47,7 @@ DeelnemerNotes::~DeelnemerNotes()
     delete newNoteButton;
     delete removeNoteButton;
     delete ui;
+    delete notasSortedModel;
     delete model_deelnemernotes;
     // if the program crashes when we delete model_deelnemernotes, then maybe it is still used in buurtijd_deelnemers.cpp ?
 }
@@ -58,5 +59,6 @@ void DeelnemerNotes::createNewNote()
 
 void DeelnemerNotes::removeSelectedNote()
 {
-    vvimDebug() << "Removing note" << model_deelnemernotes->data(ui->listViewOfAllNotes->currentIndex().sibling(0,-1)).toInt() << ". Are you sure?";
+    QModelIndex index_from_id = notasSortedModel->index(ui->listViewOfAllNotes->currentIndex().row(),0);
+    vvimDebug() << "Removing row" << ui->listViewOfAllNotes->currentIndex().row() << "table id:" << notasSortedModel->data(index_from_id).toInt() << ". Are you sure?";
 }

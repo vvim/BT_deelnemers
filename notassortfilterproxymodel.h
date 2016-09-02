@@ -13,10 +13,10 @@ class NotasSortFilterProxyModel : public QSortFilterProxyModel
 
 public:
     NotasSortFilterProxyModel(QObject *parent = 0);
+    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
 
 protected:
     bool lessThan(const QModelIndex &left, const QModelIndex &right) const;
-    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
 };
 
 #endif // NotasSortFilterProxyModel_H
