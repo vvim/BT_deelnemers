@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QSqlRelationalTableModel>
 #include <QDataWidgetMapper>
+#include <QPushButton>
 #include "notassortfilterproxymodel.h"
 
 namespace Ui {
@@ -20,10 +21,15 @@ public:
 
 private:
     Ui::DeelnemerNotes *ui;
+    QPushButton *newNoteButton, *removeNoteButton;
     int deelnemer_id;
     QSqlRelationalTableModel *model_deelnemernotes;
     QDataWidgetMapper *mapper;
     NotasSortFilterProxyModel *notasSortedModel;
+
+private slots:
+    void createNewNote();
+    void removeSelectedNote();
 };
 
 #endif // DEELNEMERNOTES_H

@@ -17,6 +17,10 @@ DeelnemerNotes::DeelnemerNotes(int _deelnemer_id, QSqlRelationalTableModel *_mod
     ui->setupUi(this);
     ui->label_deelnemer_notes->setText(QString("Nota's van deelnemer %1").arg(_deelnemer_id));
 
+    newNoteButton = new QPushButton(tr("Nieuwe Nota"));
+    removeNoteButton = new QPushButton(tr("Wis Nota"));
+    ui->buttonBox->addButton(newNoteButton,QDialogButtonBox::ActionRole);
+    ui->buttonBox->addButton(removeNoteButton,QDialogButtonBox::DestructiveRole);
 
     notasSortedModel = new NotasSortFilterProxyModel(this);
     notasSortedModel->setDynamicSortFilter(true);
@@ -34,12 +38,25 @@ DeelnemerNotes::DeelnemerNotes(int _deelnemer_id, QSqlRelationalTableModel *_mod
     connect(ui->listViewOfAllNotes->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),
                 mapper, SLOT(setCurrentModelIndex(QModelIndex)));
 
-
+    connect(newNoteButton, SIGNAL(pressed()), this, SLOT(createNewNote()));
+    connect(removeNoteButton, SIGNAL(pressed()), this, SLOT(removeSelectedNote()));
 }
 
 DeelnemerNotes::~DeelnemerNotes()
 {
+    delete newNoteButton;
+    delete removeNoteButton;
     delete ui;
     delete model_deelnemernotes;
     // if the program crashes when we delete model_deelnemernotes, then maybe it is still used in buurtijd_deelnemers.cpp ?
+}
+
+void DeelnemerNotes::createNewNote()
+{
+    vvimDebug() << "Creating new note";
+}
+
+void DeelnemerNotes::removeSelectedNote()
+{
+    vvimDebug() << "Removing note" << model_deelnemernotes->data(ui->listViewOfAllNotes->currentIndex().sibling(0,-1)).toInt() << ". Are you sure?";
 }
