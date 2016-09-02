@@ -24,7 +24,7 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="NotasListView" name="listViewOfAllNotes">
+      <widget class="QListView" name="listViewOfAllNotes">
        <property name="maximumSize">
         <size>
          <width>150</width>
@@ -47,13 +47,6 @@
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>NotasListView</class>
-   <extends>QListView</extends>
-   <header>notaslistview.h</header>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

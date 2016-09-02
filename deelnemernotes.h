@@ -4,7 +4,7 @@
 #include <QWidget>
 #include <QSqlRelationalTableModel>
 #include <QDataWidgetMapper>
-#include "notaslistview.h"
+#include "notassortfilterproxymodel.h"
 
 namespace Ui {
 class DeelnemerNotes;
@@ -23,6 +23,7 @@ private:
     int deelnemer_id;
     QSqlRelationalTableModel *model_deelnemernotes;
     QDataWidgetMapper *mapper;
+    NotasSortFilterProxyModel *notasSortedModel;
 };
 
 #endif // DEELNEMERNOTES_H

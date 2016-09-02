@@ -41,7 +41,7 @@ SOURCES += main.cpp\
     mylineedit.cpp \
     deelnemer_location.cpp \
     deelnemernotes.cpp \
-    notaslistview.cpp
+    notassortfilterproxymodel.cpp
 
 HEADERS  += buurtijd_deelnemers.h \
     btlistview.h \
@@ -50,7 +50,7 @@ HEADERS  += buurtijd_deelnemers.h \
     deelnemer_location.h \
     sdeelnemermarker.h \
     deelnemernotes.h \
-    notaslistview.h
+    notassortfilterproxymodel.h
 
 FORMS    += buurtijd_deelnemers.ui \
     deelnemer_location.ui \

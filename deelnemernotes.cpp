@@ -17,14 +17,17 @@ DeelnemerNotes::DeelnemerNotes(int _deelnemer_id, QSqlRelationalTableModel *_mod
     ui->setupUi(this);
     ui->label_deelnemer_notes->setText(QString("Nota's van deelnemer %1").arg(_deelnemer_id));
 
-    ui->listViewOfAllNotes->setModel(model_deelnemernotes);
-    ui->listViewOfAllNotes->setModelColumn(model_deelnemernotes->fieldIndex("timestamp")); // do not show column 0 ('id') but column 1 ('timestamp')
 
-    /*can't get this to work*/ model_deelnemernotes->setSort(model_deelnemernotes->fieldIndex("timestamp"),Qt::DescendingOrder); // descending order from field "timestamp"
-    // subclass QSortFilterProxyModel or have a look at https://developer.qt.nokia.com/wiki/QSqlRelationalDelegate_subclass_that_works_with_QSqlRelationalTableModel
+    notasSortedModel = new NotasSortFilterProxyModel(this);
+    notasSortedModel->setDynamicSortFilter(true);
+    notasSortedModel->setSourceModel(model_deelnemernotes);
+
+    ui->listViewOfAllNotes->setModel(notasSortedModel);
+    ui->listViewOfAllNotes->setModelColumn(model_deelnemernotes->fieldIndex("timestamp")); // do not show column 0 ('id') but column 1 ('timestamp')
+    notasSortedModel->sort(model_deelnemernotes->fieldIndex("timestamp"), Qt::DescendingOrder);
 
     mapper = new QDataWidgetMapper(this);
-    mapper->setModel(model_deelnemernotes);
+    mapper->setModel(notasSortedModel);
 
     mapper->addMapping(ui->textEditCurrentNote, model_deelnemernotes->fieldIndex("nota"));
 
