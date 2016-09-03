@@ -62,3 +62,35 @@ void DeelnemerNotes::removeSelectedNote()
     QModelIndex index_from_id = notasSortedModel->index(ui->listViewOfAllNotes->currentIndex().row(),0);
     vvimDebug() << "Removing row" << ui->listViewOfAllNotes->currentIndex().row() << "table id:" << notasSortedModel->data(index_from_id).toInt() << ". Are you sure?";
 }
+
+void DeelnemerNotes::on_buttonBox_accepted()
+{
+    vvimDebug() << "OK button pressed" << "saving";
+
+    model_deelnemernotes->database().transaction();
+
+    if(model_deelnemernotes->submitAll())
+    {
+        vvimDebug() << "submitAll is successful, committing";
+        model_deelnemernotes->database().commit();
+        /* feedback
+        QString feedback = QString(ui->le_naam->text());
+        ui->label_feedback->setText(feedback.append(" opgeslagen"));
+        ui->label_feedback->setStyleSheet("font-style: italic; color: green");
+        */
+    }
+    else
+    {
+        vvimDebug() << "submitAll FAILED, rollback";
+        model_deelnemernotes->database().rollback();
+        /* feedback
+        ui->label_feedback->setText("Er ging iets mis, wijzigingen niet opgeslagen");
+        ui->label_feedback->setStyleSheet("font-weight: bold; color: red");
+        */
+    }
+}
+
+void DeelnemerNotes::on_buttonBox_rejected()
+{
+    vvimDebug() << "Cancel button pressed" << "undo changes";
+}

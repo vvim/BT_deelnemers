@@ -30,6 +30,8 @@ private:
 private slots:
     void createNewNote();
     void removeSelectedNote();
+    void on_buttonBox_accepted();
+    void on_buttonBox_rejected();
 };
 
 #endif // DEELNEMERNOTES_H
