@@ -2,6 +2,7 @@
 #include "ui_deelnemernotes.h"
 
 #include <QDebug>
+#include <QMessageBox>
 
 #define vvimDebug()\
     qDebug() << "[" << Q_FUNC_INFO << "]"
@@ -66,6 +67,35 @@ void DeelnemerNotes::removeSelectedNote()
 {
     QModelIndex index_from_id = notasSortedModel->index(ui->listViewOfAllNotes->currentIndex().row(),0);
     vvimDebug() << "Removing row" << ui->listViewOfAllNotes->currentIndex().row() << "table id:" << notasSortedModel->data(index_from_id).toInt() << ". Are you sure?";
+    if(ui->listViewOfAllNotes->currentIndex().row() < 0)
+    {
+        vvimDebug() << "rownr < 0 => not valid id";
+        vvimDebug() << "id valid?" << notasSortedModel->data(index_from_id).isValid();
+        vvimDebug() << "show messagebox";
+        QMessageBox::information(this, tr("Selecteer nota om te verwijderen"),
+                    tr("1. selecteer de nota die je wilt verwijderen\n2. druk op 'Wis Nota'"));
+        return;
+    }
+    vvimDebug() << "id valid?" << notasSortedModel->data(index_from_id).isValid();
+    vvimDebug() << "will request confirmation from the user before throwing this note into the fire";
+
+    // feedback from the user requested -> http://stackoverflow.com/a/13111762/
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::question(this, tr("Nota verwijderen?"),
+                                  tr("Deze actie kan niet ongedaan gemaakt worden. Weg is weg...\nBent u zeker dat u de geselecteerde nota wilt verwijderen?\n"),
+                                  QMessageBox::Yes|QMessageBox::No);
+    if (reply == QMessageBox::Yes)
+    {
+        vvimDebug() << "user confirmed to delete selected note";
+        notasSortedModel->removeRow(ui->listViewOfAllNotes->currentIndex().row());
+        // must commit to database;
+        on_buttonBox_accepted();
+    }
+    else
+    {
+        vvimDebug() << "user said 'No', note will not be deleted";
+    }
+
 }
 
 void DeelnemerNotes::on_buttonBox_accepted()
