@@ -93,4 +93,7 @@ void DeelnemerNotes::on_buttonBox_accepted()
 void DeelnemerNotes::on_buttonBox_rejected()
 {
     vvimDebug() << "Cancel button pressed" << "undo changes";
+    qDebug() << model_deelnemernotes->database().rollback();
+    // reload by using select() , see https://forum.qt.io/topic/2981/how-to-reload-the-tableview-to-reload-its-data/4
+    qDebug() << model_deelnemernotes->select();
 }
