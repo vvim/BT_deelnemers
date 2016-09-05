@@ -394,6 +394,7 @@ void Buurtijd_deelnemers::on_saveButton_clicked()
     else
     {
         vvimDebug() << "submitAll FAILED, rollback";
+        vvimDebug() << "error:" << model_deelnemers->lastError();
         model_deelnemers->database().rollback();
         ui->label_feedback->setText("Er ging iets mis, wijzigingen niet opgeslagen");
         ui->label_feedback->setStyleSheet("font-weight: bold; color: red");

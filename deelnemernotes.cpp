@@ -2,7 +2,11 @@
 #include "ui_deelnemernotes.h"
 
 #include <QDebug>
+#include <QSqlError>
 #include <QMessageBox>
+
+#define NOTE_TIMESTAMP_COLUMN 1
+#define NOTE_DEELNEMERID_COLUMN 3
 
 #define vvimDebug()\
     qDebug() << "[" << Q_FUNC_INFO << "]"
@@ -117,6 +121,7 @@ void DeelnemerNotes::on_buttonBox_accepted()
     else
     {
         vvimDebug() << "submitAll FAILED, rollback";
+        vvimDebug() << "error:" << model_deelnemernotes->lastError();
         model_deelnemernotes->database().rollback();
         /* feedback
         ui->label_feedback->setText("Er ging iets mis, wijzigingen niet opgeslagen");
