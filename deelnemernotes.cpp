@@ -40,6 +40,11 @@ DeelnemerNotes::DeelnemerNotes(int _deelnemer_id, QSqlRelationalTableModel *_mod
 
     connect(newNoteButton, SIGNAL(pressed()), this, SLOT(createNewNote()));
     connect(removeNoteButton, SIGNAL(pressed()), this, SLOT(removeSelectedNote()));
+
+    // renaming buttons from QButtonBox to make their use clear
+    // see http://stackoverflow.com/a/31291548/
+    ui->buttonBox->button(QDialogButtonBox::Ok)->setText(tr("Wijzigingen opslaan"));
+    ui->buttonBox->button(QDialogButtonBox::Cancel)->setText(tr("Wijzigingen annuleren"));
 }
 
 DeelnemerNotes::~DeelnemerNotes()
