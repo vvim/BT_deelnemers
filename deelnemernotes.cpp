@@ -64,7 +64,12 @@ DeelnemerNotes::~DeelnemerNotes()
 
 void DeelnemerNotes::createNewNote()
 {
-    vvimDebug() << "Creating new note";
+    int row_to_insert = model_deelnemernotes->rowCount();
+    vvimDebug() << "Creating new note at row" << row_to_insert;
+    vvimDebug() << model_deelnemernotes->insertRow(row_to_insert);
+
+    model_deelnemernotes->setData(model_deelnemernotes->index(row_to_insert,NOTE_TIMESTAMP_COLUMN),QDateTime::currentDateTime());
+    model_deelnemernotes->setData(model_deelnemernotes->index(row_to_insert,NOTE_DEELNEMERID_COLUMN),deelnemer_id);
 }
 
 void DeelnemerNotes::removeSelectedNote()
