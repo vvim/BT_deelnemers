@@ -557,5 +557,9 @@ SDeelnemerMarker* Buurtijd_deelnemers::readDeelnemer()
 
     QString address = QString("%1 %2 %3 - %4 %5").arg(straat).arg(huisnr).arg(busnr).arg(postcode).arg(plaats);
 
-    return new SDeelnemerMarker(deelnemersId, latitude, longitude, name, address);
+    QString email = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("email1"))).toString();
+    QString telnr = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("telefoon"))).toString();
+    QString gsm = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("gsm"))).toString();
+
+    return new SDeelnemerMarker(deelnemersId, latitude, longitude, name, address, email, telnr, gsm);
 }

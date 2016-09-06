@@ -19,14 +19,18 @@ struct SDeelnemerMarker
         lng = 0;
         name = "";
         address = "";
+        email = "";
+        telnr = "";
+        gsm = "";
 		// add later if useful:
 		//    individu = false;
 		//    organisatie = false;
     }
 
-    SDeelnemerMarker(int _id, double _lat, double _lng, QString _name, QString _address)
+    SDeelnemerMarker(int _id, double _lat, double _lng, QString _name, QString _address, QString _email, QString _telnr, QString _gsm)
     {
         id = _id; lat = _lat; lng = _lng; name = _name; address = _address;
+        email = _email; telnr = _telnr; gsm = _gsm;
 		// add later if useful:
 		//    individu = false;
 		//    organisatie = false;
@@ -43,6 +47,7 @@ struct SDeelnemerMarker
     void PrintInformation()
     {
         qDebug() << "." << id << name << address << "(" << lat << lng << ")";
+        qDebug() << "." << email << telnr << gsm;
 		/** add later if useful:
         if((!individu) && (!organisatie))
         {
@@ -58,6 +63,11 @@ struct SDeelnemerMarker
     QString caption()
     {
         return QString("%1<br/>%2").arg(name).arg(address);
+    }
+
+    QString contactInformationInOneLine()
+    {
+        return QString("%1\t%2\t%3\t%4\t%5").arg(name).arg(email).arg(telnr).arg(gsm).arg(address);
     }
 
 	/** add later if useful:
@@ -77,6 +87,9 @@ struct SDeelnemerMarker
     double lng;
     QString name;
     QString address;
+    QString email;
+    QString telnr;
+    QString gsm;
 
 // add later if useful:
 //    bool individu;
