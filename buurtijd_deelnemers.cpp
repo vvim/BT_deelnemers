@@ -531,11 +531,13 @@ void Buurtijd_deelnemers::on_pushButton_showNotes_clicked()
 
 void Buurtijd_deelnemers::on_pushButton_copyContactInformation_clicked()
 {
-    vvimDebug() << "copy user information to System Clipboard";
+    SDeelnemerMarker *deelnemer = readDeelnemer();
+    vvimDebug() << "copy user information to System Clipboard" << "user" << deelnemer->id;
+
     // https://contingencycoder.wordpress.com/2013/07/22/quick-tip-copy-any-text-to-the-system-clipboard-in-qt/
     // http://stackoverflow.com/a/15742175
 
-    QApplication::clipboard()->setText("here be contactinfo of participant selected");
+    QApplication::clipboard()->setText(deelnemer->contactInformationInOneLine());
 }
 
 SDeelnemerMarker* Buurtijd_deelnemers::readDeelnemer()
