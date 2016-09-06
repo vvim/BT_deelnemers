@@ -468,22 +468,7 @@ void Buurtijd_deelnemers::on_pushButton_showMaps_clicked()
     if(location)
         delete location;
 
-    int currentRow = last_known_index.row();
-    int deelnemersId = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("id"))).toInt();
-    double latitude = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("lat"))).toDouble();
-    double longitude = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("lng"))).toDouble();
-    QString name = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("naam"))).toString();
-
-    // NULL.toString() = "" ?
-    QString straat = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("straat"))).toString();
-    QString huisnr = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("huisnr"))).toString();
-    QString busnr = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("busnr"))).toString();
-    QString postcode = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("postcode"))).toString();
-    QString plaats = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("plaats"))).toString();
-
-    QString address = QString("%1 %2 %3 - %4 %5").arg(straat).arg(huisnr).arg(busnr).arg(postcode).arg(plaats);
-
-    SDeelnemerMarker *deelnemer = new SDeelnemerMarker(deelnemersId, latitude, longitude, name, address);
+    SDeelnemerMarker *deelnemer = readDeelnemer();
 
     location = new DeelnemerLocation(deelnemer, model_deelnemers);
     location->show();
@@ -541,4 +526,26 @@ void Buurtijd_deelnemers::on_pushButton_showNotes_clicked()
 
     notes = new DeelnemerNotes(deelnemersId, model_deelnemernotes);
     notes->show();
+}
+
+SDeelnemerMarker* Buurtijd_deelnemers::readDeelnemer()
+{
+    vvimDebug() << "readDeelnemer() called";
+    int currentRow = last_known_index.row();
+    int deelnemersId = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("id"))).toInt();
+    vvimDebug() << "for user" << deelnemersId;
+    double latitude = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("lat"))).toDouble();
+    double longitude = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("lng"))).toDouble();
+    QString name = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("naam"))).toString();
+
+    // NULL.toString() = "" ?
+    QString straat = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("straat"))).toString();
+    QString huisnr = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("huisnr"))).toString();
+    QString busnr = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("busnr"))).toString();
+    QString postcode = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("postcode"))).toString();
+    QString plaats = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("plaats"))).toString();
+
+    QString address = QString("%1 %2 %3 - %4 %5").arg(straat).arg(huisnr).arg(busnr).arg(postcode).arg(plaats);
+
+    return new SDeelnemerMarker(deelnemersId, latitude, longitude, name, address);
 }
