@@ -525,9 +525,6 @@ void Buurtijd_deelnemers::on_pushButton_showNotes_clicked()
     //  -> see http://stackoverflow.com/questions/6413901/how-to-implement-editor-using-qtextedit-with-toolbar
 
     int deelnemersId = model_deelnemers->data(model_deelnemers->index(last_known_index.row(),model_deelnemers->fieldIndex("id"))).toInt();
-    vvimDebug() << "current deelnemer his id is:" << deelnemersId;
-    deelnemersId = 17; // first column of selected row in model
-    vvimDebug() << "but for testing we change it to:" << deelnemersId;
 
     QSqlRelationalTableModel *model_deelnemernotes = new QSqlRelationalTableModel();
     model_deelnemernotes->setEditStrategy(QSqlTableModel::OnManualSubmit);
