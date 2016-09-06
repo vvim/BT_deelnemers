@@ -1,6 +1,7 @@
 #include "buurtijd_deelnemers.h"
 #include "ui_buurtijd_deelnemers.h"
 #include "sdeelnemermarker.h"
+#include <QClipboard>
 
 #define vvimDebug()\
     qDebug() << "[" << Q_FUNC_INFO << "]"
@@ -526,6 +527,15 @@ void Buurtijd_deelnemers::on_pushButton_showNotes_clicked()
 
     notes = new DeelnemerNotes(deelnemersId, model_deelnemernotes);
     notes->show();
+}
+
+void Buurtijd_deelnemers::on_pushButton_copyContactInformation_clicked()
+{
+    vvimDebug() << "copy user information to System Clipboard";
+    // https://contingencycoder.wordpress.com/2013/07/22/quick-tip-copy-any-text-to-the-system-clipboard-in-qt/
+    // http://stackoverflow.com/a/15742175
+
+    QApplication::clipboard()->setText("here be contactinfo of participant selected");
 }
 
 SDeelnemerMarker* Buurtijd_deelnemers::readDeelnemer()
