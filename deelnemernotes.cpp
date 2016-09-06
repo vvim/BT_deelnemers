@@ -70,6 +70,15 @@ void DeelnemerNotes::createNewNote()
 
     model_deelnemernotes->setData(model_deelnemernotes->index(row_to_insert,NOTE_TIMESTAMP_COLUMN),QDateTime::currentDateTime());
     model_deelnemernotes->setData(model_deelnemernotes->index(row_to_insert,NOTE_DEELNEMERID_COLUMN),deelnemer_id);
+
+    on_buttonBox_accepted(); // save newly created note
+
+    /* we have to change selection to a valid row of QListView, else the user can start to type a
+     * note, but it will be discarded even if the user clicks on "save note", because the selected
+     * row will be '-1'.
+     * -> see issue #9 https://github.com/vvim/BT_deelnemers/issues/9
+     */
+    ui->listViewOfAllNotes->setCurrentIndex(notasSortedModel->index(0,NOTE_TIMESTAMP_COLUMN));
 }
 
 void DeelnemerNotes::removeSelectedNote()
