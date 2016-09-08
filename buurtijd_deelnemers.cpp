@@ -557,7 +557,18 @@ SDeelnemerMarker* Buurtijd_deelnemers::readDeelnemer()
     QString postcode = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("postcode"))).toString();
     QString plaats = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("plaats"))).toString();
 
+    /*********************
+     *
+     * [TODO] : instead of using "name + familienaam", we can make a different marker SDeelnemerIndividual
+     *
+     * [TODO] : instead of ADDRESS, we can make a Struct containing straat/huisnr/busnr/postcode/plaats which
+     *          will write out a good address at any time, with any combination
+     *
+     *********************/
     QString address = QString("%1 %2 %3 - %4 %5").arg(straat).arg(huisnr).arg(busnr).arg(postcode).arg(plaats);
+    QString familienaam = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("familienaam"))).toString();
+    if(familienaam != "")
+        name.append(" ").append(familienaam);
 
     QString email = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("email1"))).toString();
     QString telnr = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("telefoon"))).toString();
