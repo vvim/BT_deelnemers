@@ -483,23 +483,6 @@ void Buurtijd_deelnemers::on_cancelButton_clicked()
 
 void Buurtijd_deelnemers::on_pushButton_showNotes_clicked()
 {
-    /***
-     * idea:
-     *
-     * +------------------------+
-     * |    |                   |
-     * |    |                   |
-     * | A  |         B         |
-     * |    |                   |
-     * |    |                   |
-     * |    |                   |
-     * +------------------------+
-     *
-     * A: will be a list of notes (ordered by date, DESC) of this particular user
-     * B: will show the content of selected note
-     *
-     **/
-
     vvimDebug() << "show Notes";
     if(notes)
         delete notes;

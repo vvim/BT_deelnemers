@@ -25,7 +25,7 @@ DeelnemerNotes::DeelnemerNotes(SDeelnemerMarker _deelnemer, QSqlRelationalTableM
     model_deelnemernotes = _model_deelnemernotes;
 
     ui->setupUi(this);
-    ui->label_deelnemer_notes->setText(QString("Nota's van deelnemer %1").arg(deelnemer.getName()));
+    ui->label_deelnemer_notes->setText(QString("Nota's van %1").arg(deelnemer.getName()));
 
     newNoteButton = new QPushButton(tr("Nieuwe Nota"));
     removeNoteButton = new QPushButton(tr("Wis Nota"));
