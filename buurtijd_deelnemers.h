@@ -45,7 +45,7 @@ private:
     void showInformationForIndividual(bool make_visible);
     void showInformationForOrganisation(bool make_visible);
     void loadCompleter();
-    SDeelnemerMarker* readDeelnemer();
+    SDeelnemerMarker readDeelnemer();
     SAddress readAddress();
 
     MyCompleter *completer;

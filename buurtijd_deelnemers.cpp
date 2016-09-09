@@ -469,7 +469,7 @@ void Buurtijd_deelnemers::on_pushButton_showMaps_clicked()
     if(location)
         delete location;
 
-    SDeelnemerMarker *deelnemer = readDeelnemer();
+    SDeelnemerMarker deelnemer = readDeelnemer();
 
     location = new DeelnemerLocation(deelnemer, model_deelnemers);
     location->show();
@@ -525,22 +525,22 @@ void Buurtijd_deelnemers::on_pushButton_showNotes_clicked()
 
     model_deelnemernotes->setFilter(QString("deelnemer_id = %1").arg(deelnemersId));
 
-    notes = new DeelnemerNotes(deelnemersId, model_deelnemernotes);
+    notes = new DeelnemerNotes(readDeelnemer(), model_deelnemernotes);
     notes->show();
 }
 
 void Buurtijd_deelnemers::on_pushButton_copyContactInformation_clicked()
 {
-    SDeelnemerMarker *deelnemer = readDeelnemer();
-    vvimDebug() << "copy user information to System Clipboard" << "user" << deelnemer->id;
+    SDeelnemerMarker deelnemer = readDeelnemer();
+    vvimDebug() << "copy user information to System Clipboard" << "user" << deelnemer.id;
 
     // https://contingencycoder.wordpress.com/2013/07/22/quick-tip-copy-any-text-to-the-system-clipboard-in-qt/
     // http://stackoverflow.com/a/15742175
 
-    QApplication::clipboard()->setText(deelnemer->contactInformationInOneLine());
+    QApplication::clipboard()->setText(deelnemer.contactInformationInOneLine());
 }
 
-SDeelnemerMarker* Buurtijd_deelnemers::readDeelnemer()
+SDeelnemerMarker Buurtijd_deelnemers::readDeelnemer()
 {
     vvimDebug() << "readDeelnemer() called";
     int currentRow = last_known_index.row();
@@ -565,7 +565,7 @@ SDeelnemerMarker* Buurtijd_deelnemers::readDeelnemer()
     QString telnr = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("telefoon"))).toString();
     QString gsm = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("gsm"))).toString();
 
-    return new SDeelnemerMarker(deelnemersId, latitude, longitude, name, address, email, telnr, gsm);
+    return SDeelnemerMarker(deelnemersId, latitude, longitude, name, address, email, telnr, gsm);
 }
 
 SAddress Buurtijd_deelnemers::readAddress()

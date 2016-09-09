@@ -25,7 +25,7 @@ QString JavaScriptEscape(QString plaintext)
     return javascriptversion;
 }
 
-DeelnemerLocation::DeelnemerLocation(SDeelnemerMarker *_deelnemer, QSqlRelationalTableModel *_model_deelnemers, int _zoom, QWidget *parent) :
+DeelnemerLocation::DeelnemerLocation(SDeelnemerMarker _deelnemer, QSqlRelationalTableModel *_model_deelnemers, int _zoom, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::deelnemer_location)
 {
@@ -61,7 +61,7 @@ DeelnemerLocation::DeelnemerLocation(SDeelnemerMarker *_deelnemer, QSqlRelationa
     f.close();
 
     ui->setupUi(this);
-    ui->label_deelnemer_location->setText(deelnemerMarker->name);
+    ui->label_deelnemer_location->setText(deelnemerMarker.name);
 
 #ifdef  GOOGLEMAPS_IN_BROWSER
         vvimDebug() << "writing HTML-file to be opened by a browser instead of using QWebView";
@@ -70,7 +70,7 @@ DeelnemerLocation::DeelnemerLocation(SDeelnemerMarker *_deelnemer, QSqlRelationa
         if (htmlfile.open(QFile::WriteOnly | QFile::Text))
         {
             QTextStream stream(&htmlfile);
-            stream << htmlToLoad.arg(settings->value("apiKey").toString()).arg(deelnemerMarker->lat).arg(deelnemerMarker->lng).arg(zoom).arg(JavaScriptEscape(deelnemerMarker->caption())) << endl;
+            stream << htmlToLoad.arg(settings->value("apiKey").toString()).arg(deelnemerMarker.lat).arg(deelnemerMarker.lng).arg(zoom).arg(JavaScriptEscape(deelnemerMarker.captionForGoogleMapsInfoWindow())) << endl;
             htmlfile.close();
         }
         else
@@ -88,14 +88,13 @@ DeelnemerLocation::DeelnemerLocation(SDeelnemerMarker *_deelnemer, QSqlRelationa
         openthis.append(HTMLFILE);
         proc->execute(browser,openthis);
 #else
-        ui->webView->setHtml(htmlToLoad.arg(settings->value("apiKey").toString()).arg(deelnemerMarker->lat).arg(deelnemerMarker->lng).arg(zoom).arg(JavaScriptEscape(deelnemerMarker->caption()))  );
+        ui->webView->setHtml(htmlToLoad.arg(settings->value("apiKey").toString()).arg(deelnemerMarker.lat).arg(deelnemerMarker.lng).arg(zoom).arg(JavaScriptEscape(deelnemerMarker.captionForGoogleMapsInfoWindow()))  );
 #endif
 }
 
 DeelnemerLocation::~DeelnemerLocation()
 {
     vvimDebug() << "calling destructor";
-    delete deelnemerMarker;
     delete settings;
     delete ui;
     // DO NOT delete _model_deelnemers, we still need it in buurtijd_deelnemers.cpp
@@ -128,7 +127,7 @@ void DeelnemerLocation::on_pushButton_showAllDeelnemers_clicked()
     {
         // [TODO] markers_js.append(str.arg(latitude).arg(longitude).arg(title).arg(iconcolor).arg(id));
         if( ( model_deelnemers->index( i, lidIdx ).data().toInt() == model_LID )  // NULL toInt() == 0
-                && (model_deelnemers->index( i, idIdx ).data().toInt() != deelnemerMarker->id) ) // we do not have to show the main marker twice
+                && (model_deelnemers->index( i, idIdx ).data().toInt() != deelnemerMarker.id) ) // we do not have to show the main marker twice
         {
             // we only show markers if the corresponding deelnemer is an official member, so lidIdx should be 1
             double latitude = model_deelnemers->index( i, latIdx ).data().toDouble();
@@ -192,7 +191,7 @@ void DeelnemerLocation::on_pushButton_showAllDeelnemers_clicked()
         if (htmlfile.open(QFile::WriteOnly | QFile::Text))
         {
             QTextStream stream(&htmlfile);
-            stream << htmlToLoad.arg(settings->value("apiKey").toString()).arg(deelnemerMarker->lat).arg(deelnemerMarker->lng).arg(zoom).arg(deelnemerMarker->caption()).arg(markers_js);
+            stream << htmlToLoad.arg(settings->value("apiKey").toString()).arg(deelnemerMarker.lat).arg(deelnemerMarker.lng).arg(zoom).arg(deelnemerMarker.captionForGoogleMapsInfoWindow()).arg(markers_js);
             htmlfile.close();
         }
         else
@@ -210,6 +209,6 @@ void DeelnemerLocation::on_pushButton_showAllDeelnemers_clicked()
         openthis.append(HTMLFILE);
         proc->execute(browser,openthis);
 #else
-    ui->webView->setHtml(htmlToLoad.arg(settings->value("apiKey").toString()).arg(deelnemerMarker->lat).arg(deelnemerMarker->lng).arg(zoom).arg(deelnemerMarker->caption()).arg(markers_js)  );
+    ui->webView->setHtml(htmlToLoad.arg(settings->value("apiKey").toString()).arg(deelnemerMarker.lat).arg(deelnemerMarker.lng).arg(zoom).arg(deelnemerMarker.captionForGoogleMapsInfoWindow()).arg(markers_js)  );
 #endif
 }

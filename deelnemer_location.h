@@ -16,7 +16,7 @@ class DeelnemerLocation : public QWidget
     Q_OBJECT
 
 public:
-    explicit DeelnemerLocation(SDeelnemerMarker *_deelnemer, QSqlRelationalTableModel *_model_deelnemers, int _zoom = 15, QWidget *parent = 0);
+    explicit DeelnemerLocation(SDeelnemerMarker _deelnemer, QSqlRelationalTableModel *_model_deelnemers, int _zoom = 15, QWidget *parent = 0);
     ~DeelnemerLocation();
 
 private slots:
@@ -25,7 +25,7 @@ private slots:
 private:
     Ui::deelnemer_location *ui;
     QSettings *settings;
-    SDeelnemerMarker *deelnemerMarker;
+    SDeelnemerMarker deelnemerMarker;
     QSqlRelationalTableModel *model_deelnemers;
     int zoom;
     QString browser;
