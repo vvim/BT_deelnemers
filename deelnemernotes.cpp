@@ -52,6 +52,12 @@ DeelnemerNotes::DeelnemerNotes(int _deelnemer_id, QSqlRelationalTableModel *_mod
     // see http://stackoverflow.com/a/31291548/
     ui->buttonBox->button(QDialogButtonBox::Ok)->setText(tr("Wijzigingen opslaan"));
     ui->buttonBox->button(QDialogButtonBox::Cancel)->setText(tr("Wijzigingen annuleren"));
+
+    if(model_deelnemernotes->rowCount() > 0)
+    {
+        vvimDebug() << "notes are present, so select the first one";
+        ui->listViewOfAllNotes->setCurrentIndex(notasSortedModel->index(0,NOTE_TIMESTAMP_COLUMN));
+    }
 }
 
 DeelnemerNotes::~DeelnemerNotes()
