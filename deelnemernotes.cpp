@@ -5,7 +5,9 @@
 #include <QSqlError>
 #include <QMessageBox>
 
+#define NOTE_TIMESTAMP_ID 0
 #define NOTE_TIMESTAMP_COLUMN 1
+#define NOTE_TIMESTAMP_NOTE 2
 #define NOTE_DEELNEMERID_COLUMN 3
 
 #define vvimDebug()\
@@ -32,13 +34,13 @@ DeelnemerNotes::DeelnemerNotes(int _deelnemer_id, QSqlRelationalTableModel *_mod
     notasSortedModel->setSourceModel(model_deelnemernotes);
 
     ui->listViewOfAllNotes->setModel(notasSortedModel);
-    ui->listViewOfAllNotes->setModelColumn(model_deelnemernotes->fieldIndex("timestamp")); // do not show column 0 ('id') but column 1 ('timestamp')
-    notasSortedModel->sort(model_deelnemernotes->fieldIndex("timestamp"), Qt::DescendingOrder);
+    ui->listViewOfAllNotes->setModelColumn(NOTE_TIMESTAMP_COLUMN); // do not show column 0 ('id') but column 1 ('timestamp')
+    notasSortedModel->sort(NOTE_TIMESTAMP_COLUMN, Qt::DescendingOrder);
 
     mapper = new QDataWidgetMapper(this);
     mapper->setModel(notasSortedModel);
 
-    mapper->addMapping(ui->textEditCurrentNote, model_deelnemernotes->fieldIndex("nota"));
+    mapper->addMapping(ui->textEditCurrentNote, NOTE_TIMESTAMP_NOTE);
 
     connect(ui->listViewOfAllNotes->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),
                 mapper, SLOT(setCurrentModelIndex(QModelIndex)));
@@ -83,7 +85,7 @@ void DeelnemerNotes::createNewNote()
 
 void DeelnemerNotes::removeSelectedNote()
 {
-    QModelIndex index_from_id = notasSortedModel->index(ui->listViewOfAllNotes->currentIndex().row(),0);
+    QModelIndex index_from_id = notasSortedModel->index(ui->listViewOfAllNotes->currentIndex().row(),NOTE_TIMESTAMP_ID);
     vvimDebug() << "Removing row" << ui->listViewOfAllNotes->currentIndex().row() << "table id:" << notasSortedModel->data(index_from_id).toInt() << ". Are you sure?";
     if(ui->listViewOfAllNotes->currentIndex().row() < 0)
     {
