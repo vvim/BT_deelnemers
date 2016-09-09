@@ -73,7 +73,7 @@ void DeelnemerNotes::createNewNote()
     model_deelnemernotes->setData(model_deelnemernotes->index(row_to_insert,NOTE_TIMESTAMP_COLUMN),QDateTime::currentDateTime());
     model_deelnemernotes->setData(model_deelnemernotes->index(row_to_insert,NOTE_DEELNEMERID_COLUMN),deelnemer_id);
 
-    on_buttonBox_accepted(); // save newly created note
+    SaveToDatabase(); // save newly created note
 
     /* we have to change selection to a valid row of QListView, else the user can start to type a
      * note, but it will be discarded even if the user clicks on "save note", because the selected
@@ -109,7 +109,7 @@ void DeelnemerNotes::removeSelectedNote()
         vvimDebug() << "user confirmed to delete selected note";
         notasSortedModel->removeRow(ui->listViewOfAllNotes->currentIndex().row());
         // must commit to database;
-        on_buttonBox_accepted();
+        SaveToDatabase();
     }
     else
     {
@@ -121,7 +121,19 @@ void DeelnemerNotes::removeSelectedNote()
 void DeelnemerNotes::on_buttonBox_accepted()
 {
     vvimDebug() << "OK button pressed" << "saving";
+    SaveToDatabase();
+}
 
+void DeelnemerNotes::on_buttonBox_rejected()
+{
+    vvimDebug() << "Cancel button pressed" << "undo changes";
+    qDebug() << model_deelnemernotes->database().rollback();
+    // reload by using select() , see https://forum.qt.io/topic/2981/how-to-reload-the-tableview-to-reload-its-data/4
+    qDebug() << model_deelnemernotes->select();
+}
+
+bool DeelnemerNotes::SaveToDatabase()
+{
     model_deelnemernotes->database().transaction();
 
     if(model_deelnemernotes->submitAll())
@@ -144,12 +156,4 @@ void DeelnemerNotes::on_buttonBox_accepted()
         ui->label_feedback->setStyleSheet("font-weight: bold; color: red");
         */
     }
-}
-
-void DeelnemerNotes::on_buttonBox_rejected()
-{
-    vvimDebug() << "Cancel button pressed" << "undo changes";
-    qDebug() << model_deelnemernotes->database().rollback();
-    // reload by using select() , see https://forum.qt.io/topic/2981/how-to-reload-the-tableview-to-reload-its-data/4
-    qDebug() << model_deelnemernotes->select();
 }

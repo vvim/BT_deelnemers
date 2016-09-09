@@ -26,6 +26,7 @@ private:
     QSqlRelationalTableModel *model_deelnemernotes;
     QDataWidgetMapper *mapper;
     NotasSortFilterProxyModel *notasSortedModel;
+    bool SaveToDatabase();
 
 private slots:
     void createNewNote();
