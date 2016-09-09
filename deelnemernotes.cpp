@@ -110,12 +110,17 @@ void DeelnemerNotes::removeSelectedNote()
         notasSortedModel->removeRow(ui->listViewOfAllNotes->currentIndex().row());
         // must commit to database;
         SaveToDatabase();
+
+        /** after removing a note from the model, the note stays visible in the QTextEdit, and QListView's selected row is invalid (-1)
+         **     vvimDebug() << "which row is selected now?" << ui->listViewOfAllNotes->currentIndex().row();
+         **
+         ** To avoid the user's confusion: better to clear the QTextEdit **/
+        ui->textEditCurrentNote->clear();
     }
     else
     {
         vvimDebug() << "user said 'No', note will not be deleted";
     }
-
 }
 
 void DeelnemerNotes::on_buttonBox_accepted()
