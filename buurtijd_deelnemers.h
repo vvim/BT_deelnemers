@@ -47,6 +47,7 @@ private:
     void loadCompleter();
     SDeelnemerMarker readDeelnemer();
     SAddress readAddress();
+    bool ThisRowContainsAnIndividual(int row);
 
     MyCompleter *completer;
     QMap<QString, QModelIndex> deelnemers_map;

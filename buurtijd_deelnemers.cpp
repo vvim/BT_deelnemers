@@ -271,8 +271,7 @@ void Buurtijd_deelnemers::ChangeRow(QModelIndex new_index)
                 );
 
     /// info: NULL.toInt() == 0 ! so this can be misleading , you can test with ().isNull()
-    if( !(model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("soort_deelnemer"))).isNull())
-            && model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("soort_deelnemer"))).toInt() == 0)
+    if(ThisRowContainsAnIndividual(currentRow))
     {
         /// -> 3) information for individuals only
         vvimDebug() << model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("naam"))).toString() << "is een individu";
@@ -540,7 +539,7 @@ SDeelnemerMarker Buurtijd_deelnemers::readDeelnemer()
 
     SDeelnemerMarker _deelnemer = SDeelnemerMarker(deelnemersId, latitude, longitude, name, address, email, telnr, gsm);
 
-    if(model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("soort_deelnemer"))).toInt() == 0)
+    if(ThisRowContainsAnIndividual(currentRow))
     {
         vvimDebug() << "this deelnemer is an individual";
         QString familienaam = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("familienaam"))).toString();
@@ -562,4 +561,10 @@ SAddress Buurtijd_deelnemers::readAddress()
     QString plaats = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("plaats"))).toString();
 
     return SAddress(straat,huisnr,busnr,postcode,plaats);
+}
+
+bool Buurtijd_deelnemers::ThisRowContainsAnIndividual(int row)
+{
+    return( !(model_deelnemers->data(model_deelnemers->index(row,model_deelnemers->fieldIndex("soort_deelnemer"))).isNull())
+                && model_deelnemers->data(model_deelnemers->index(row,model_deelnemers->fieldIndex("soort_deelnemer"))).toInt() == 0);
 }
