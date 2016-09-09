@@ -139,16 +139,26 @@ bool DeelnemerNotes::SaveToDatabase()
     if(model_deelnemernotes->submitAll())
     {
         vvimDebug() << "submitAll is successful, committing";
-        model_deelnemernotes->database().commit();
-        /* feedback
-        QString feedback = QString(ui->le_naam->text());
-        ui->label_feedback->setText(feedback.append(" opgeslagen"));
-        ui->label_feedback->setStyleSheet("font-style: italic; color: green");
-        */
+        if(model_deelnemernotes->database().commit())
+        {
+            vvimDebug() << "commit is successful, done!";
+            /* feedback
+            QString feedback = QString(ui->le_naam->text());
+            ui->label_feedback->setText(feedback.append(" opgeslagen"));
+            ui->label_feedback->setStyleSheet("font-style: italic; color: green");
+            */
+            return true;
+        }
+        else
+        {
+            vvimDebug() << "[FAIL] commit failed";
+            vvimDebug() << "error:" << model_deelnemernotes->lastError();
+            return false;
+        }
     }
     else
     {
-        vvimDebug() << "submitAll FAILED, rollback";
+        vvimDebug() << "[FAIL] submitAll failed, rollback";
         vvimDebug() << "error:" << model_deelnemernotes->lastError();
         model_deelnemernotes->database().rollback();
         /* feedback
@@ -156,4 +166,5 @@ bool DeelnemerNotes::SaveToDatabase()
         ui->label_feedback->setStyleSheet("font-weight: bold; color: red");
         */
     }
+    return false;
 }
