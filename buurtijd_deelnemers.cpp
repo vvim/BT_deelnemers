@@ -549,23 +549,14 @@ SDeelnemerMarker* Buurtijd_deelnemers::readDeelnemer()
     double latitude = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("lat"))).toDouble();
     double longitude = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("lng"))).toDouble();
     QString name = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("naam"))).toString();
-
-    // NULL.toString() = "" ?
-    QString straat = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("straat"))).toString();
-    QString huisnr = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("huisnr"))).toString();
-    QString busnr = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("busnr"))).toString();
-    QString postcode = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("postcode"))).toString();
-    QString plaats = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("plaats"))).toString();
+    SAddress address = readAddress();
 
     /*********************
      *
      * [TODO] : instead of using "name + familienaam", we can make a different marker SDeelnemerIndividual
      *
-     * [TODO] : instead of ADDRESS, we can make a Struct containing straat/huisnr/busnr/postcode/plaats which
-     *          will write out a good address at any time, with any combination
-     *
      *********************/
-    QString address = QString("%1 %2 %3 - %4 %5").arg(straat).arg(huisnr).arg(busnr).arg(postcode).arg(plaats);
+
     QString familienaam = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("familienaam"))).toString();
     if(familienaam != "")
         name.append(" ").append(familienaam);
@@ -575,4 +566,17 @@ SDeelnemerMarker* Buurtijd_deelnemers::readDeelnemer()
     QString gsm = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("gsm"))).toString();
 
     return new SDeelnemerMarker(deelnemersId, latitude, longitude, name, address, email, telnr, gsm);
+}
+
+SAddress Buurtijd_deelnemers::readAddress()
+{
+    vvimDebug() << "readAddress() called";
+    int currentRow = last_known_index.row();
+    QString straat = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("straat"))).toString();
+    QString huisnr = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("huisnr"))).toString();
+    QString busnr = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("busnr"))).toString();
+    QString postcode = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("postcode"))).toString();
+    QString plaats = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("plaats"))).toString();
+
+    return SAddress(straat,huisnr,busnr,postcode,plaats);
 }

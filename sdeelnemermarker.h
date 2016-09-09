@@ -2,6 +2,7 @@
 #define SDEELNEMERMARKER_H
 
 #include <QDebug>
+#include "saddress.h"
 
 // add later if useful:
 //      #include sdeelnemerindividu.h
@@ -18,7 +19,7 @@ struct SDeelnemerMarker
         lat = 0;
         lng = 0;
         name = "";
-        address = "";
+        //address = "";
         email = "";
         telnr = "";
         gsm = "";
@@ -27,7 +28,7 @@ struct SDeelnemerMarker
 		//    organisatie = false;
     }
 
-    SDeelnemerMarker(int _id, double _lat, double _lng, QString _name, QString _address, QString _email, QString _telnr, QString _gsm)
+    SDeelnemerMarker(int _id, double _lat, double _lng, QString _name, SAddress _address, QString _email, QString _telnr, QString _gsm)
     {
         id = _id; lat = _lat; lng = _lng; name = _name; address = _address;
         email = _email; telnr = _telnr; gsm = _gsm;
@@ -46,9 +47,15 @@ struct SDeelnemerMarker
 
     void PrintInformation()
     {
-        qDebug() << "." << id << name << address << "(" << lat << lng << ")";
-        qDebug() << "." << email << telnr << gsm;
-		/** add later if useful:
+        qDebug() << ". type: DeelnemerMarker";
+        qDebug() << "... id     :" << id;
+        qDebug() << "... name    :" << name;
+        qDebug() << "... email      :" << email;
+        qDebug() << "... telnr :" << telnr;
+        qDebug() << "... gsm     :" << gsm;
+        qDebug() << "... (lat, lng)    :" << lat << lng;
+        address.PrintInformation();
+        /** add later if useful:
         if((!individu) && (!organisatie))
         {
             qDebug() << ". type: Adres";
@@ -62,12 +69,25 @@ struct SDeelnemerMarker
 
     QString caption()
     {
-        return QString("%1<br/>%2").arg(name).arg(address);
+        return QString("%1<br/>%2").arg(name).arg(address.getAddress());
+    }
+
+
+    QString getNameAndAddress()
+    {
+        QString nameandaddress = "";
+
+        if(!name.trimmed().isEmpty())
+            nameandaddress.append(name).append(", ");
+
+        nameandaddress.append(address.getAddress());
+
+        return nameandaddress;
     }
 
     QString contactInformationInOneLine()
     {
-        return QString("%1\t%2\t%3\t%4\t%5").arg(name).arg(email).arg(telnr).arg(gsm).arg(address);
+        return QString("%1\t%2\t%3\t%4\t%5").arg(name).arg(email).arg(telnr).arg(gsm).arg(address.getAddress());
     }
 
 	/** add later if useful:
@@ -86,7 +106,7 @@ struct SDeelnemerMarker
     double lat;
     double lng;
     QString name;
-    QString address;
+    SAddress address;
     QString email;
     QString telnr;
     QString gsm;

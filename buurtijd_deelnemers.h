@@ -46,6 +46,7 @@ private:
     void showInformationForOrganisation(bool make_visible);
     void loadCompleter();
     SDeelnemerMarker* readDeelnemer();
+    SAddress readAddress();
 
     MyCompleter *completer;
     QMap<QString, QModelIndex> deelnemers_map;
