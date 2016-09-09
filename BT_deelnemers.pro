@@ -51,7 +51,8 @@ HEADERS  += buurtijd_deelnemers.h \
     sdeelnemermarker.h \
     deelnemernotes.h \
     notassortfilterproxymodel.h \
-    saddress.h
+    saddress.h \
+    sdeelnemerindividu.h
 
 FORMS    += buurtijd_deelnemers.ui \
     deelnemer_location.ui \

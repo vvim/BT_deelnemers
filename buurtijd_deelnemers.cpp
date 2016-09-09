@@ -534,21 +534,21 @@ SDeelnemerMarker Buurtijd_deelnemers::readDeelnemer()
     QString name = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("naam"))).toString();
     SAddress address = readAddress();
 
-    /*********************
-     *
-     * [TODO] : instead of using "name + familienaam", we can make a different marker SDeelnemerIndividual
-     *
-     *********************/
-
-    QString familienaam = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("familienaam"))).toString();
-    if(familienaam != "")
-        name.append(" ").append(familienaam);
-
     QString email = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("email1"))).toString();
     QString telnr = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("telefoon"))).toString();
     QString gsm = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("gsm"))).toString();
 
-    return SDeelnemerMarker(deelnemersId, latitude, longitude, name, address, email, telnr, gsm);
+    SDeelnemerMarker _deelnemer = SDeelnemerMarker(deelnemersId, latitude, longitude, name, address, email, telnr, gsm);
+
+    if(model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("soort_deelnemer"))).toInt() == 0)
+    {
+        vvimDebug() << "this deelnemer is an individual";
+        QString familienaam = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("familienaam"))).toString();
+        _deelnemer.AddIndividu(SDeelnemerIndividu(name, familienaam));
+    }
+
+
+    return _deelnemer;
 }
 
 SAddress Buurtijd_deelnemers::readAddress()

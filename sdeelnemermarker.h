@@ -3,6 +3,7 @@
 
 #include <QDebug>
 #include "saddress.h"
+#include "sdeelnemerindividu.h"
 
 // add later if useful:
 //      #include sdeelnemerindividu.h
@@ -23,8 +24,9 @@ struct SDeelnemerMarker
         email = "";
         telnr = "";
         gsm = "";
+        individu = false;
+
 		// add later if useful:
-		//    individu = false;
 		//    organisatie = false;
     }
 
@@ -32,25 +34,23 @@ struct SDeelnemerMarker
     {
         id = _id; lat = _lat; lng = _lng; name = _name; address = _address;
         email = _email; telnr = _telnr; gsm = _gsm;
+        individu = false;
+
 		// add later if useful:
-		//    individu = false;
 		//    organisatie = false;
     }
 
-	/** add later if useful:
-    SDeelnemerMarker(int _id, double _lat, double _lng, SDeelnemerIndividu _Individu)
+    void AddIndividu(SDeelnemerIndividu _individu)
     {
-        id = _id; lat = _lat; lng = _lng; caption = _Individu.getNameAndAddress(); Individu = _Individu;
-        individu = true; organisatie = false;
+        individu = true;
+        Individu = _individu;
     }
-    **/
 
     QString getName()
     {
-        /*
-          if (individual)
-              return Individual.getName();
-         */
+        if(individu)
+            return Individu.getName();
+
         return name;
     }
 
@@ -65,6 +65,8 @@ struct SDeelnemerMarker
         qDebug() << "... gsm       :" << gsm;
         qDebug() << "... (lat, lng):" << lat << lng;
         address.PrintInformation();
+        if(individu)
+            Individu.PrintInformation();
         /** add later if useful:
         if((!individu) && (!organisatie))
         {
@@ -79,16 +81,16 @@ struct SDeelnemerMarker
 
     QString captionForGoogleMapsInfoWindow()
     {
-        return QString("%1<br/>%2").arg(name).arg(address.getAddress());
+        return QString("%1<br/>%2").arg(getName()).arg(address.getAddress());
     }
 
 
     QString getNameAndAddress()
     {
-        QString nameandaddress = "";
+        QString nameandaddress = getName();
 
-        if(!name.trimmed().isEmpty())
-            nameandaddress.append(name).append(", ");
+        if(!nameandaddress.trimmed().isEmpty())
+            nameandaddress.append(", ");
 
         nameandaddress.append(address.getAddress());
 
@@ -97,7 +99,7 @@ struct SDeelnemerMarker
 
     QString contactInformationInOneLine()
     {
-        return QString("%1\t%2\t%3\t%4\t%5").arg(name).arg(email).arg(telnr).arg(gsm).arg(address.getAddress());
+        return QString("%1\t%2\t%3\t%4\t%5").arg(getName()).arg(email).arg(telnr).arg(gsm).arg(address.getAddress());
     }
 
 	/** add later if useful:
@@ -121,13 +123,15 @@ struct SDeelnemerMarker
     QString telnr;
     QString gsm;
 
+    bool individu;
+    SDeelnemerIndividu Individu;
+
 // add later if useful:
-//    bool individu;
+//
 //    bool organisatie;
 //    bool lid;
 //    bool liduitgeschreven; // of deze struct can in de struct 'lid' genest zijn
 
-//    SDeelnemerIndividu Individu;
 //    SDeelnemerOrganisatie Organisatie;
 //    SDeelnemerLid Lid;
 //    SDeelnemerUitgeschrevenLid UitgeschrevenLid;
