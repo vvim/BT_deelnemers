@@ -45,15 +45,25 @@ struct SDeelnemerMarker
     }
     **/
 
+    QString getName()
+    {
+        /*
+          if (individual)
+              return Individual.getName();
+         */
+        return name;
+    }
+
     void PrintInformation()
     {
         qDebug() << ". type: DeelnemerMarker";
-        qDebug() << "... id     :" << id;
-        qDebug() << "... name    :" << name;
-        qDebug() << "... email      :" << email;
-        qDebug() << "... telnr :" << telnr;
-        qDebug() << "... gsm     :" << gsm;
-        qDebug() << "... (lat, lng)    :" << lat << lng;
+        qDebug() << "... id        :" << id;
+        qDebug() << "... name      :" << name;
+        qDebug() << "... getName() :" << getName();
+        qDebug() << "... email     :" << email;
+        qDebug() << "... telnr     :" << telnr;
+        qDebug() << "... gsm       :" << gsm;
+        qDebug() << "... (lat, lng):" << lat << lng;
         address.PrintInformation();
         /** add later if useful:
         if((!individu) && (!organisatie))
