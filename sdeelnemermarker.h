@@ -77,7 +77,7 @@ struct SDeelnemerMarker
         **/
     }
 
-    QString caption()
+    QString captionForGoogleMapsInfoWindow()
     {
         return QString("%1<br/>%2").arg(name).arg(address.getAddress());
     }
