@@ -13,16 +13,19 @@
 #define vvimDebug()\
     qDebug() << "[" << Q_FUNC_INFO << "]"
 
-DeelnemerNotes::DeelnemerNotes(int _deelnemer_id, QSqlRelationalTableModel *_model_deelnemernotes, QWidget *parent) :
+DeelnemerNotes::DeelnemerNotes(SDeelnemerMarker _deelnemer, QSqlRelationalTableModel *_model_deelnemernotes, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::DeelnemerNotes)
 {
-    // get deelnemer_id from constructor
-    deelnemer_id = _deelnemer_id;
+    deelnemer = _deelnemer;
+    if(deelnemer.id < 0)
+    {
+        vvimDebug() << "[ERROR] invalid deelnemer-id!" << deelnemer.id << "db will refuse when user tries to add notes";
+    }
     model_deelnemernotes = _model_deelnemernotes;
 
     ui->setupUi(this);
-    ui->label_deelnemer_notes->setText(QString("Nota's van deelnemer %1").arg(_deelnemer_id));
+    ui->label_deelnemer_notes->setText(QString("Nota's van deelnemer %1").arg(deelnemer.getName()));
 
     newNoteButton = new QPushButton(tr("Nieuwe Nota"));
     removeNoteButton = new QPushButton(tr("Wis Nota"));
@@ -77,7 +80,7 @@ void DeelnemerNotes::createNewNote()
     vvimDebug() << model_deelnemernotes->insertRow(row_to_insert);
 
     model_deelnemernotes->setData(model_deelnemernotes->index(row_to_insert,NOTE_TIMESTAMP_COLUMN),QDateTime::currentDateTime());
-    model_deelnemernotes->setData(model_deelnemernotes->index(row_to_insert,NOTE_DEELNEMERID_COLUMN),deelnemer_id);
+    model_deelnemernotes->setData(model_deelnemernotes->index(row_to_insert,NOTE_DEELNEMERID_COLUMN),deelnemer.id);
 
     SaveToDatabase(); // save newly created note
 

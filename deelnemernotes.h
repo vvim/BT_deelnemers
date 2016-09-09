@@ -6,6 +6,7 @@
 #include <QDataWidgetMapper>
 #include <QPushButton>
 #include "notassortfilterproxymodel.h"
+#include "sdeelnemermarker.h"
 
 namespace Ui {
 class DeelnemerNotes;
@@ -16,13 +17,13 @@ class DeelnemerNotes : public QWidget
     Q_OBJECT
 
 public:
-    explicit DeelnemerNotes(int _deelnemer_id, QSqlRelationalTableModel *_model_deelnemernotes, QWidget *parent = 0);
+    explicit DeelnemerNotes(SDeelnemerMarker _deelnemer, QSqlRelationalTableModel *_model_deelnemernotes, QWidget *parent = 0);
     ~DeelnemerNotes();
 
 private:
     Ui::DeelnemerNotes *ui;
     QPushButton *newNoteButton, *removeNoteButton;
-    int deelnemer_id;
+    SDeelnemerMarker deelnemer;
     QSqlRelationalTableModel *model_deelnemernotes;
     QDataWidgetMapper *mapper;
     NotasSortFilterProxyModel *notasSortedModel;
