@@ -417,7 +417,13 @@ void Buurtijd_deelnemers::loadCompleter()
     int idIdx = model_deelnemers->fieldIndex("id");
     int familieNaamIdx = model_deelnemers->fieldIndex("familienaam");
     int naamIdx = model_deelnemers->fieldIndex("naam");
-    vvimDebug() << "[CAVEAT]" << "we expect the combination [naam] [familienaam] to be unique, but can we guarantee that?" << "else we could mix the address of telephonenumber in the mix?" << "currently I add there ID-number to make every entry unique";
+    int plaatsIdx = model_deelnemers->fieldIndex("plaats");
+    int gsmIdx = model_deelnemers->fieldIndex("gsm");
+    int telefoonIdx = model_deelnemers->fieldIndex("telefoon");
+    vvimDebug() << "[CAVEAT]"
+                << "we expect the combination [naam] [familienaam] to be unique, but can we guarantee that?"
+                << "else we could mix the address of telephonenumber in the mix?"
+                << "currently I add there ID-number to make every entry unique";
 
     for ( int i = 0 ; i < model_deelnemers->rowCount() ; ++i )
     {
@@ -432,9 +438,9 @@ void Buurtijd_deelnemers::loadCompleter()
             dlnmr = model_deelnemers->index( i, naamIdx ).data().toString();
             dlnmr.append(" ");
             dlnmr.append(model_deelnemers->index( i, familieNaamIdx ).data().toString());
-            dlnmr.append(QString(" (id %1)").arg(model_deelnemers->index( i, idIdx ).data().toString()));
+            dlnmr.append(QString(" (id %1) %2 - %3 - %4").arg(model_deelnemers->index( i, idIdx ).data().toString()).arg(model_deelnemers->index( i, plaatsIdx ).data().toString()).arg(model_deelnemers->index( i, gsmIdx ).data().toString()).arg(model_deelnemers->index( i, telefoonIdx ).data().toString()));
         }
-        deelnemers_list << dlnmr;
+        deelnemers_list << dlnmr.trimmed();
         deelnemers_map[dlnmr] = model_deelnemers->index( i, idIdx );
     }
 
