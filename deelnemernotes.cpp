@@ -140,10 +140,20 @@ void DeelnemerNotes::on_buttonBox_accepted()
 
 void DeelnemerNotes::on_buttonBox_rejected()
 {
-    vvimDebug() << "Cancel button pressed" << "undo changes";
-    qDebug() << model_deelnemernotes->database().rollback();
-    // reload by using select() , see https://forum.qt.io/topic/2981/how-to-reload-the-tableview-to-reload-its-data/4
-    qDebug() << model_deelnemernotes->select();
+    vvimDebug() << "... Cancel button pressed" << "undo changes";
+
+    vvimDebug() << "... rolling back";
+    if(!model_deelnemernotes->database().rollback())
+        vvimDebug() << "rollback FAILED" << model_deelnemernotes->lastError().text();
+
+    vvimDebug() << "... reload by using select() , see https://forum.qt.io/topic/2981/how-to-reload-the-tableview-to-reload-its-data/4";
+    if(!model_deelnemernotes->select())
+        vvimDebug() << "select FAILED" << model_deelnemernotes->lastError().text();
+
+    // in this view, we do not have to reset the CurrentModelIndex, if the currentindex is invalid (-1)
+    // the solution is that no nota is selected (different than Buurtijd_deelnemers::on_cancelButton_clicked() )
+
+    vvimDebug() << "... end of function on_buttonBox_rejected() DONE";
 }
 
 bool DeelnemerNotes::SaveToDatabase()
