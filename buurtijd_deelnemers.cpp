@@ -440,7 +440,12 @@ void Buurtijd_deelnemers::loadCompleter()
             dlnmr.append(model_deelnemers->index( i, familieNaamIdx ).data().toString());
             dlnmr.append(QString(" (id %1) %2 - %3 - %4").arg(model_deelnemers->index( i, idIdx ).data().toString()).arg(model_deelnemers->index( i, plaatsIdx ).data().toString()).arg(model_deelnemers->index( i, gsmIdx ).data().toString()).arg(model_deelnemers->index( i, telefoonIdx ).data().toString()));
         }
-        deelnemers_list << dlnmr.trimmed();
+        dlnmr = dlnmr.simplified();
+        while(dlnmr.endsWith(" -"))
+        {
+            dlnmr.chop(2);
+        }
+        deelnemers_list << dlnmr;
         deelnemers_map[dlnmr] = model_deelnemers->index( i, idIdx );
     }
 
