@@ -487,8 +487,20 @@ void Buurtijd_deelnemers::on_pushButton_showMaps_clicked()
 
 void Buurtijd_deelnemers::on_cancelButton_clicked()
 {
-    QMessageBox::information(this, "Knop werkt nog niet",
-                "De knop 'Bewerkingen annuleren' werkt nog niet, dit komt later.");
+    vvimDebug() << "... Cancel button pressed" << "undo all changes";
+
+    vvimDebug() << "... rolling back, will also trigger ChangeRow()";
+    if(!model_deelnemers->database().rollback())
+        vvimDebug() << "rollback FAILED" << model_deelnemers->lastError().text();
+
+
+    vvimDebug() << "... reload by using select() , see https://forum.qt.io/topic/2981/how-to-reload-the-tableview-to-reload-its-data/4";
+    if(!model_deelnemers->select())
+        vvimDebug() << "select FAILED" << model_deelnemers->lastError().text();
+
+    vvimDebug() << "... we have to reset the CurrentModelIndex, or the currentindex will be invalid (-1) and no changes are possible";
+    mapper->setCurrentModelIndex(last_known_index);
+    vvimDebug() << "... end of function on_cancelButton_clicked() DONE";
 }
 
 void Buurtijd_deelnemers::on_pushButton_showNotes_clicked()
