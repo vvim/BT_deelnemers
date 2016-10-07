@@ -3,6 +3,7 @@
 
 #include <QDebug>
 #include "saddress.h"
+#include "scontacts.h"
 #include "sdeelnemerindividu.h"
 
 // add later if useful:
@@ -20,35 +21,35 @@ struct SDeelnemerMarker
         lat = 0;
         lng = 0;
         name = "";
-        //address = "";
-        email = "";
-        telnr = "";
-        gsm = "";
-        individu = false;
+        individu_present = false;
+
+		// add later if useful:
+		//    organisatie = false;
+
+        address_present = false;
+        contacts_present = false;
+    }
+
+    SDeelnemerMarker(int _id, double _lat, double _lng, QString _name, SAddress _Address, SContacts _Contacts)
+    {
+        id = _id; lat = _lat; lng = _lng; name = _name;
+        Address = _Address; Contacts = _Contacts;
+        address_present = true; contacts_present = true;
+        individu_present = false;
 
 		// add later if useful:
 		//    organisatie = false;
     }
 
-    SDeelnemerMarker(int _id, double _lat, double _lng, QString _name, SAddress _address, QString _email, QString _telnr, QString _gsm)
+    void AddIndividu(SDeelnemerIndividu _Individu)
     {
-        id = _id; lat = _lat; lng = _lng; name = _name; address = _address;
-        email = _email; telnr = _telnr; gsm = _gsm;
-        individu = false;
-
-		// add later if useful:
-		//    organisatie = false;
-    }
-
-    void AddIndividu(SDeelnemerIndividu _individu)
-    {
-        individu = true;
-        Individu = _individu;
+        individu_present = true;
+        Individu = _Individu;
     }
 
     QString getName()
     {
-        if(individu)
+        if(individu_present)
             return Individu.getName();
 
         return name;
@@ -60,12 +61,12 @@ struct SDeelnemerMarker
         qDebug() << "... id        :" << id;
         qDebug() << "... name      :" << name;
         qDebug() << "... getName() :" << getName();
-        qDebug() << "... email     :" << email;
-        qDebug() << "... telnr     :" << telnr;
-        qDebug() << "... gsm       :" << gsm;
         qDebug() << "... (lat, lng):" << lat << lng;
-        address.PrintInformation();
-        if(individu)
+        if(address_present)
+            Address.PrintInformation();
+        if(contacts_present)
+            Contacts.PrintInformation();
+        if(individu_present)
             Individu.PrintInformation();
         /** add later if useful:
         if((!individu) && (!organisatie))
@@ -81,7 +82,10 @@ struct SDeelnemerMarker
 
     QString captionForGoogleMapsInfoWindow()
     {
-        return QString("%1<br/>%2").arg(getName()).arg(address.getAddress());
+        if(address_present)
+            return QString("%1<br/>%2").arg(getName()).arg(Address.getAddress());
+        else
+            return QString("%1").arg(getName());
     }
 
 
@@ -92,14 +96,20 @@ struct SDeelnemerMarker
         if(!nameandaddress.trimmed().isEmpty())
             nameandaddress.append(", ");
 
-        nameandaddress.append(address.getAddress());
+        if(address_present)
+            nameandaddress.append(Address.getAddress());
 
         return nameandaddress;
     }
 
     QString contactInformationInOneLine()
     {
-        return QString("%1\t%2\t%3\t%4\t%5").arg(getName()).arg(email).arg(telnr).arg(gsm).arg(address.getAddress());
+        QString contactinformation = getName();
+        if(contacts_present)
+            contactinformation.append("\t%1\t%2\t%3\t%4").arg(Contacts.email1).arg(Contacts.email2).arg(Contacts.telnr).arg(Contacts.gsm);
+        if(address_present)
+            contactinformation.append("\t%1").arg(Address.getAddress());
+        return contactinformation;
     }
 
 	/** add later if useful:
@@ -118,13 +128,14 @@ struct SDeelnemerMarker
     double lat;
     double lng;
     QString name;
-    SAddress address;
-    QString email;
-    QString telnr;
-    QString gsm;
 
-    bool individu;
+    bool individu_present;
     SDeelnemerIndividu Individu;
+
+    bool address_present;
+    SAddress Address;
+    bool contacts_present;
+    SContacts Contacts;
 
 // add later if useful:
 //
