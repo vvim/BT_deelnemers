@@ -57,7 +57,7 @@ private:
     MyCompleter *completer;
     QMap<QString, QModelIndex> deelnemers_map;
     QModelIndex last_known_index;
-    SDeelnemerMarker *last_known_deelnemer;
+    SDeelnemerMarker last_known_deelnemer;
     DeelnemerLocation *location;
     DeelnemerNotes *notes;
     QSettings *settings;
