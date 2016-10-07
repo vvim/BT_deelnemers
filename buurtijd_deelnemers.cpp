@@ -3,6 +3,9 @@
 #include "sdeelnemermarker.h"
 #include <QClipboard>
 
+#define DEELNEMER_SOORT_is_INDIVIDU 0
+#define DEELNEMER_SOORT_is_ORGANISATIE 1
+
 #define vvimDebug()\
     qDebug() << "[" << Q_FUNC_INFO << "]"
 
@@ -13,6 +16,7 @@ Buurtijd_deelnemers::Buurtijd_deelnemers(QWidget *parent) :
     completer = NULL;
     location = NULL;
     notes = NULL;
+    last_known_deelnemer = NULL;
     settings = new QSettings("settings.ini", QSettings::IniFormat);
 
     ui->setupUi(this);
@@ -151,6 +155,7 @@ Buurtijd_deelnemers::~Buurtijd_deelnemers()
 
     delete completer;
     delete settings;
+    delete last_known_deelnemer;
 
     delete location;
     delete notes;
@@ -219,6 +224,9 @@ void Buurtijd_deelnemers::ChangeRow(QModelIndex new_index)
     }
     int currentRow = new_index.row();
 
+    if(UserMadeChangesToDeelnemer())
+    {
+        qDebug() << "Wijzigingen opslaan? submitAll / Rollback";
     /* !! zodra je van fiche verandert , vraag aan de gebruiker "wijzigingen opslaan"? submitAll / Rollback
      *
      * 1) testen of er iets is gewijzigd bij de gebruiker
@@ -248,6 +256,7 @@ void Buurtijd_deelnemers::ChangeRow(QModelIndex new_index)
      * 3) verder doen met de werking van het programma
      *
     **/
+    }
 
     mapper->setCurrentModelIndex(new_index);
     last_known_index = new_index;
@@ -259,6 +268,8 @@ void Buurtijd_deelnemers::ChangeRow(QModelIndex new_index)
 
     /// -> 2) information for official members only
     /// info: invalid index => -1
+
+    last_known_deelnemer = readDeelnemer();
 
     showInformationForOfficialMember(
                 model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("lid"))).toBool()
@@ -599,4 +610,182 @@ bool Buurtijd_deelnemers::ThisRowContainsAnIndividual(int row)
 {
     return( !(model_deelnemers->data(model_deelnemers->index(row,model_deelnemers->fieldIndex("soort_deelnemer"))).isNull())
                 && model_deelnemers->data(model_deelnemers->index(row,model_deelnemers->fieldIndex("soort_deelnemer"))).toInt() == 0);
+}
+
+bool Buurtijd_deelnemers::UserMadeChangesToDeelnemer()
+{
+    if(last_known_deelnemer == NULL)
+    {
+        vvimDebug() << "last_known_deelnemer NULL, this is normal at the startup of the program as no deelnemer has been loaded yet";
+        return false;
+    }
+
+    int id = last_known_deelnemer->id;
+    //lat = 0;
+    //lng = 0;
+
+    if(ui->le_naam->text() != last_known_deelnemer->name)
+    {
+        vvimDebug() << "deelnemer" << id << "name has changed. DB:" << last_known_deelnemer->name << "now:" << ui->le_naam->text();
+        return true;
+    }
+
+    if(UserMadeChangesToDeelnemerAddress())
+    {
+        vvimDebug() << "deelnemer" << id << "address has changed.";
+        vvimDebug() << "[TODO] Address has changed => recalculate LAT and LNG!";
+        return true;
+    }
+
+    if(UserMadeChangesToDeelnemerContacts())
+    {
+        vvimDebug() << "deelnemer" << id << "contacts have changed.";
+        return true;
+    }
+
+    if(UserMadeChangesToDeelnemerIndividu())
+    {
+        vvimDebug() << "deelnemer" << id << "individu has changed.";
+        return true;
+    }
+/*
+    if( (ui->comboBox_soort-> == "person") != last_known_deelnemer->individu)
+    {
+        vvimDebug() << "deelnemer" << id << "has changed. DB:" << last_known_deelnemer->individu << "now:" << ui->comboBox_soort->ite->text();
+        return true;
+    }
+*/
+
+    return false;
+}
+
+
+bool Buurtijd_deelnemers::UserMadeChangesToDeelnemerAddress()
+{
+    if(last_known_deelnemer == NULL)
+    {
+        vvimDebug() << "last_known_deelnemer NULL, this is normal at the startup of the program as no deelnemer has been loaded yet";
+        return false;
+    }
+
+    if(!last_known_deelnemer->address_present)
+    {
+        vvimDebug() << "[WARNING]" << "last_known_deelnemer has no defined address, something went wrong";
+        return true;
+    }
+
+    if(ui->le_straat->text() != last_known_deelnemer->Address.street)
+    {
+        vvimDebug() << "...street has changed. DB:" << last_known_deelnemer->Address.street << "now:" << ui->le_straat->text();
+        return true;
+    }
+
+    if(ui->le_huisnr->text() != last_known_deelnemer->Address.housenr)
+    {
+        vvimDebug() << "...housenr has changed. DB:" << last_known_deelnemer->Address.housenr << "now:" << ui->le_huisnr->text();
+        return true;
+    }
+
+    if(ui->le_busnr->text() != last_known_deelnemer->Address.busnr)
+    {
+        vvimDebug() << "...busnr has changed. DB:" << last_known_deelnemer->Address.busnr << "now:" << ui->le_busnr->text();
+        return true;
+    }
+
+    if(ui->le_postcode->text() != last_known_deelnemer->Address.postalcode)
+    {
+        vvimDebug() << "...postalcode has changed. DB:" << last_known_deelnemer->Address.postalcode << "now:" << ui->le_postcode->text();
+        return true;
+    }
+
+    if(ui->le_plaats->text() != last_known_deelnemer->Address.plaats)
+    {
+        vvimDebug() << "...plaats has changed. DB:" << last_known_deelnemer->Address.plaats << "now:" << ui->le_plaats->text();
+        return true;
+    }
+
+    return false;
+}
+
+bool Buurtijd_deelnemers::UserMadeChangesToDeelnemerContacts()
+{
+    if(last_known_deelnemer == NULL)
+    {
+        vvimDebug() << "last_known_deelnemer NULL, this is normal at the startup of the program as no deelnemer has been loaded yet";
+        return false;
+    }
+
+    if(!last_known_deelnemer->contacts_present)
+    {
+        vvimDebug() << "[WARNING]" << "last_known_deelnemer has no defined contacts, something went wrong";
+        return true;
+    }
+
+    if(ui->le_email1->text() != last_known_deelnemer->Contacts.email1)
+    {
+        vvimDebug() << "...email1 has changed. DB:" << last_known_deelnemer->Contacts.email1 << "now:" << ui->le_email1->text();
+        return true;
+    }
+
+    if(ui->le_email2->text() != last_known_deelnemer->Contacts.email2)
+    {
+        vvimDebug() << "...email2 has changed. DB:" << last_known_deelnemer->Contacts.email2 << "now:" << ui->le_email2->text();
+        return true;
+    }
+
+    if(ui->le_telefoon->text() != last_known_deelnemer->Contacts.telnr)
+    {
+        vvimDebug() << "...telnr has changed. DB:" << last_known_deelnemer->Contacts.telnr << "now:" << ui->le_telefoon->text();
+        return true;
+    }
+
+    if(ui->le_gsm->text() != last_known_deelnemer->Contacts.gsm)
+    {
+        vvimDebug() << "...gsm has changed. DB:" << last_known_deelnemer->Contacts.gsm << "now:" << ui->le_gsm->text();
+        return true;
+    }
+
+    return false;
+}
+
+bool Buurtijd_deelnemers::UserMadeChangesToDeelnemerIndividu()
+{
+    if(last_known_deelnemer == NULL)
+    {
+        vvimDebug() << "last_known_deelnemer NULL, this is normal at the startup of the program as no deelnemer has been loaded yet";
+        return false;
+    }
+
+    if( ui->comboBox_soort->currentIndex() == DEELNEMER_SOORT_is_INDIVIDU)
+    {
+        if(!last_known_deelnemer->individu_present )
+        {
+            vvimDebug() << "...deelnemer in UI is 'individu', but in SDeelnemer it is not => changes have been made.";
+            return true;
+        }
+
+        // the deelnemer in the program is an INDIVIDU and the deelnemer in SDeelnemer is an INDIVIDU
+        // so we should test all attributes
+
+        if(ui->le_familieNaam->text() != last_known_deelnemer->Individu.familienaam)
+        {
+            vvimDebug() << "...familienaam has changed. DB:" << last_known_deelnemer->Individu.familienaam << "now:" << ui->le_familieNaam->text();
+            return true;
+        }
+
+
+    }
+    else
+    {
+        // the deelnemer in the program is NOT an INDIVIDU
+        // so we should test if the deelnemer in SDeelnemer is one
+        // return TRUE if there is an INDIVIDU in SDeelnemer, return FALSE if there isn't
+        if(last_known_deelnemer->individu_present)
+        {
+            vvimDebug() << "...deelnemer in UI is NOT 'individu', but in SDeelnemer it is => changes have been made.";
+            return true;
+        }
+    }
+
+    return false;
 }

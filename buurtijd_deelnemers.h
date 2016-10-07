@@ -49,10 +49,15 @@ private:
     SAddress readAddress();
     SContacts readContacts();
     bool ThisRowContainsAnIndividual(int row);
+    bool UserMadeChangesToDeelnemer();
+    bool UserMadeChangesToDeelnemerAddress();
+    bool UserMadeChangesToDeelnemerContacts();
+    bool UserMadeChangesToDeelnemerIndividu();
 
     MyCompleter *completer;
     QMap<QString, QModelIndex> deelnemers_map;
     QModelIndex last_known_index;
+    SDeelnemerMarker *last_known_deelnemer;
     DeelnemerLocation *location;
     DeelnemerNotes *notes;
     QSettings *settings;
