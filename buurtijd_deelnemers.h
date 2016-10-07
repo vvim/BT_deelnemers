@@ -47,6 +47,7 @@ private:
     void loadCompleter();
     SDeelnemerMarker readDeelnemer();
     SAddress readAddress();
+    SContacts readContacts();
     bool ThisRowContainsAnIndividual(int row);
 
     MyCompleter *completer;

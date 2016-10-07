@@ -555,12 +555,9 @@ SDeelnemerMarker Buurtijd_deelnemers::readDeelnemer()
     double longitude = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("lng"))).toDouble();
     QString name = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("naam"))).toString();
     SAddress address = readAddress();
+    SContacts contact = readContacts();
 
-    QString email = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("email1"))).toString();
-    QString telnr = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("telefoon"))).toString();
-    QString gsm = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("gsm"))).toString();
-
-    SDeelnemerMarker _deelnemer = SDeelnemerMarker(deelnemersId, latitude, longitude, name, address, email, telnr, gsm);
+    SDeelnemerMarker _deelnemer = SDeelnemerMarker(deelnemersId, latitude, longitude, name, address, contact);
 
     if(ThisRowContainsAnIndividual(currentRow))
     {
@@ -584,6 +581,18 @@ SAddress Buurtijd_deelnemers::readAddress()
     QString plaats = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("plaats"))).toString();
 
     return SAddress(straat,huisnr,busnr,postcode,plaats);
+}
+
+SContacts Buurtijd_deelnemers::readContacts()
+{
+    vvimDebug() << "readContacts() called";
+    int currentRow = last_known_index.row();
+    QString email1 = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("email1"))).toString();
+    QString email2 = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("email2"))).toString();
+    QString telnr = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("telefoon"))).toString();
+    QString gsm = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("gsm"))).toString();
+
+    return SContacts(email1,email2,telnr,gsm);
 }
 
 bool Buurtijd_deelnemers::ThisRowContainsAnIndividual(int row)
