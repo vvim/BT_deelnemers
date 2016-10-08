@@ -635,6 +635,36 @@ bool Buurtijd_deelnemers::UserMadeChangesToDeelnemer()
         return true;
     }
 
+    if(ui->plainTextEdit_varia->toPlainText() != last_known_deelnemer.profile)
+    {
+        vvimDebug() << "deelnemer" << id << "profile has changed. DB:" << last_known_deelnemer.profile << "now:" << ui->plainTextEdit_varia->toPlainText();
+        return true;
+    }
+
+    if(ui->dateEdit_laatstecontact->date() != last_known_deelnemer.lastcontact)
+    {
+        vvimDebug() << "deelnemer" << id << "lastcontact has changed. DB:" << last_known_deelnemer.lastcontact.toString() << "now:" << ui->dateEdit_laatstecontact->date().toString();
+        return true;
+    }
+
+    if(ui->plainTextEdit_wanneer_best_contacteren->toPlainText() != last_known_deelnemer.when_best_to_contact)
+    {
+        vvimDebug() << "deelnemer" << id << "when_best_to_contact has changed. DB:" << last_known_deelnemer.when_best_to_contact << "now:" << ui->plainTextEdit_wanneer_best_contacteren->toPlainText();
+        return true;
+    }
+
+    if(ui->comboBox_contactvoorkeur->currentIndex() != last_known_deelnemer.preferred_way_to_contact)
+    {
+        vvimDebug() << "deelnemer" << id << "preferred_way_to_contact has changed. DB:" << last_known_deelnemer.preferred_way_to_contact << "now:" << ui->comboBox_contactvoorkeur->currentIndex() << ui->comboBox_contactvoorkeur->currentText();
+        return true;
+    }
+
+    if(ui->comboBox_hoe_bt_leren_kennen->currentIndex() != last_known_deelnemer.how_first_contact)
+    {
+        vvimDebug() << "deelnemer" << id << "how_first_contact_BT has changed. DB:" << last_known_deelnemer.how_first_contact << "now:" << ui->comboBox_hoe_bt_leren_kennen->currentIndex() << ui->comboBox_hoe_bt_leren_kennen->currentText();
+        return true;
+    }
+
     if(UserMadeChangesToDeelnemerAddress())
     {
         vvimDebug() << "deelnemer" << id << "address has changed.";
