@@ -564,10 +564,16 @@ SDeelnemerMarker Buurtijd_deelnemers::readDeelnemer()
     double latitude = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("lat"))).toDouble();
     double longitude = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("lng"))).toDouble();
     QString name = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("naam"))).toString();
+    QString profile = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("varia"))).toString();
+    QDate lastcontact = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("laatste_contact"))).toDate();
+    QString when_best_to_contact = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("wanneer_best_contacteren"))).toString();
+    int preferred_way_to_contact = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("contactvoorkeur"))).toInt();
+    int how_first_contact = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("bt_leren_kennen"))).toInt();
+
     SAddress address = readAddress();
     SContacts contact = readContacts();
 
-    SDeelnemerMarker _deelnemer = SDeelnemerMarker(deelnemersId, latitude, longitude, name, address, contact);
+    SDeelnemerMarker _deelnemer = SDeelnemerMarker(deelnemersId, latitude, longitude, name, profile, lastcontact, when_best_to_contact, preferred_way_to_contact, how_first_contact, address, contact);
 
     if(ThisRowContainsAnIndividual(currentRow))
     {
