@@ -544,6 +544,53 @@
    <header>mylineedit.h</header>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>le_zoekDeelnemer</tabstop>
+  <tabstop>pushButton_showDeelnemer</tabstop>
+  <tabstop>plainTextEdit_varia</tabstop>
+  <tabstop>le_naam</tabstop>
+  <tabstop>le_familieNaam</tabstop>
+  <tabstop>le_straat</tabstop>
+  <tabstop>le_huisnr</tabstop>
+  <tabstop>le_busnr</tabstop>
+  <tabstop>le_postcode</tabstop>
+  <tabstop>le_plaats</tabstop>
+  <tabstop>le_telefoon</tabstop>
+  <tabstop>le_gsm</tabstop>
+  <tabstop>le_email1</tabstop>
+  <tabstop>le_email2</tabstop>
+  <tabstop>checkbox_lid</tabstop>
+  <tabstop>dateEdit_laatstecontact</tabstop>
+  <tabstop>dateEdit_inschrijfdatum</tabstop>
+  <tabstop>comboBox_ingeschreven_door</tabstop>
+  <tabstop>checkBox_hr_goedgekeurd</tabstop>
+  <tabstop>checkBox_contact_delen</tabstop>
+  <tabstop>checkBox_fotomateriaal_gebruiken</tabstop>
+  <tabstop>checkBox_was_lid_is_nu_gestopt</tabstop>
+  <tabstop>dateEdit_stop_datum</tabstop>
+  <tabstop>plainTextEdit_stop_reden</tabstop>
+  <tabstop>comboBox_soort</tabstop>
+  <tabstop>pushButton_copyContactInformation</tabstop>
+  <tabstop>pushButton_showMaps</tabstop>
+  <tabstop>pushButton_showNotes</tabstop>
+  <tabstop>comboBox_geslacht</tabstop>
+  <tabstop>dateEdit_geboortedatum</tabstop>
+  <tabstop>le_afkomst</tabstop>
+  <tabstop>comboBox_statuut</tabstop>
+  <tabstop>comboBox_niveau_nederlands</tabstop>
+  <tabstop>comboBox_hoe_bt_leren_kennen</tabstop>
+  <tabstop>comboBox_contactvoorkeur</tabstop>
+  <tabstop>plainTextEdit_wanneer_best_contacteren</tabstop>
+  <tabstop>checkBox_familiale_verzekering</tabstop>
+  <tabstop>checkBox_brandverzekering</tabstop>
+  <tabstop>checkBox_vrijwilligers_verzekering</tabstop>
+  <tabstop>le_contactpersoon_organisatie_voornaam</tabstop>
+  <tabstop>le_contactpersoon_organisatie_familienaam</tabstop>
+  <tabstop>listView_doelgroep</tabstop>
+  <tabstop>listView_domein</tabstop>
+  <tabstop>cancelButton</tabstop>
+  <tabstop>saveButton</tabstop>
+ </tabstops>
  <resources>
   <include location="buurtijd_deelnemers.qrc"/>
  </resources>
