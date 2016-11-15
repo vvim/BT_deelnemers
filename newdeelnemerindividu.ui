@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>843</width>
-    <height>834</height>
+    <height>222</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -30,255 +30,17 @@
    </item>
    <item>
     <layout class="QGridLayout" name="gridLayout">
-     <item row="13" column="3">
-      <widget class="QLabel" name="label_hoe_bt_leren_kennen">
-       <property name="text">
-        <string>Hoe Buurtijd leren kennen</string>
-       </property>
-      </widget>
+     <item row="2" column="4" colspan="3">
+      <widget class="QLineEdit" name="le_plaats"/>
      </item>
-     <item row="5" column="0">
-      <widget class="QLabel" name="label_email1">
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_naam">
        <property name="text">
-        <string>Email</string>
+        <string>Naam</string>
        </property>
       </widget>
      </item>
      <item row="2" column="3">
-      <widget class="QLabel" name="label_huisnr">
-       <property name="text">
-        <string>Nr</string>
-       </property>
-      </widget>
-     </item>
-     <item row="12" column="3">
-      <widget class="QLabel" name="label_statuut">
-       <property name="text">
-        <string>Statuut</string>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="0">
-      <widget class="QLabel" name="label_telefoon">
-       <property name="text">
-        <string>Telefoon</string>
-       </property>
-      </widget>
-     </item>
-     <item row="6" column="3">
-      <widget class="QLabel" name="label_laatste_contact">
-       <property name="text">
-        <string>Laatste contact</string>
-       </property>
-      </widget>
-     </item>
-     <item row="15" column="0" colspan="2">
-      <widget class="QLabel" name="label_wanneer_best_contacteren">
-       <property name="text">
-        <string>Wanneer best contacteren</string>
-       </property>
-      </widget>
-     </item>
-     <item row="14" column="0" colspan="2">
-      <widget class="QLabel" name="label_contactvoorkeur">
-       <property name="text">
-        <string>Contact voorkeur</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="4">
-      <widget class="QLineEdit" name="le_huisnr">
-       <property name="maximumSize">
-        <size>
-         <width>80</width>
-         <height>16777215</height>
-        </size>
-       </property>
-      </widget>
-     </item>
-     <item row="7" column="4">
-      <widget class="QComboBox" name="comboBox_ingeschreven_door"/>
-     </item>
-     <item row="16" column="3" colspan="2">
-      <widget class="QCheckBox" name="checkBox_brandverzekering">
-       <property name="text">
-        <string>Heeft brandverzekering</string>
-       </property>
-      </widget>
-     </item>
-     <item row="7" column="1" colspan="2">
-      <widget class="QDateEdit" name="dateEdit_inschrijfdatum"/>
-     </item>
-     <item row="11" column="1" colspan="2">
-      <widget class="QComboBox" name="comboBox_geslacht"/>
-     </item>
-     <item row="9" column="0" colspan="3">
-      <widget class="QCheckBox" name="checkBox_was_lid_is_nu_gestopt">
-       <property name="text">
-        <string>was lid, is nu gestopt</string>
-       </property>
-      </widget>
-     </item>
-     <item row="16" column="0" colspan="3">
-      <widget class="QCheckBox" name="checkBox_familiale_verzekering">
-       <property name="text">
-        <string>Heeft familiale verzekering</string>
-       </property>
-      </widget>
-     </item>
-     <item row="12" column="1" colspan="2">
-      <widget class="QLineEdit" name="le_afkomst"/>
-     </item>
-     <item row="4" column="4" colspan="3">
-      <widget class="QLineEdit" name="le_gsm"/>
-     </item>
-     <item row="1" column="4" colspan="3">
-      <widget class="QLineEdit" name="le_familieNaam"/>
-     </item>
-     <item row="12" column="0">
-      <widget class="QLabel" name="label_afkomst">
-       <property name="text">
-        <string>Afkomst</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="3">
-      <widget class="QLabel" name="label_familieNaam">
-       <property name="text">
-        <string>Familienaam</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item row="10" column="1" colspan="2">
-      <widget class="QDateEdit" name="dateEdit_stop_datum"/>
-     </item>
-     <item row="9" column="4" rowspan="2" colspan="3">
-      <widget class="QPlainTextEdit" name="plainTextEdit_stop_reden"/>
-     </item>
-     <item row="7" column="0">
-      <widget class="QLabel" name="label_inschrijfdatum">
-       <property name="text">
-        <string>Inschrijving</string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="0">
-      <widget class="QLabel" name="label_postcode">
-       <property name="text">
-        <string>Postcode</string>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="1" colspan="2">
-      <widget class="QLineEdit" name="le_telefoon"/>
-     </item>
-     <item row="12" column="4" colspan="3">
-      <widget class="QComboBox" name="comboBox_statuut"/>
-     </item>
-     <item row="1" column="1" colspan="2">
-      <widget class="QLineEdit" name="le_naam"/>
-     </item>
-     <item row="13" column="1" colspan="2">
-      <widget class="QComboBox" name="comboBox_niveau_nederlands"/>
-     </item>
-     <item row="10" column="0">
-      <widget class="QLabel" name="label_stop_datum">
-       <property name="text">
-        <string>Datum</string>
-       </property>
-      </widget>
-     </item>
-     <item row="14" column="2" colspan="5">
-      <widget class="QComboBox" name="comboBox_contactvoorkeur"/>
-     </item>
-     <item row="2" column="0">
-      <widget class="QLabel" name="label_straat">
-       <property name="text">
-        <string>Straat</string>
-       </property>
-      </widget>
-     </item>
-     <item row="11" column="4">
-      <widget class="QDateEdit" name="dateEdit_geboortedatum"/>
-     </item>
-     <item row="4" column="3">
-      <widget class="QLabel" name="label_gsm">
-       <property name="text">
-        <string>GSM</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="6">
-      <widget class="QLineEdit" name="le_busnr">
-       <property name="maximumSize">
-        <size>
-         <width>80</width>
-         <height>16777215</height>
-        </size>
-       </property>
-      </widget>
-     </item>
-     <item row="7" column="3">
-      <widget class="QLabel" name="label_ingeschreven_door">
-       <property name="text">
-        <string>door</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="5">
-      <widget class="QLabel" name="label_busnr">
-       <property name="text">
-        <string>Bus</string>
-       </property>
-      </widget>
-     </item>
-     <item row="8" column="5" colspan="2">
-      <widget class="QCheckBox" name="checkBox_fotomateriaal_gebruiken">
-       <property name="text">
-        <string>foto's gebruiken</string>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="1" colspan="2">
-      <widget class="QLineEdit" name="le_email1"/>
-     </item>
-     <item row="3" column="1" colspan="2">
-      <widget class="QLineEdit" name="le_postcode"/>
-     </item>
-     <item row="0" column="1" colspan="6">
-      <widget class="QPlainTextEdit" name="plainTextEdit_varia">
-       <property name="maximumSize">
-        <size>
-         <width>16777215</width>
-         <height>40</height>
-        </size>
-       </property>
-      </widget>
-     </item>
-     <item row="8" column="3" colspan="2">
-      <widget class="QCheckBox" name="checkBox_contact_delen">
-       <property name="text">
-        <string>contact mag gedeeld worden</string>
-       </property>
-      </widget>
-     </item>
-     <item row="11" column="3">
-      <widget class="QLabel" name="label_geboortedatum">
-       <property name="text">
-        <string>Geboren op</string>
-       </property>
-      </widget>
-     </item>
-     <item row="6" column="4">
-      <widget class="QDateEdit" name="dateEdit_laatstecontact"/>
-     </item>
-     <item row="3" column="3">
       <widget class="QLabel" name="label_plaats">
        <property name="text">
         <string>Plaats</string>
@@ -288,83 +50,98 @@
        </property>
       </widget>
      </item>
-     <item row="15" column="2" colspan="5">
-      <widget class="QPlainTextEdit" name="plainTextEdit_wanneer_best_contacteren">
+     <item row="1" column="3">
+      <widget class="QLabel" name="label_huisnr">
+       <property name="text">
+        <string>Nr</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1" colspan="2">
+      <widget class="QLineEdit" name="le_straat"/>
+     </item>
+     <item row="2" column="1" colspan="2">
+      <widget class="QLineEdit" name="le_postcode"/>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="label_telefoon">
+       <property name="text">
+        <string>Telefoon</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="4">
+      <widget class="QLineEdit" name="le_huisnr">
        <property name="maximumSize">
         <size>
-         <width>16777215</width>
-         <height>40</height>
+         <width>80</width>
+         <height>16777215</height>
         </size>
        </property>
       </widget>
      </item>
-     <item row="5" column="4" colspan="3">
-      <widget class="QLineEdit" name="le_email2"/>
-     </item>
-     <item row="5" column="3">
-      <widget class="QLabel" name="label_email2">
+     <item row="2" column="0">
+      <widget class="QLabel" name="label_postcode">
        <property name="text">
-        <string>Email</string>
-       </property>
-      </widget>
-     </item>
-     <item row="13" column="0">
-      <widget class="QLabel" name="label_niveau_nederlands">
-       <property name="text">
-        <string>Niv NL</string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="4" colspan="3">
-      <widget class="QLineEdit" name="le_plaats"/>
-     </item>
-     <item row="6" column="0" colspan="3">
-      <widget class="QCheckBox" name="checkbox_lid">
-       <property name="text">
-        <string>ingeschreven als lid</string>
-       </property>
-      </widget>
-     </item>
-     <item row="11" column="0">
-      <widget class="QLabel" name="label_geslacht">
-       <property name="text">
-        <string>Geslacht</string>
+        <string>Postcode</string>
        </property>
       </widget>
      </item>
      <item row="1" column="0">
-      <widget class="QLabel" name="label_naam">
+      <widget class="QLabel" name="label_straat">
        <property name="text">
-        <string>Naam</string>
+        <string>Straat</string>
        </property>
       </widget>
      </item>
-     <item row="2" column="1" colspan="2">
-      <widget class="QLineEdit" name="le_straat"/>
-     </item>
-     <item row="13" column="4" colspan="3">
-      <widget class="QComboBox" name="comboBox_hoe_bt_leren_kennen"/>
-     </item>
-     <item row="9" column="3" rowspan="2">
-      <widget class="QLabel" name="label_stop_reden">
-       <property name="text">
-        <string>Stopreden</string>
+     <item row="1" column="6">
+      <widget class="QLineEdit" name="le_busnr">
+       <property name="maximumSize">
+        <size>
+         <width>80</width>
+         <height>16777215</height>
+        </size>
        </property>
       </widget>
      </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="label_varia">
+     <item row="1" column="5">
+      <widget class="QLabel" name="label_busnr">
        <property name="text">
-        <string>Profiel</string>
+        <string>Bus</string>
        </property>
       </widget>
      </item>
-     <item row="8" column="0" colspan="3">
-      <widget class="QCheckBox" name="checkBox_hr_goedgekeurd">
+     <item row="3" column="4" colspan="3">
+      <widget class="QLineEdit" name="le_gsm"/>
+     </item>
+     <item row="0" column="1" colspan="2">
+      <widget class="QLineEdit" name="le_naam"/>
+     </item>
+     <item row="0" column="3">
+      <widget class="QLabel" name="label_familieNaam">
        <property name="text">
-        <string>reglement getekend</string>
+        <string>Familienaam</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
        </property>
       </widget>
+     </item>
+     <item row="0" column="4" colspan="3">
+      <widget class="QLineEdit" name="le_familieNaam"/>
+     </item>
+     <item row="3" column="3">
+      <widget class="QLabel" name="label_gsm">
+       <property name="text">
+        <string>GSM</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1" colspan="2">
+      <widget class="QLineEdit" name="le_telefoon"/>
      </item>
     </layout>
    </item>
