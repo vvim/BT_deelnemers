@@ -16,6 +16,7 @@
 #include "mylineedit.h"
 #include "deelnemer_location.h"
 #include "deelnemernotes.h"
+#include "newdeelnemerindividu.h"
 
 namespace Ui {
 class Buurtijd_deelnemers;
@@ -60,6 +61,7 @@ private:
     SDeelnemerMarker last_known_deelnemer;
     DeelnemerLocation *location;
     DeelnemerNotes *notes;
+    NewDeelnemerIndividu *newindividu;
     QSettings *settings;
 
 private slots:
@@ -70,6 +72,7 @@ private slots:
     void on_cancelButton_clicked();
     void on_pushButton_showNotes_clicked();
     void on_pushButton_copyContactInformation_clicked();
+    void on_pushButton_CreateNewIndividu_clicked();
 };
 
 #endif // BUURTIJD_DEELNEMERS_H

@@ -41,7 +41,8 @@ SOURCES += main.cpp\
     mylineedit.cpp \
     deelnemer_location.cpp \
     deelnemernotes.cpp \
-    notassortfilterproxymodel.cpp
+    notassortfilterproxymodel.cpp \
+    newdeelnemerindividu.cpp
 
 HEADERS  += buurtijd_deelnemers.h \
     btlistview.h \
@@ -53,11 +54,13 @@ HEADERS  += buurtijd_deelnemers.h \
     notassortfilterproxymodel.h \
     saddress.h \
     sdeelnemerindividu.h \
-    scontacts.h
+    scontacts.h \
+    newdeelnemerindividu.h
 
 FORMS    += buurtijd_deelnemers.ui \
     deelnemer_location.ui \
-    deelnemernotes.ui
+    deelnemernotes.ui \
+    newdeelnemerindividu.ui
 
 RESOURCES += \
     buurtijd_deelnemers.qrc

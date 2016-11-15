@@ -16,6 +16,7 @@ Buurtijd_deelnemers::Buurtijd_deelnemers(QWidget *parent) :
     completer = NULL;
     location = NULL;
     notes = NULL;
+    newindividu = NULL;
     last_known_deelnemer = SDeelnemerMarker();
     settings = new QSettings("settings.ini", QSettings::IniFormat);
 
@@ -158,6 +159,7 @@ Buurtijd_deelnemers::~Buurtijd_deelnemers()
 
     delete location;
     delete notes;
+    delete newindividu;
     delete ui;
 
     vvimDebug() << "[TODO]" << "delete alle modellen";
@@ -823,4 +825,14 @@ bool Buurtijd_deelnemers::UserMadeChangesToDeelnemerIndividu()
     }
 
     return false;
+}
+
+void Buurtijd_deelnemers::on_pushButton_CreateNewIndividu_clicked()
+{
+    vvimDebug() << "show NewBuurtijderIndividu";
+    if(newindividu)
+        delete newindividu;
+
+    newindividu = new NewDeelnemerIndividu();
+    newindividu->show();
 }

@@ -24,12 +24,19 @@
       </widget>
      </item>
      <item>
-      <widget class="MyLineEdit" name="le_zoekDeelnemer"/>
+      <widget class="MyLineEdit" name="le_zoekDeelnemer" native="true"/>
      </item>
      <item>
       <widget class="QPushButton" name="pushButton_showDeelnemer">
        <property name="text">
         <string>Toon</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_CreateNewIndividu">
+       <property name="text">
+        <string>Nieuw</string>
        </property>
       </widget>
      </item>
@@ -232,7 +239,7 @@
       </widget>
      </item>
      <item row="21" column="3" rowspan="3" colspan="3">
-      <widget class="BTListView" name="listView_domein"/>
+      <widget class="BTListView" name="listView_domein" native="true"/>
      </item>
      <item row="8" column="1">
       <widget class="QDateEdit" name="dateEdit_inschrijfdatum"/>
@@ -404,7 +411,7 @@
       </widget>
      </item>
      <item row="21" column="1" rowspan="3">
-      <widget class="BTListView" name="listView_doelgroep"/>
+      <widget class="BTListView" name="listView_doelgroep" native="true"/>
      </item>
      <item row="9" column="4" colspan="2">
       <widget class="QCheckBox" name="checkBox_fotomateriaal_gebruiken">
@@ -534,14 +541,14 @@
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>BTListView</class>
-   <extends>QListView</extends>
-   <header>btlistview.h</header>
+   <class>MyLineEdit</class>
+   <extends>QWidget</extends>
+   <header>mylineedit.h</header>
   </customwidget>
   <customwidget>
-   <class>MyLineEdit</class>
-   <extends>QLineEdit</extends>
-   <header>mylineedit.h</header>
+   <class>BTListView</class>
+   <extends>QWidget</extends>
+   <header>btlistview.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>
