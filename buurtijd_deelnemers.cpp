@@ -400,16 +400,14 @@ void Buurtijd_deelnemers::on_saveButton_clicked()
         vvimDebug() << "reload the completer";
         loadCompleter();
         QString feedback = QString(ui->le_naam->text());
-        ui->label_feedback->setText(feedback.append(" opgeslagen"));
-        ui->label_feedback->setStyleSheet("font-style: italic; color: green");
+        feedbackSuccess(feedback.append(" opgeslagen"));
     }
     else
     {
         vvimDebug() << "submitAll FAILED, rollback";
         vvimDebug() << "error:" << model_deelnemers->lastError();
         model_deelnemers->database().rollback();
-        ui->label_feedback->setText("Er ging iets mis, wijzigingen niet opgeslagen");
-        ui->label_feedback->setStyleSheet("font-weight: bold; color: red");
+        feedbackWarning("Er ging iets mis, wijzigingen niet opgeslagen");
     }
 
     if(last_known_index.isValid())
@@ -835,4 +833,16 @@ void Buurtijd_deelnemers::on_pushButton_CreateNewIndividu_clicked()
 
     newindividu = new NewDeelnemerIndividu();
     newindividu->show();
+}
+
+void Buurtijd_deelnemers::feedbackSuccess(QString message)
+{
+    ui->label_feedback->setText(message);
+    ui->label_feedback->setStyleSheet("font-style: italic; color: green");
+}
+
+void Buurtijd_deelnemers::feedbackWarning(QString message)
+{
+    ui->label_feedback->setText(message);
+    ui->label_feedback->setStyleSheet("font-weight: bold; color: red");
 }

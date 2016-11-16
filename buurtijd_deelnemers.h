@@ -54,6 +54,8 @@ private:
     bool UserMadeChangesToDeelnemerAddress();
     bool UserMadeChangesToDeelnemerContacts();
     bool UserMadeChangesToDeelnemerIndividu();
+    void feedbackSuccess(QString message);
+    void feedbackWarning(QString message);
 
     MyCompleter *completer;
     QMap<QString, QModelIndex> deelnemers_map;
