@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>843</width>
-    <height>222</height>
+    <height>220</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -33,10 +33,10 @@
      <item row="2" column="4" colspan="3">
       <widget class="QLineEdit" name="le_plaats"/>
      </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="label_naam">
+     <item row="1" column="3">
+      <widget class="QLabel" name="label_huisnr">
        <property name="text">
-        <string>Naam</string>
+        <string>Nr</string>
        </property>
       </widget>
      </item>
@@ -50,25 +50,18 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="3">
-      <widget class="QLabel" name="label_huisnr">
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_straat">
        <property name="text">
-        <string>Nr</string>
+        <string>Straat</string>
        </property>
       </widget>
      </item>
      <item row="1" column="1" colspan="2">
       <widget class="QLineEdit" name="le_straat"/>
      </item>
-     <item row="2" column="1" colspan="2">
-      <widget class="QLineEdit" name="le_postcode"/>
-     </item>
-     <item row="3" column="0">
-      <widget class="QLabel" name="label_telefoon">
-       <property name="text">
-        <string>Telefoon</string>
-       </property>
-      </widget>
+     <item row="0" column="4" colspan="3">
+      <widget class="QLineEdit" name="le_familieNaam"/>
      </item>
      <item row="1" column="4">
       <widget class="QLineEdit" name="le_huisnr">
@@ -80,17 +73,23 @@
        </property>
       </widget>
      </item>
-     <item row="2" column="0">
-      <widget class="QLabel" name="label_postcode">
+     <item row="2" column="1" colspan="2">
+      <widget class="QLineEdit" name="le_postcode"/>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_naam">
        <property name="text">
-        <string>Postcode</string>
+        <string>Voornaam</string>
        </property>
       </widget>
      </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="label_straat">
+     <item row="0" column="3">
+      <widget class="QLabel" name="label_familieNaam">
        <property name="text">
-        <string>Straat</string>
+        <string>Familienaam</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
        </property>
       </widget>
      </item>
@@ -111,37 +110,15 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="4" colspan="3">
-      <widget class="QLineEdit" name="le_gsm"/>
-     </item>
      <item row="0" column="1" colspan="2">
       <widget class="QLineEdit" name="le_naam"/>
      </item>
-     <item row="0" column="3">
-      <widget class="QLabel" name="label_familieNaam">
+     <item row="2" column="0">
+      <widget class="QLabel" name="label_postcode">
        <property name="text">
-        <string>Familienaam</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+        <string>Postcode</string>
        </property>
       </widget>
-     </item>
-     <item row="0" column="4" colspan="3">
-      <widget class="QLineEdit" name="le_familieNaam"/>
-     </item>
-     <item row="3" column="3">
-      <widget class="QLabel" name="label_gsm">
-       <property name="text">
-        <string>GSM</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="1" colspan="2">
-      <widget class="QLineEdit" name="le_telefoon"/>
      </item>
     </layout>
    </item>
@@ -161,26 +138,6 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_bottom">
      <item>
-      <widget class="QLabel" name="label_feedback">
-       <property name="text">
-        <string>TextLabel</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
       <widget class="QDialogButtonBox" name="buttonBox">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
@@ -194,24 +151,17 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>le_naam</tabstop>
+  <tabstop>le_familieNaam</tabstop>
+  <tabstop>le_straat</tabstop>
+  <tabstop>le_huisnr</tabstop>
+  <tabstop>le_busnr</tabstop>
+  <tabstop>le_postcode</tabstop>
+  <tabstop>le_plaats</tabstop>
+ </tabstops>
  <resources/>
  <connections>
-  <connection>
-   <sender>buttonBox</sender>
-   <signal>rejected()</signal>
-   <receiver>NewDeelnemerIndividu</receiver>
-   <slot>reject()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>316</x>
-     <y>260</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>286</x>
-     <y>274</y>
-    </hint>
-   </hints>
-  </connection>
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
@@ -224,6 +174,22 @@
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>NewDeelnemerIndividu</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>316</x>
+     <y>260</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>286</x>
      <y>274</y>
     </hint>
    </hints>
