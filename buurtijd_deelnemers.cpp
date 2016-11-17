@@ -865,6 +865,21 @@ void Buurtijd_deelnemers::addNewIndividuToDatabase(QString naam,QString familien
         vvimDebug() << "adding new individual" << "[FAILED]" <<     query_add_new_individu.lastQuery();
         feedbackWarning(QString("Er ging iets mis, %1 niet opgeslagen").arg(feedback));
     }
+
+    //update the model
+    model_deelnemers->database().transaction();
+    model_deelnemers->submitAll();
+
+    //reload the completer
+    loadCompleter();
+
+    //show the newly added individual:
+    vvimDebug() << "[WARNING] we should first test if we need to save made changes to the shown user before showing newly added individual?";
+    // show individual at the bottom of the model??
+    int lastRow = model_deelnemers->rowCount() - 1;
+    QModelIndex deelnemer_idx = model_deelnemers->index( lastRow, 0);
+    vvimDebug() << deelnemer_idx << model_deelnemers->rowCount() << lastRow;
+    ChangeRow(deelnemer_idx);
 }
 
 void Buurtijd_deelnemers::feedbackSuccess(QString message)
