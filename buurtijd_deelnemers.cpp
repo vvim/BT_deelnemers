@@ -832,7 +832,39 @@ void Buurtijd_deelnemers::on_pushButton_CreateNewIndividu_clicked()
         delete newindividu;
 
     newindividu = new NewDeelnemerIndividu();
+    connect(newindividu, SIGNAL(addNewIndividu(QString,QString,QString,QString,QString,QString,QString)),
+            this, SLOT(addNewIndividuToDatabase(QString,QString,QString,QString,QString,QString,QString))); // wat met NULL ?
     newindividu->show();
+}
+
+void Buurtijd_deelnemers::addNewIndividuToDatabase(QString naam,QString familienaam,QString straat,QString huisnr,QString busnr,QString postcode,QString plaats)
+{
+    vvimDebug() << "will add to database:" << QString("\n..%1 %2\n..%3 %4 bus %5\n..%6 %7").arg(naam).arg(familienaam).arg(straat).arg(huisnr).arg(busnr).arg(postcode).arg(plaats);
+
+    QString SQLquery_add_new_individu = "INSERT INTO `t_deelnemers` ( `naam`, `familienaam`, `straat`, `huisnr`, `busnr`, `postcode`, `plaats`, `soort_deelnemer`) VALUES (:naam, :familienaam, :straat, :huisnr, :busnr, :postcode, :plaats, :soort_deelnemer)";
+
+    QSqlQuery query_add_new_individu;
+    query_add_new_individu.prepare(SQLquery_add_new_individu);
+    query_add_new_individu.bindValue(":naam", naam);
+    query_add_new_individu.bindValue(":familienaam", familienaam);
+    query_add_new_individu.bindValue(":straat", straat);
+    query_add_new_individu.bindValue(":huisnr", huisnr);
+    query_add_new_individu.bindValue(":busnr", busnr);
+    query_add_new_individu.bindValue(":postcode", postcode);
+    query_add_new_individu.bindValue(":plaats", plaats);
+    query_add_new_individu.bindValue(":soort_deelnemer", DEELNEMER_SOORT_is_INDIVIDU);
+
+    QString feedback = QString("%1 %2").arg(naam).arg(familienaam);
+    if(query_add_new_individu.exec())
+    {
+        vvimDebug() << "adding new individual" << "success";
+        feedbackSuccess(feedback.append(" opgeslagen"));
+    }
+    else
+    {
+        vvimDebug() << "adding new individual" << "[FAILED]" <<     query_add_new_individu.lastQuery();
+        feedbackWarning(QString("Er ging iets mis, %1 niet opgeslagen").arg(feedback));
+    }
 }
 
 void Buurtijd_deelnemers::feedbackSuccess(QString message)

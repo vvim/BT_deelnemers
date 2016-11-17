@@ -1,5 +1,9 @@
 #include "newdeelnemerindividu.h"
 #include "ui_newdeelnemerindividu.h"
+#include <QDebug>
+
+#define vvimDebug()\
+    qDebug() << "[" << Q_FUNC_INFO << "]"
 
 NewDeelnemerIndividu::NewDeelnemerIndividu(QWidget *parent) :
     QDialog(parent),
@@ -17,4 +21,12 @@ NewDeelnemerIndividu::NewDeelnemerIndividu(QWidget *parent) :
 NewDeelnemerIndividu::~NewDeelnemerIndividu()
 {
     delete ui;
+}
+
+void NewDeelnemerIndividu::on_buttonBox_accepted()
+{
+    vvimDebug() << "emit addNewIndividu() to put information in database";
+    emit addNewIndividu(ui->le_naam->text(),ui->le_familieNaam->text(),
+                        ui->le_straat->text(),ui->le_huisnr->text(),ui->le_busnr->text(),
+                        ui->le_postcode->text(),ui->le_plaats->text());
 }

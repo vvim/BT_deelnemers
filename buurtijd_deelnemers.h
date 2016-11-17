@@ -75,6 +75,7 @@ private slots:
     void on_pushButton_showNotes_clicked();
     void on_pushButton_copyContactInformation_clicked();
     void on_pushButton_CreateNewIndividu_clicked();
+    void addNewIndividuToDatabase(QString naam,QString familienaam,QString straat,QString huisnr,QString busnr,QString postcode,QString plaats);
 };
 
 #endif // BUURTIJD_DEELNEMERS_H

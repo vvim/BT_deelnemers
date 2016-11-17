@@ -15,6 +15,12 @@ public:
     explicit NewDeelnemerIndividu(QWidget *parent = 0);
     ~NewDeelnemerIndividu();
 
+signals:
+    void addNewIndividu(QString,QString,QString,QString,QString,QString,QString);
+
+private slots:
+    void on_buttonBox_accepted();
+
 private:
     Ui::NewDeelnemerIndividu *ui;
 };
