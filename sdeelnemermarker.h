@@ -125,9 +125,9 @@ struct SDeelnemerMarker
     {
         QString contactinformation = getName();
         if(contacts_present)
-            contactinformation.append("\t%1\t%2\t%3\t%4").arg(Contacts.email1).arg(Contacts.email2).arg(Contacts.telnr).arg(Contacts.gsm);
+            contactinformation.append(QString("\t%1\t%2\t%3\t%4").arg(Contacts.email1).arg(Contacts.email2).arg(Contacts.telnr).arg(Contacts.gsm));
         if(address_present)
-            contactinformation.append("\t%1").arg(Address.getAddress());
+            contactinformation.append(QString("\t%1").arg(Address.getAddress()));
         return contactinformation;
     }
 
