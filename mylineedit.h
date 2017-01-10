@@ -9,6 +9,7 @@
 #include <QString>
 #include <QCompleter>
 #include <QKeyEvent>
+#include <QMouseEvent>
 
 class MyCompleter : public QCompleter
 {
@@ -60,6 +61,7 @@ class MyLineEdit : public QLineEdit
 
     protected:
         void keyPressEvent(QKeyEvent *e);
+        void mousePressEvent(QMouseEvent *m);
 
     private slots:
         void insertCompletion(const QString &completion);

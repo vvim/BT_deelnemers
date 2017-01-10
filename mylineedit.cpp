@@ -74,3 +74,25 @@ void MyLineEdit::keyPressEvent(QKeyEvent *e)
     c->update(text());
     c->popup()->setCurrentIndex(c->completionModel()->index(0, 0));
 }
+
+void MyLineEdit::mousePressEvent(QMouseEvent *m)
+{
+    if (m)
+    {
+        switch (m->button())
+        {
+            case Qt::LeftButton:
+                // left mousebutton pressed in MyLineEdit, clear it so that the user can type
+                vvimDebug() << "left mousebutton pressed in MyLineEdit, clear it so that the user can type";
+                this->clear();
+                return;
+                /*
+            case Qt::RightButton:
+                qDebug() << "right mousebutton pressed";
+                return;
+                */
+            default:
+                m->ignore();
+        }
+    }
+}
