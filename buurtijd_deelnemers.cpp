@@ -614,7 +614,7 @@ SContacts Buurtijd_deelnemers::readContacts()
 bool Buurtijd_deelnemers::ThisRowContainsAnIndividual(int row)
 {
     return( !(model_deelnemers->data(model_deelnemers->index(row,model_deelnemers->fieldIndex("soort_deelnemer"))).isNull())
-                && model_deelnemers->data(model_deelnemers->index(row,model_deelnemers->fieldIndex("soort_deelnemer"))).toInt() == 0);
+                && model_deelnemers->data(model_deelnemers->index(row,model_deelnemers->fieldIndex("soort_deelnemer"))).toInt() == DEELNEMER_SOORT_is_INDIVIDU);
 }
 
 bool Buurtijd_deelnemers::UserMadeChangesToDeelnemer()
