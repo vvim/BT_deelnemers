@@ -579,7 +579,13 @@ SDeelnemerMarker Buurtijd_deelnemers::readDeelnemer()
     {
         vvimDebug() << "this deelnemer is an individual";
         QString familienaam = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("familienaam"))).toString();
-        _deelnemer.AddIndividu(SDeelnemerIndividu(name, familienaam));
+        int geslacht = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("geslacht"))).toInt();
+        QDate geboortedatum = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("geboortedatum"))).toDate();
+        QString afkomst = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("afkomst"))).toString();
+        int statuut = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("statuut"))).toInt();
+        int niveauNederlands = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("niveau_nl"))).toInt();
+
+        _deelnemer.AddIndividu(SDeelnemerIndividu(name, familienaam, geslacht, geboortedatum, afkomst, statuut, niveauNederlands));
     }
 
 
@@ -808,7 +814,35 @@ bool Buurtijd_deelnemers::UserMadeChangesToDeelnemerIndividu()
             return true;
         }
 
+        if(ui->comboBox_geslacht->currentIndex() != last_known_deelnemer.Individu.geslacht)
+        {
+            vvimDebug() << "...geslacht has changed. DB:" << last_known_deelnemer.Individu.geslacht << last_known_deelnemer.Individu.getGeslacht() << "now:" << ui->comboBox_geslacht->currentIndex() << ui->comboBox_geslacht->currentText();
+            return true;
+        }
 
+        if(ui->dateEdit_geboortedatum->date() != last_known_deelnemer.Individu.geboortedatum)
+        {
+            vvimDebug() << "...geboortedatum has changed. DB:" << last_known_deelnemer.Individu.geboortedatum << "now:" << ui->dateEdit_geboortedatum->date();
+            return true;
+        }
+
+        if(ui->le_afkomst->text() != last_known_deelnemer.Individu.afkomst)
+        {
+            vvimDebug() << "...afkomst has changed. DB:" << last_known_deelnemer.Individu.afkomst << "now:" << ui->le_afkomst->text();
+            return true;
+        }
+
+        if(ui->comboBox_statuut->currentIndex() != last_known_deelnemer.Individu.statuut)
+        {
+            vvimDebug() << "...statuut has changed. DB:" << last_known_deelnemer.Individu.statuut /** << last_known_deelnemer.Individu.getStatuut() **/ << "now:" << ui->comboBox_statuut->currentIndex() << ui->comboBox_statuut->currentText();
+            return true;
+        }
+
+        if(ui->comboBox_niveau_nederlands->currentIndex() != last_known_deelnemer.Individu.niveauNederlands)
+        {
+            vvimDebug() << "...niveau Nederlands has changed. DB:" << last_known_deelnemer.Individu.niveauNederlands /** << last_known_deelnemer.Individu.getNiveauNederlands() **/ << "now:" << ui->comboBox_niveau_nederlands->currentIndex() << ui->comboBox_niveau_nederlands->currentText();
+            return true;
+        }
     }
     else
     {
