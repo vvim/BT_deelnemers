@@ -55,7 +55,8 @@ HEADERS  += buurtijd_deelnemers.h \
     saddress.h \
     sdeelnemerindividu.h \
     scontacts.h \
-    newdeelnemerindividu.h
+    newdeelnemerindividu.h \
+    sdeelnemerorganisatie.h
 
 FORMS    += buurtijd_deelnemers.ui \
     deelnemer_location.ui \

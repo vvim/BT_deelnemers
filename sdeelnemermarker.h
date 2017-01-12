@@ -6,6 +6,7 @@
 #include "saddress.h"
 #include "scontacts.h"
 #include "sdeelnemerindividu.h"
+#include "sdeelnemerorganisatie.h"
 
 // add later if useful:
 //      #include sdeelnemerindividu.h
@@ -57,8 +58,16 @@ struct SDeelnemerMarker
 
     void AddIndividu(SDeelnemerIndividu _Individu)
     {
+        organisatie_present = false; // mutually exclusive: a deelnemer is either an individual XOR an organisation
         individu_present = true;
         Individu = _Individu;
+    }
+
+    void AddOrganisatie(SDeelnemerOrganisatie _Organisatie)
+    {
+        individu_present = false; // mutually exclusive: a deelnemer is either an individual XOR an organisation
+        organisatie_present = true;
+        Organisatie = _Organisatie;
     }
 
     QString getName()
@@ -87,14 +96,12 @@ struct SDeelnemerMarker
             Contacts.PrintInformation();
         if(individu_present)
             Individu.PrintInformation();
+        if(organisatie_present)
+            Organisatie.PrintInformation();
         /** add later if useful:
         if((!individu) && (!organisatie))
         {
             qDebug() << ". type: Adres";
-        }
-        if(organisatie)
-        {
-            Organisatie.PrintInformation();
         }
         **/
     }
@@ -160,6 +167,9 @@ struct SDeelnemerMarker
     SAddress Address;
     bool contacts_present;
     SContacts Contacts;
+
+    bool organisatie_present;
+    SDeelnemerOrganisatie Organisatie;
 
 // add later if useful:
 //
