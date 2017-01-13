@@ -24,7 +24,7 @@ struct SDeelnemerIndividu
         brandverzekering = false;
     }
 
-    SDeelnemerIndividu(QString _voornaam, QString _familienaam, int _geslacht, QDate _geboortedatum, QString _afkomst, int _statuut, int _niveauNederlands)
+    SDeelnemerIndividu(QString _voornaam, QString _familienaam, int _geslacht, QDate _geboortedatum, QString _afkomst, int _statuut, int _niveauNederlands, bool _familialeverzekering, bool _brandverzekering)
     {
         voornaam = _voornaam;
         familienaam = _familienaam;
@@ -33,6 +33,8 @@ struct SDeelnemerIndividu
         afkomst = _afkomst;
         statuut = _statuut;
         niveauNederlands = _niveauNederlands;
+        familialeverzekering = _familialeverzekering;
+        brandverzekering = _brandverzekering;
     }
 
     QString getName()
@@ -68,6 +70,7 @@ struct SDeelnemerIndividu
     QString afkomst;
     int statuut;
     int niveauNederlands;
+    bool familialeverzekering, brandverzekering;
 };
 
 #endif // SDEELNEMERINDIVIDU_H

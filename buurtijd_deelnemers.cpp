@@ -584,8 +584,10 @@ SDeelnemerMarker Buurtijd_deelnemers::readDeelnemer()
         QString afkomst = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("afkomst"))).toString();
         int statuut = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("statuut"))).toInt();
         int niveauNederlands = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("niveau_nl"))).toInt();
+        bool fam_verzekering = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("fam_verzekering"))).toBool();
+        bool brand_verzekering = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("brand_verzekering"))).toBool();
 
-        _deelnemer.AddIndividu(SDeelnemerIndividu(name, familienaam, geslacht, geboortedatum, afkomst, statuut, niveauNederlands));
+        _deelnemer.AddIndividu(SDeelnemerIndividu(name, familienaam, geslacht, geboortedatum, afkomst, statuut, niveauNederlands, fam_verzekering, brand_verzekering));
     }
 
 
@@ -841,6 +843,18 @@ bool Buurtijd_deelnemers::UserMadeChangesToDeelnemerIndividu()
         if(ui->comboBox_niveau_nederlands->currentIndex() != last_known_deelnemer.Individu.niveauNederlands)
         {
             vvimDebug() << "...niveau Nederlands has changed. DB:" << last_known_deelnemer.Individu.niveauNederlands /** << last_known_deelnemer.Individu.getNiveauNederlands() **/ << "now:" << ui->comboBox_niveau_nederlands->currentIndex() << ui->comboBox_niveau_nederlands->currentText();
+            return true;
+        }
+
+        if( ui->checkBox_familiale_verzekering->isChecked() != last_known_deelnemer.Individu.familialeverzekering)
+        {
+            vvimDebug() << "...familiale verzekering has changed. DB:" << last_known_deelnemer.Individu.familialeverzekering << "now:" << ui->checkBox_familiale_verzekering->isChecked();
+            return true;
+        }
+
+        if( ui->checkBox_brandverzekering->isChecked() != last_known_deelnemer.Individu.brandverzekering)
+        {
+            vvimDebug() << "...brandverzekering has changed. DB:" << last_known_deelnemer.Individu.brandverzekering << "now:" << ui->checkBox_brandverzekering->isChecked();
             return true;
         }
     }
