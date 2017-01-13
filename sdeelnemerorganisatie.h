@@ -3,43 +3,28 @@
 
 #include <QDebug>
 
-// I could make an enum class to save the gender of this individual, but
-// as the UI works with a combobox, an 'int' seems more practical
-//
-//      enum class Geslacht { man, vrouw };
-
-//structure containing markers data when typeOf(deelnemer) = individu
+//structure containing markers data when typeOf(deelnemer) = organisatie
 struct SDeelnemerOrganisatie
 {
     SDeelnemerOrganisatie()
     {
     }
 
-/*    SDeelnemerIndividu(QString _voornaam, QString _familienaam, int _geslacht, QDate _geboortedatum, QString _afkomst, int _statuut, int _niveauNederlands)
+/*    SDeelnemerOrganisatie(QString _xx)
     {
-        voornaam = _voornaam;
-        familienaam = _familienaam;
-        geslacht = _geslacht;
-        geboortedatum = _geboortedatum;
-        afkomst = _afkomst;
-        statuut = _statuut;
-        niveauNederlands = _niveauNederlands;
+        xx = _xx;
     }
 */
 
     void PrintInformation()
     {
         qDebug() << "... subtype: Organisatie";
-        qDebug() << "..... idk:" /* << voornaam */ ;
+        qDebug() << "..... xx:" /* << xx */ ;
     }
 
-    QString voornaam;
-    QString familienaam;
-    int geslacht;
-    QDate geboortedatum;
-    QString afkomst;
-    int statuut;
-    int niveauNederlands;
+    /*
+    QString xx;
+    */
 };
 
 #endif // SDEELNEMERORGANISATIE_H
