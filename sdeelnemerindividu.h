@@ -15,6 +15,13 @@ struct SDeelnemerIndividu
     {
         voornaam = "";
         familienaam = "";
+        geslacht = -1;
+        geboortedatum = QDate();
+        afkomst = "";
+        statuut = -1;
+        niveauNederlands = -1;
+        familialeverzekering = false;
+        brandverzekering = false;
     }
 
     SDeelnemerIndividu(QString _voornaam, QString _familienaam, int _geslacht, QDate _geboortedatum, QString _afkomst, int _statuut, int _niveauNederlands)
