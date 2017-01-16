@@ -2,9 +2,14 @@
     <qresource prefix="/icons">
         <file>icons/map.png</file>
         <file>icons/note.png</file>
+        <file>icons/next.png</file>
+        <file>icons/previous.png</file>
     </qresource>
     <qresource prefix="/html">
         <file>google_maps.html</file>
         <file>google_maps_markers.html</file>
+    </qresource>
+    <qresource prefix="/">
+        <file>icons/next.png</file>
     </qresource>
 </RCC>

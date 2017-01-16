@@ -131,6 +131,7 @@ Buurtijd_deelnemers::Buurtijd_deelnemers(QWidget *parent) :
 
     connect(ui->deelnemersTable->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),
             this, SLOT(ChangeRow(QModelIndex)));
+    connect(mapper, SIGNAL(currentIndexChanged(int)), this, SLOT(updateNavigationalButtons(int)));
 
     ui->deelnemersTable->setCurrentIndex(model_deelnemers->index(0, 0));
 
@@ -1031,4 +1032,48 @@ void Buurtijd_deelnemers::feedbackWarning(QString message)
 {
     ui->label_feedback->setText(message);
     ui->label_feedback->setStyleSheet("font-weight: bold; color: red");
+}
+
+void Buurtijd_deelnemers::updateNavigationalButtons(int row)
+{
+    ui->pushButton_previous->setEnabled(row > 0);
+    ui->pushButton_next->setEnabled(row < model_deelnemers->rowCount() - 1);
+}
+
+void Buurtijd_deelnemers::on_pushButton_previous_clicked()
+{
+    vvimDebug() << "button 'previous' pressed";
+    ui->label_feedback->clear();
+    int row = last_known_index.row() - 1;
+
+    QModelIndex deelnemer_idx = model_deelnemers->index(row,0);
+
+    if (deelnemer_idx.isValid()) // else no match
+    {
+        vvimDebug() << "toon user" << deelnemer_idx.data().toInt();
+        ChangeRow(deelnemer_idx);
+    }
+    else
+    {
+        vvimDebug() << "no such user at index" << deelnemer_idx;
+    }
+}
+
+void Buurtijd_deelnemers::on_pushButton_next_clicked()
+{
+    vvimDebug() << "button 'previous' pressed";
+    ui->label_feedback->clear();
+    int row = last_known_index.row() + 1;
+
+    QModelIndex deelnemer_idx = model_deelnemers->index(row,0);
+
+    if (deelnemer_idx.isValid()) // else no match
+    {
+        vvimDebug() << "toon user" << deelnemer_idx.data().toInt();
+        ChangeRow(deelnemer_idx);
+    }
+    else
+    {
+        vvimDebug() << "no such user at index" << deelnemer_idx;
+    }
 }
