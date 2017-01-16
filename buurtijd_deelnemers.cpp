@@ -590,6 +590,17 @@ SDeelnemerMarker Buurtijd_deelnemers::readDeelnemer()
         _deelnemer.AddIndividu(SDeelnemerIndividu(name, familienaam, geslacht, geboortedatum, afkomst, statuut, niveauNederlands, fam_verzekering, brand_verzekering));
     }
 
+    if(ThisRowContainsAnOrganisation(currentRow))
+    {
+        vvimDebug() << "this deelnemer is an organisation";
+        QString contactpersoon_voornaam = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("contactpersoon_voornaam"))).toString();
+        QString contactpersoon_familienaam = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("contactpersoon_familienaam"))).toString();
+        bool vrijw_verzekering = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("vrijwilligers_verzekering"))).toBool();
+        QString doelgroep = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("doelgroep"))).toString();
+        QString domein = model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("domein"))).toString();
+
+        _deelnemer.AddOrganisatie(SDeelnemerOrganisatie(contactpersoon_voornaam, contactpersoon_familienaam, vrijw_verzekering, doelgroep, domein));
+    }
 
     return _deelnemer;
 }
@@ -623,6 +634,12 @@ bool Buurtijd_deelnemers::ThisRowContainsAnIndividual(int row)
 {
     return( !(model_deelnemers->data(model_deelnemers->index(row,model_deelnemers->fieldIndex("soort_deelnemer"))).isNull())
                 && model_deelnemers->data(model_deelnemers->index(row,model_deelnemers->fieldIndex("soort_deelnemer"))).toInt() == DEELNEMER_SOORT_is_INDIVIDU);
+}
+
+bool Buurtijd_deelnemers::ThisRowContainsAnOrganisation(int row)
+{
+    return( !(model_deelnemers->data(model_deelnemers->index(row,model_deelnemers->fieldIndex("soort_deelnemer"))).isNull())
+                && model_deelnemers->data(model_deelnemers->index(row,model_deelnemers->fieldIndex("soort_deelnemer"))).toInt() == DEELNEMER_SOORT_is_ORGANISATIE);
 }
 
 bool Buurtijd_deelnemers::UserMadeChangesToDeelnemer()

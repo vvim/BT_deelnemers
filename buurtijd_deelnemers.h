@@ -50,6 +50,7 @@ private:
     SAddress readAddress();
     SContacts readContacts();
     bool ThisRowContainsAnIndividual(int row);
+    bool ThisRowContainsAnOrganisation(int row);
     bool UserMadeChangesToDeelnemer();
     bool UserMadeChangesToDeelnemerAddress();
     bool UserMadeChangesToDeelnemerContacts();
