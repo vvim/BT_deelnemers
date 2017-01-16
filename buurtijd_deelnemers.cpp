@@ -223,41 +223,49 @@ void Buurtijd_deelnemers::ChangeRow(QModelIndex new_index)
             return;
         }
     }
-    int currentRow = new_index.row();
 
+    vvimDebug() << "Wijzigingen opslaan? deelnemer:" << last_known_deelnemer.id;
+    // [DEBUG] last_known_deelnemer.PrintInformation();
     if(UserMadeChangesToDeelnemer())
     {
-        qDebug() << "Wijzigingen opslaan? submitAll / Rollback";
+        vvimDebug() << ".. changes have been made";
     /* !! zodra je van fiche verandert , vraag aan de gebruiker "wijzigingen opslaan"? submitAll / Rollback
      *
-     * 1) testen of er iets is gewijzigd bij de gebruiker
-     *          hoe? houden we een BOOL bij met "heeft iets aangeklikt"
-     *               of vergelijken we de inhoud van elke widget met de inhoud van het overeenkomstige model?
+     * 1) testen of er iets is gewijzigd bij de gebruiker -> UserMadeChangesToDeelnemer()
      *
      * 2) indien nodig: messagebox laten zien
      *
      * 3) verder doen met de werking van het programma
-    int reply = QMessageBox::question(this, "Wijzigingen opslaan?", "Wijzigingen opslaan?",
-                                    QMessageBox::Yes|QMessageBox::No);
-    if (reply == QMessageBox::Yes)
-    {
-        // commit();
+     */
+
+
+        vvimDebug() << ".. show QMessageBox";
+        /// !! TODO na "SaveChanges", wordt de nieuwe informatie in SDeelnemer geladen?
+        int reply = QMessageBox::question(this, tr("Wijzigingen opslaan?"), tr("Bij deelnemer %1 zijn gegevens gewijzigd. Wil je deze opslaan vooraleer we de fiche van een andere deelnemer openen?").arg(last_known_deelnemer.getName()),
+                                        QMessageBox::Yes|QMessageBox::No);
+        if (reply == QMessageBox::Yes)
+        {
+            vvimDebug() << ".... user clicked on 'Yes' to save the changes";
+            on_saveButton_clicked();
+            // commit();
+        }
+        else if (reply == QMessageBox::No)
+        {
+            on_cancelButton_clicked();
+            // rollback();
+            vvimDebug() << ".... NO was clicked by user => ignore changes";
+        }
+        else
+        {
+            // de gebruiker heeft op ESC gedrukt of het kruisje aangeklikt: geldt niet als input
+            vvimDebug() << ".... user pressed ESC or closed the QMessageBox => exit this function";
+            return;
+        }
+
     }
-    else if (reply == QMessageBox::No)
-    {
-        // rollback();
-        qDebug() << "Yes was *not* clicked";
-    }
-    else
-    {
-        // de gebruiker heeft op ESC gedrukt of het kruisje aangeklikt: geldt niet als input
-        return;
-    }
-     *
-     * 3) verder doen met de werking van het programma
-     *
-    **/
-    }
+
+    vvimDebug() << ".. changing current row";
+    int currentRow = new_index.row();
 
     mapper->setCurrentModelIndex(new_index);
     last_known_index = new_index;
