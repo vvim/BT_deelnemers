@@ -55,6 +55,7 @@ private:
     bool UserMadeChangesToDeelnemerAddress();
     bool UserMadeChangesToDeelnemerContacts();
     bool UserMadeChangesToDeelnemerIndividu();
+    bool UserMadeChangesToDeelnemerOrganisatie();
     void feedbackSuccess(QString message);
     void feedbackWarning(QString message);
 

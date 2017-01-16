@@ -708,13 +708,12 @@ bool Buurtijd_deelnemers::UserMadeChangesToDeelnemer()
         vvimDebug() << "deelnemer" << id << "individu has changed.";
         return true;
     }
-/*
-    if( (ui->comboBox_soort-> == "person") != last_known_deelnemer.individu)
+
+    if(UserMadeChangesToDeelnemerOrganisatie())
     {
-        vvimDebug() << "deelnemer" << id << "has changed. DB:" << last_known_deelnemer.individu << "now:" << ui->comboBox_soort->ite->text();
+        vvimDebug() << "deelnemer" << id << "organisatie has changed.";
         return true;
     }
-*/
 
     return false;
 }
@@ -883,6 +882,71 @@ bool Buurtijd_deelnemers::UserMadeChangesToDeelnemerIndividu()
         if(last_known_deelnemer.individu_present)
         {
             vvimDebug() << "...deelnemer in UI is NOT 'individu', but in SDeelnemer it is => changes have been made.";
+            return true;
+        }
+    }
+
+    return false;
+}
+
+bool Buurtijd_deelnemers::UserMadeChangesToDeelnemerOrganisatie()
+{
+    if(last_known_deelnemer.id < 0)
+    {
+        vvimDebug() << "last_known_deelnemer.id < 0, this is normal at the startup of the program as no deelnemer has been loaded yet";
+        return false;
+    }
+
+    if( ui->comboBox_soort->currentIndex() == DEELNEMER_SOORT_is_ORGANISATIE)
+    {
+        if(!last_known_deelnemer.organisatie_present )
+        {
+            vvimDebug() << "...deelnemer in UI is 'organisatie', but in SDeelnemer it is not => changes have been made.";
+            return true;
+        }
+
+        // the deelnemer in the program is an ORGANISATIE and the deelnemer in SDeelnemer is an ORGANISATIE
+        // so we should test all attributes
+
+        if(ui->le_contactpersoon_organisatie_voornaam->text() != last_known_deelnemer.Organisatie.contactpersoon_voornaam)
+        {
+            vvimDebug() << "...contactpersoon-voornaam has changed. DB:" << last_known_deelnemer.Organisatie.contactpersoon_voornaam << "now:" << ui->le_contactpersoon_organisatie_voornaam->text();
+            return true;
+        }
+
+        if(ui->le_contactpersoon_organisatie_familienaam->text() != last_known_deelnemer.Organisatie.contactpersoon_familienaam)
+        {
+            vvimDebug() << "...contactpersoon-voornaam has changed. DB:" << last_known_deelnemer.Organisatie.contactpersoon_familienaam << "now:" << ui->le_contactpersoon_organisatie_familienaam->text();
+            return true;
+        }
+
+        if( ui->checkBox_vrijwilligers_verzekering->isChecked() != last_known_deelnemer.Organisatie.vrijwilligersverzekering)
+        {
+            vvimDebug() << "...vrijwilligersverzekering has changed. DB:" << last_known_deelnemer.Organisatie.vrijwilligersverzekering << "now:" << ui->checkBox_vrijwilligers_verzekering->isChecked();
+            return true;
+        }
+
+        if(ui->listView_doelgroep->selectedItemsList() != last_known_deelnemer.Organisatie.doelgroep)
+        {
+            vvimDebug() << "...doelgroep has changed. DB:" << last_known_deelnemer.Organisatie.doelgroep << "now:" << ui->listView_doelgroep->selectedItemsList();
+            return true;
+        }
+
+        if(ui->listView_domein->selectedItemsList() != last_known_deelnemer.Organisatie.domein)
+        {
+            vvimDebug() << "...domein has changed. DB:" << last_known_deelnemer.Organisatie.domein << "now:" << ui->listView_domein->selectedItemsList();
+            return true;
+        }
+
+    }
+    else
+    {
+        // the deelnemer in the program is NOT an ORGANISATIE
+        // so we should test if the deelnemer in SDeelnemer is one
+        // return TRUE if there is an ORGANISATIE in SDeelnemer, return FALSE if there isn't
+        if(last_known_deelnemer.organisatie_present)
+        {
+            vvimDebug() << "...deelnemer in UI is NOT 'organisatie', but in SDeelnemer it is => changes have been made.";
             return true;
         }
     }
