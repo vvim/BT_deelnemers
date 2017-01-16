@@ -399,6 +399,8 @@ void Buurtijd_deelnemers::on_saveButton_clicked()
         model_deelnemers->database().commit();
         vvimDebug() << "reload the completer";
         loadCompleter();
+        vvimDebug() << "reload information in last_known_deelnemer so we can still test if the user changed information since the last save";
+        last_known_deelnemer = readDeelnemer();
         QString feedback = QString(ui->le_naam->text());
         feedbackSuccess(feedback.append(" opgeslagen"));
     }
