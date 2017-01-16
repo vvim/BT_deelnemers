@@ -1077,3 +1077,16 @@ void Buurtijd_deelnemers::on_pushButton_next_clicked()
         vvimDebug() << "no such user at index" << deelnemer_idx;
     }
 }
+
+void Buurtijd_deelnemers::keyPressEvent( QKeyEvent *k )
+{
+    switch(k->key())
+    {
+        case Qt::Key_PageDown:
+            on_pushButton_next_clicked();
+            break;
+        case Qt::Key_PageUp:
+            on_pushButton_previous_clicked();
+            break;
+    }
+}
