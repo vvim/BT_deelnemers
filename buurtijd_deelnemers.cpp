@@ -3,8 +3,8 @@
 #include "sdeelnemermarker.h"
 #include <QClipboard>
 
-#define DEELNEMER_SOORT_is_INDIVIDU 0
-#define DEELNEMER_SOORT_is_ORGANISATIE 1
+#define DEELNEMER_SOORT_is_INDIVIDU 1
+#define DEELNEMER_SOORT_is_ORGANISATIE 2
 
 #define vvimDebug()\
     qDebug() << "[" << Q_FUNC_INFO << "]"

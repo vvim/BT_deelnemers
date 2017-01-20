@@ -4,7 +4,7 @@
 #include "deelnemer_location.h"
 #include "ui_deelnemer_location.h"
 
-#define model_INDIVIDUAL 0
+#define model_INDIVIDUAL 1
 #define model_LID 1
 
 #ifdef  GOOGLEMAPS_IN_BROWSER
