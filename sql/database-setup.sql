@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Aug 29, 2016 at 03:44 PM
+-- Generation Time: Jan 20, 2017 at 02:40 PM
 -- Server version: 5.5.50-0+deb8u1
 -- PHP Version: 5.6.24-0+deb8u1
 
@@ -87,15 +87,16 @@ CREATE TABLE IF NOT EXISTS `t_deelnemer_contact_voorkeur` (
 --
 
 INSERT INTO `t_deelnemer_contact_voorkeur` (`id`, `voorkeur`) VALUES
-(0, 'maakt niet uit'),
-(1, 'per sms of telefoon'),
-(2, 'sms'),
-(3, 'bellen op vaste lijn'),
-(4, 'bellen op gsm'),
-(5, 'bel vaste lijn of gsm'),
-(6, 'email'),
-(7, 'spreek mij aan'),
-(8, 'per sms of email');
+(0, '--nog niet ingevuld'),
+(1, 'maakt niet uit'),
+(2, 'per sms of telefoon'),
+(3, 'sms'),
+(4, 'bellen op vaste lijn'),
+(5, 'bellen op gsm'),
+(6, 'bel vaste lijn of gsm'),
+(7, 'email'),
+(8, 'spreek mij aan'),
+(9, 'per sms of email');
 
 -- --------------------------------------------------------
 
@@ -171,8 +172,9 @@ CREATE TABLE IF NOT EXISTS `t_deelnemer_geslacht` (
 --
 
 INSERT INTO `t_deelnemer_geslacht` (`id`, `geslacht`) VALUES
-(0, 'man'),
-(1, 'vrouw');
+(0, '-geen'),
+(1, 'man'),
+(2, 'vrouw');
 
 -- --------------------------------------------------------
 
@@ -190,11 +192,12 @@ CREATE TABLE IF NOT EXISTS `t_deelnemer_hoe_leren_kennen` (
 --
 
 INSERT INTO `t_deelnemer_hoe_leren_kennen` (`id`, `info`) VALUES
-(0, 'mond-aan-mond reclame'),
-(1, 'via folder of promo'),
-(2, 'via organisatie'),
-(3, 'tijdens een infomoment'),
-(4, 'ander');
+(0, '--nog niet ingevuld'),
+(1, 'mond-aan-mond reclame'),
+(2, 'via folder of promo'),
+(3, 'via organisatie'),
+(4, 'tijdens een infomoment'),
+(5, 'ander');
 
 -- --------------------------------------------------------
 
@@ -212,10 +215,11 @@ CREATE TABLE IF NOT EXISTS `t_deelnemer_ingeschreven_door` (
 --
 
 INSERT INTO `t_deelnemer_ingeschreven_door` (`id`, `medewerker`) VALUES
-(0, 'Wim'),
-(1, 'Erica'),
-(2, 'Bram'),
-(3, 'Sultan');
+(0, '-geen'),
+(1, 'Wim'),
+(2, 'Erica'),
+(3, 'Bram'),
+(4, 'Sultan');
 
 -- --------------------------------------------------------
 
@@ -233,10 +237,11 @@ CREATE TABLE IF NOT EXISTS `t_deelnemer_niv_nederlands` (
 --
 
 INSERT INTO `t_deelnemer_niv_nederlands` (`id`, `niveau`) VALUES
-(0, 'geen kennis van het Nederlands'),
-(1, 'een paar woorden'),
-(2, 'duidelijke zinnen'),
-(3, 'vloeiend of moedertaal');
+(0, '--nog niet ingevuld'),
+(1, 'geen kennis van het Nederlands'),
+(2, 'een paar woorden'),
+(3, 'duidelijke zinnen'),
+(4, 'vloeiend of moedertaal');
 
 -- --------------------------------------------------------
 
@@ -267,8 +272,9 @@ CREATE TABLE IF NOT EXISTS `t_deelnemer_soort` (
 --
 
 INSERT INTO `t_deelnemer_soort` (`id`, `soort`) VALUES
-(0, 'individu'),
-(1, 'organisatie');
+(0, '--onbekend'),
+(1, 'individu'),
+(2, 'organisatie');
 
 -- --------------------------------------------------------
 
@@ -286,19 +292,20 @@ CREATE TABLE IF NOT EXISTS `t_deelnemer_statuut` (
 --
 
 INSERT INTO `t_deelnemer_statuut` (`id`, `statuut`) VALUES
-(0, 'ziekenkas'),
-(1, 'invaliditeitsuitkering'),
-(2, 'werkzoekend met uitkering'),
-(3, 'werkzoekend met PWA'),
-(4, 'sociale tewerkstelling (art 60, SINE, …)'),
-(5, 'OCMW Leefloon'),
-(6, 'pensioen'),
-(7, 'brugpensioen'),
-(8, 'werk in loondienst'),
-(9, 'werk als zelfstandige'),
-(10, 'leerling of student'),
-(11, 'werkzoekend zonder uitkering'),
-(12, 'geen inkomen en niet werkzoekend');
+(0, '--nog niet ingevuld'),
+(1, 'ziekenkas'),
+(2, 'invaliditeitsuitkering'),
+(3, 'werkzoekend met uitkering'),
+(4, 'werkzoekend met PWA'),
+(5, 'sociale tewerkstelling (art 60, SINE, …)'),
+(6, 'OCMW Leefloon'),
+(7, 'pensioen'),
+(8, 'brugpensioen'),
+(9, 'werk in loondienst'),
+(10, 'werk als zelfstandige'),
+(11, 'leerling of student'),
+(12, 'werkzoekend zonder uitkering'),
+(13, 'geen inkomen en niet werkzoekend');
 
 --
 -- Indexes for dumped tables
