@@ -30,6 +30,9 @@ public:
     explicit Buurtijd_deelnemers(QWidget *parent = 0);
     ~Buurtijd_deelnemers();
 
+protected:
+    void  closeEvent(QCloseEvent*);
+
 private:
     void showError(const QSqlError &err);
     Ui::Buurtijd_deelnemers *ui;

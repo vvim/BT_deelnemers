@@ -1090,3 +1090,25 @@ void Buurtijd_deelnemers::keyPressEvent( QKeyEvent *k )
             break;
     }
 }
+
+void Buurtijd_deelnemers::closeEvent(QCloseEvent *event)
+{
+    vvimDebug() << "Closing time - Open all the doors and let you out into the world - You don't have to go home but you can't stay here.";
+
+    // see http://stackoverflow.com/questions/17480984/qt-how-do-i-handle-the-event-of-the-user-pressing-the-x-close-button
+
+    int reply = QMessageBox::question(this, tr("Wijzigingen opslaan?"), tr("Bij deelnemer %1 zijn gegevens gewijzigd. Wil je deze opslaan vooraleer we het programma sluiten?").arg(last_known_deelnemer.getName()),
+                                    QMessageBox::Yes|QMessageBox::No);
+    if (reply == QMessageBox::Yes)
+    {
+        vvimDebug() << ".... user clicked on 'Yes' to save the changes";
+        last_known_deelnemer = readDeelnemer();
+        on_saveButton_clicked();
+        1. volgens mij gaat dit fout omdat re in "on_saveButton_clicked" ook nog een functie "changeRow" is, en die zorgt voor infinite loop
+                => misschien een extra functie "save_date()" die door on_saveButton_clicked wordt opgeroepen en ook door deze functie gebruikt wordt
+        2. test of de "event->accept" niet te vroeg komt bij connectie naar Linga->databank. wordt de verbinding al afgebroken voor SQL is uitgevoerd??
+
+    }
+    event->accept();
+//            event->ignore();
+}
