@@ -984,7 +984,7 @@ void Buurtijd_deelnemers::addNewIndividuToDatabase(QString naam,QString familien
 {
     vvimDebug() << "will add to database:" << QString("\n..%1 %2\n..%3 %4 bus %5\n..%6 %7").arg(naam).arg(familienaam).arg(straat).arg(huisnr).arg(busnr).arg(postcode).arg(plaats);
 
-    QString SQLquery_add_new_individu = "INSERT INTO `t_deelnemers` ( `naam`, `familienaam`, `straat`, `huisnr`, `busnr`, `postcode`, `plaats`, `soort_deelnemer`) VALUES (:naam, :familienaam, :straat, :huisnr, :busnr, :postcode, :plaats, :soort_deelnemer)";
+    QString SQLquery_add_new_individu = "INSERT INTO `t_deelnemers` ( `naam`, `familienaam`, `straat`, `huisnr`, `busnr`, `postcode`, `plaats`, `soort_deelnemer`, `geslacht`, `geboortedatum`, `statuut`, `bt_leren_kennen`, `niveau_nl`, `contactvoorkeur`, `ingeschreven_door`, `laatste_contact`, `inschrijf_datum`) VALUES (:naam, :familienaam, :straat, :huisnr, :busnr, :postcode, :plaats, :soort_deelnemer, 0 , '1800-01-01' , 0 , 0 , 0 , 0 , 0 , '1800-01-01' , '1800-01-01' )";
 
     QSqlQuery query_add_new_individu;
     query_add_new_individu.prepare(SQLquery_add_new_individu);
