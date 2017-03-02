@@ -146,6 +146,9 @@ Buurtijd_deelnemers::Buurtijd_deelnemers(QWidget *parent) :
     ui->dateEdit_laatstecontact->setDisplayFormat("dd MMM yyyy");
     ui->dateEdit_laatstecontact->setLocale(QLocale::Dutch);
     ui->dateEdit_laatstecontact->setCalendarPopup(true);  //zie http://stackoverflow.com/questions/7031962/qdateedit-calendar-popup
+    ui->dateEdit_stop_datum->setDisplayFormat("dd MMM yyyy");
+    ui->dateEdit_stop_datum->setLocale(QLocale::Dutch);
+    ui->dateEdit_stop_datum->setCalendarPopup(true);  //zie http://stackoverflow.com/questions/7031962/qdateedit-calendar-popup
 
     ui->le_zoekDeelnemer->setFocus();
 }
