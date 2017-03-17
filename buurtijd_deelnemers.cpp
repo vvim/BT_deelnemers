@@ -983,6 +983,7 @@ void Buurtijd_deelnemers::on_pushButton_CreateNewIndividu_clicked()
 void Buurtijd_deelnemers::addNewIndividuToDatabase(QString naam,QString familienaam,QString straat,QString huisnr,QString busnr,QString postcode,QString plaats)
 {
     vvimDebug() << "will add to database:" << QString("\n..%1 %2\n..%3 %4 bus %5\n..%6 %7").arg(naam).arg(familienaam).arg(straat).arg(huisnr).arg(busnr).arg(postcode).arg(plaats);
+    ui->le_zoekDeelnemer->clear();
 
     QString SQLquery_add_new_individu = "INSERT INTO `t_deelnemers` ( `naam`, `familienaam`, `straat`, `huisnr`, `busnr`, `postcode`, `plaats`, `soort_deelnemer`, `geslacht`, `geboortedatum`, `statuut`, `bt_leren_kennen`, `niveau_nl`, `contactvoorkeur`, `ingeschreven_door`, `laatste_contact`, `inschrijf_datum`) VALUES (:naam, :familienaam, :straat, :huisnr, :busnr, :postcode, :plaats, :soort_deelnemer, 0 , '1800-01-01' , 0 , 0 , 0 , 0 , 0 , '1800-01-01' , '1800-01-01' )";
 
@@ -1047,6 +1048,8 @@ void Buurtijd_deelnemers::on_pushButton_previous_clicked()
 {
     vvimDebug() << "button 'previous' pressed";
     ui->label_feedback->clear();
+    ui->le_zoekDeelnemer->clear();
+
     int row = last_known_index.row() - 1;
 
     QModelIndex deelnemer_idx = model_deelnemers->index(row,0);
@@ -1066,6 +1069,8 @@ void Buurtijd_deelnemers::on_pushButton_next_clicked()
 {
     vvimDebug() << "button 'previous' pressed";
     ui->label_feedback->clear();
+    ui->le_zoekDeelnemer->clear();
+
     int row = last_known_index.row() + 1;
 
     QModelIndex deelnemer_idx = model_deelnemers->index(row,0);
@@ -1130,5 +1135,48 @@ icon downloaded from free library at http://www.iconarchive.com/show/ios7-icons-
     model_deelnemers->->select();
 
     !! ipv mijn voorstel onder "change the _view_" */
+
+}
+
+void Buurtijd_deelnemers::on_pushButton_first_clicked()
+{
+    vvimDebug() << "button 'first' pressed";
+    ui->label_feedback->clear();
+    ui->le_zoekDeelnemer->clear();
+
+    int row = 0;
+
+    QModelIndex deelnemer_idx = model_deelnemers->index(row,0);
+
+    if (deelnemer_idx.isValid()) // else no match
+    {
+        vvimDebug() << "toon user" << deelnemer_idx.data().toInt();
+        ChangeRow(deelnemer_idx);
+    }
+    else
+    {
+        vvimDebug() << "no such user at index" << deelnemer_idx;
+    }
+}
+
+void Buurtijd_deelnemers::on_pushButton_last_clicked()
+{
+    vvimDebug() << "button 'last' pressed";
+    ui->label_feedback->clear();
+    ui->le_zoekDeelnemer->clear();
+
+    int row = model_deelnemers->rowCount() - 1;
+
+    QModelIndex deelnemer_idx = model_deelnemers->index(row,0);
+
+    if (deelnemer_idx.isValid()) // else no match
+    {
+        vvimDebug() << "toon user" << deelnemer_idx.data().toInt();
+        ChangeRow(deelnemer_idx);
+    }
+    else
+    {
+        vvimDebug() << "no such user at index" << deelnemer_idx;
+    }
 
 }

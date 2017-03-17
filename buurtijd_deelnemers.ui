@@ -538,6 +538,17 @@
       </spacer>
      </item>
      <item>
+      <widget class="QPushButton" name="pushButton_first">
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="buurtijd_deelnemers.qrc">
+         <normaloff>:/icons/icons/first.png</normaloff>:/icons/icons/first.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="pushButton_previous">
        <property name="text">
         <string/>
@@ -556,6 +567,17 @@
        <property name="icon">
         <iconset resource="buurtijd_deelnemers.qrc">
          <normaloff>:/icons/icons/next.png</normaloff>:/icons/icons/next.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_last">
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="buurtijd_deelnemers.qrc">
+         <normaloff>:/icons/icons/last.png</normaloff>:/icons/icons/last.png</iconset>
        </property>
       </widget>
      </item>
