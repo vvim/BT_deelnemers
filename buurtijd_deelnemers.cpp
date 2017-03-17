@@ -1093,3 +1093,42 @@ void Buurtijd_deelnemers::keyPressEvent( QKeyEvent *k )
             break;
     }
 }
+
+void Buurtijd_deelnemers::on_pushButton_lastcontact_is_today_clicked()
+{
+    int row = -1;
+
+    if(last_known_index.isValid())
+        row = last_known_index.row();
+    else
+    {
+        vvimDebug() << "last_known_index is not valid, so I have no idea which row. RETURN";
+        return;
+    }
+
+    int last_contact_column = model_deelnemers->fieldIndex("laatste_contact");
+    QModelIndex j = model_deelnemers->index(row,last_contact_column);
+
+    /**
+
+Add icon for 'today'
+
+icon downloaded from free library at http://www.iconarchive.com/show/ios7-icons-by-icons8/Time-And-Date-Today-icon.html
+
+
+      **/
+
+    // change the _model_
+    vvimDebug() << "last contact was:" << model_deelnemers->data(j).toDate().toString() << row << last_contact_column;
+    model_deelnemers->setData(j,QDate::currentDate());
+
+    // change the _view_
+    ui->dateEdit_laatstecontact->setDate(QDate::currentDate());
+
+/*  vvim TODO: er zou toch een manier moeten zijn om gewoon dateEdit_laatstecontact te herladen, ipv het manueel te doen??
+            iets zoals:
+    model_deelnemers->->select();
+
+    !! ipv mijn voorstel onder "change the _view_" */
+
+}

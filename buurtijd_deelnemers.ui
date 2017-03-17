@@ -483,6 +483,23 @@
        </property>
       </widget>
      </item>
+     <item row="7" column="4">
+      <widget class="QPushButton" name="pushButton_lastcontact_is_today">
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="buurtijd_deelnemers.qrc">
+         <normaloff>:/icons/icons/today.png</normaloff>:/icons/icons/today.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>16</width>
+         <height>16</height>
+        </size>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
    <item>

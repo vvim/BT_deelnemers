@@ -4,6 +4,7 @@
         <file>icons/note.png</file>
         <file>icons/next.png</file>
         <file>icons/previous.png</file>
+        <file>icons/today.png</file>
     </qresource>
     <qresource prefix="/html">
         <file>google_maps.html</file>

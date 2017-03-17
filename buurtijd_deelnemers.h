@@ -82,6 +82,7 @@ private slots:
     void on_pushButton_previous_clicked();
     void on_pushButton_next_clicked();
     void keyPressEvent( QKeyEvent *k );
+    void on_pushButton_lastcontact_is_today_clicked();
 };
 
 #endif // BUURTIJD_DEELNEMERS_H
