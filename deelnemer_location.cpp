@@ -6,6 +6,7 @@
 
 #define model_INDIVIDUAL 1
 #define model_LID 1
+#define model_GESTOPT 1
 
 #ifdef  GOOGLEMAPS_IN_BROWSER
     #include <QProcess>
@@ -107,6 +108,7 @@ void DeelnemerLocation::on_pushButton_showAllDeelnemers_clicked()
      *    QSqlQuery query_no_lat_lng("SELECT * FROM t_deelnemers WHERE lid = 1  AND (lat is NULL OR lng is NULL) LIMIT 15");
      */
 
+    vvimDebug() << "show all deelnemers";
 
     /// bestaande marker is deelnemerMarker
 
@@ -119,6 +121,7 @@ void DeelnemerLocation::on_pushButton_showAllDeelnemers_clicked()
     int latIdx = model_deelnemers->fieldIndex("lat");
     int lngIdx = model_deelnemers->fieldIndex("lng");
     int nameIdx = model_deelnemers->fieldIndex("naam");
+    int gestoptIdx = model_deelnemers->fieldIndex("was_lid_is_nu_gestopt");
     int familieNaamIdx = model_deelnemers->fieldIndex("familienaam");
     int idIdx = model_deelnemers->fieldIndex("id");
     int soortDeelnemerIdx = model_deelnemers->fieldIndex("soort_deelnemer");
@@ -127,6 +130,7 @@ void DeelnemerLocation::on_pushButton_showAllDeelnemers_clicked()
     {
         // [TODO] markers_js.append(str.arg(latitude).arg(longitude).arg(title).arg(iconcolor).arg(id));
         if( ( model_deelnemers->index( i, lidIdx ).data().toInt() == model_LID )  // NULL toInt() == 0
+                && (model_deelnemers->index( i, gestoptIdx ).data().toInt() != model_GESTOPT)   // we do not have to show those who are no longer 'deelnemer'
                 && (model_deelnemers->index( i, idIdx ).data().toInt() != deelnemerMarker.id) ) // we do not have to show the main marker twice
         {
             // we only show markers if the corresponding deelnemer is an official member, so lidIdx should be 1
@@ -161,6 +165,7 @@ void DeelnemerLocation::on_pushButton_showAllDeelnemers_clicked()
         }
 
     }
+    vvimDebug() << "end of for-loop";
 
     if(markers_js.length() < 1) // => no deelnemers to be marked
     {
@@ -170,6 +175,7 @@ void DeelnemerLocation::on_pushButton_showAllDeelnemers_clicked()
 
     // chop last ',' from markers_js
     markers_js.chop(1);
+    vvimDebug() << "html:" << markers_js;
 
     QFile f(":/html/google_maps_markers.html");
     if (!f.open(QFile::ReadOnly | QFile::Text))
