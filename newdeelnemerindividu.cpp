@@ -26,9 +26,10 @@ NewDeelnemerIndividu::~NewDeelnemerIndividu()
 void NewDeelnemerIndividu::on_buttonBox_accepted()
 {
     vvimDebug() << "emit addNewIndividu() to put information in database";
-    emit addNewIndividu(ui->le_naam->text(),ui->le_familieNaam->text(),
+    emit addNewIndividu(ui->le_naam->text(),
                         ui->le_straat->text(),ui->le_huisnr->text(),ui->le_busnr->text(),
-                        ui->le_postcode->text(),ui->le_plaats->text());
+                        ui->le_postcode->text(),ui->le_plaats->text(),ui->rb_individu->isChecked(),ui->le_familieNaam->text());
+}
 
 void NewDeelnemerIndividu::on_rb_individu_toggled(bool checked)
 {

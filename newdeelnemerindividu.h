@@ -16,7 +16,7 @@ public:
     ~NewDeelnemerIndividu();
 
 signals:
-    void addNewIndividu(QString,QString,QString,QString,QString,QString,QString);
+    void addNewIndividu(QString,QString,QString,QString,QString,QString,bool,QString);
 
 private slots:
     void on_buttonBox_accepted();

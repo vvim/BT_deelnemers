@@ -976,12 +976,12 @@ void Buurtijd_deelnemers::on_pushButton_CreateNewIndividu_clicked()
         delete newindividu;
 
     newindividu = new NewDeelnemerIndividu();
-    connect(newindividu, SIGNAL(addNewIndividu(QString,QString,QString,QString,QString,QString,QString)),
-            this, SLOT(addNewIndividuToDatabase(QString,QString,QString,QString,QString,QString,QString))); // wat met NULL ?
+    connect(newindividu, SIGNAL(addNewIndividu(QString,QString,QString,QString,QString,QString,bool,QString)),
+            this, SLOT(addNewParticipantToDatabase(QString,QString,QString,QString,QString,QString,bool,QString))); // wat met NULL ?
     newindividu->show();
 }
 
-void Buurtijd_deelnemers::addNewIndividuToDatabase(QString naam,QString familienaam,QString straat,QString huisnr,QString busnr,QString postcode,QString plaats)
+void Buurtijd_deelnemers::addNewParticipantToDatabase(QString naam, QString straat, QString huisnr, QString busnr, QString postcode, QString plaats, bool is_individu, QString familienaam)
 {
     vvimDebug() << "will add to database:" << QString("\n..%1 %2\n..%3 %4 bus %5\n..%6 %7").arg(naam).arg(familienaam).arg(straat).arg(huisnr).arg(busnr).arg(postcode).arg(plaats);
     ui->le_zoekDeelnemer->clear();
