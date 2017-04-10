@@ -1223,3 +1223,29 @@ void Buurtijd_deelnemers::on_pushButton_last_clicked()
     }
 
 }
+
+void Buurtijd_deelnemers::on_checkbox_lid_toggled(bool checked)
+{
+    showInformationForOfficialMember(checked);
+}
+
+void Buurtijd_deelnemers::on_checkBox_was_lid_is_nu_gestopt_toggled(bool checked)
+{
+    showInformationForOfficialMemberHasQuit(checked);
+}
+
+void Buurtijd_deelnemers::on_comboBox_soort_currentIndexChanged(int index)
+{
+    switch(index)
+    {
+    case DEELNEMER_SOORT_is_INDIVIDU :
+        showInformationForIndividual(true);
+        showInformationForOrganisation(false);
+        break;
+
+    case DEELNEMER_SOORT_is_ORGANISATIE :
+        showInformationForIndividual(false);
+        showInformationForOrganisation(true);
+        break;
+    }
+}

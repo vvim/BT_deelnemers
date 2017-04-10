@@ -85,6 +85,9 @@ private slots:
     void on_pushButton_lastcontact_is_today_clicked();
     void on_pushButton_first_clicked();
     void on_pushButton_last_clicked();
+    void on_checkbox_lid_toggled(bool checked);
+    void on_checkBox_was_lid_is_nu_gestopt_toggled(bool checked);
+    void on_comboBox_soort_currentIndexChanged(int index);
 };
 
 #endif // BUURTIJD_DEELNEMERS_H
