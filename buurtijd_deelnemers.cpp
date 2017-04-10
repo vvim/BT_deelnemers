@@ -5,6 +5,7 @@
 
 #define DEELNEMER_SOORT_is_INDIVIDU 1
 #define DEELNEMER_SOORT_is_ORGANISATIE 2
+#define DEFAULT_DATE "1800-01-01"
 
 #define vvimDebug()\
     qDebug() << "[" << Q_FUNC_INFO << "]"
@@ -1009,6 +1010,34 @@ void Buurtijd_deelnemers::addNewIndividuToDatabase(QString naam,QString familien
         vvimDebug() << "adding new individual" << "[FAILED]" <<     query_add_new_individu.lastQuery();
         feedbackWarning(QString("Er ging iets mis, %1 niet opgeslagen").arg(feedback));
     }
+
+
+
+    /** TIJDELIJK: zolang er nog geen link is tussen de BH en Ming, gebruiken we tabel TRANSACTIE
+     ** bij Nieuwe Leden: Slapend Lid aanmaken
+     **/
+    /**/ QString vollnaam = naam;
+    /**/ if(familienaam.length() > 0)
+    /**/    vollnaam.append(" ").append(familienaam);
+    /**/
+    /**/ QString SQLquery_add_transaction = QString("INSERT INTO `transactie` (`timestamp`, `ontvanger`,   `gever`, `buren`, `taak`, `datum`, `opmerking`, `ingegeven_door`, `categorie`) "
+    /**/                                                        "VALUES (CURRENT_TIMESTAMP, 'Slapend Lid', :vollnaam, '0', 'slapend lid', '%1', 'ingeschreven %2', 'Ming', 'Slapend lid')").arg(DEFAULT_DATE).arg(QDate::currentDate().toString("d MMM yyyy"));
+    /**/ QSqlQuery query_add_transaction;
+    /**/ query_add_transaction.prepare(SQLquery_add_transaction);
+    /**/ query_add_transaction.bindValue(":vollnaam",vollnaam);
+    /**/ if(query_add_transaction.exec())
+    /**/ {
+    /**/     vvimDebug() << "adding" << vollnaam << "as 'Slapend Lid' in boekhouding" << "success";
+    /**/ }
+    /**/ else
+    /**/ {
+    /**/     vvimDebug() << "adding" << vollnaam << "as 'Slapend Lid' in boekhouding" << "[FAILED]";
+    /**/     vvimDebug() << "lastQuery:" << query_add_transaction.lastQuery();
+    /**/     vvimDebug() << "executedQuery:" << query_add_transaction.executedQuery();
+    /**/     vvimDebug() << "lastError:" << query_add_transaction.lastError().text();
+    /**/ }
+
+
 
     //update the model
     model_deelnemers->database().transaction();
