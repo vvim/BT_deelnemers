@@ -986,30 +986,47 @@ void Buurtijd_deelnemers::addNewIndividuToDatabase(QString naam,QString familien
     vvimDebug() << "will add to database:" << QString("\n..%1 %2\n..%3 %4 bus %5\n..%6 %7").arg(naam).arg(familienaam).arg(straat).arg(huisnr).arg(busnr).arg(postcode).arg(plaats);
     ui->le_zoekDeelnemer->clear();
 
-    QString SQLquery_add_new_individu = QString("INSERT INTO `t_deelnemers` ( `naam`, `familienaam`, `straat`, `huisnr`, `busnr`, `postcode`, `plaats`, `soort_deelnemer`, `geslacht`, `geboortedatum`, `statuut`, `bt_leren_kennen`, `niveau_nl`, `contactvoorkeur`, `ingeschreven_door`, `laatste_contact`, `inschrijf_datum`, `stop_datum`) VALUES (:naam, :familienaam, :straat, :huisnr, :busnr, :postcode, :plaats, :soort_deelnemer, 0 , '%1' , 0 , 0 , 0 , 0 , 0 , '%1' , '%1' , '%1' )").arg(DEFAULT_DATE);
+    QString volledige_naam = naam;
 
-
-    QSqlQuery query_add_new_individu;
-    query_add_new_individu.prepare(SQLquery_add_new_individu);
-    query_add_new_individu.bindValue(":naam", naam);
-    query_add_new_individu.bindValue(":familienaam", familienaam);
-    query_add_new_individu.bindValue(":straat", straat);
-    query_add_new_individu.bindValue(":huisnr", huisnr);
-    query_add_new_individu.bindValue(":busnr", busnr);
-    query_add_new_individu.bindValue(":postcode", postcode);
-    query_add_new_individu.bindValue(":plaats", plaats);
-    query_add_new_individu.bindValue(":soort_deelnemer", DEELNEMER_SOORT_is_INDIVIDU);
-
-    QString feedback = QString("%1 %2").arg(naam).arg(familienaam);
-    if(query_add_new_individu.exec())
+    if(is_individu)
     {
-        vvimDebug() << "adding new individual" << "success";
-        feedbackSuccess(feedback.append(" opgeslagen"));
+        volledige_naam.append(" ").append(familienaam);
+        vvimDebug() << volledige_naam << "is een individu";
     }
     else
     {
-        vvimDebug() << "adding new individual" << "[FAILED]" <<     query_add_new_individu.lastQuery();
-        feedbackWarning(QString("Er ging iets mis, %1 niet opgeslagen").arg(feedback));
+        vvimDebug() << volledige_naam << "is een organisatie";
+    }
+
+
+    QString SQLquery_add_new_participant = QString("INSERT INTO `t_deelnemers` ( `naam`, `familienaam`, `straat`, `huisnr`, `busnr`, `postcode`, `plaats`, `soort_deelnemer`, `geslacht`, `geboortedatum`, `statuut`, `bt_leren_kennen`, `niveau_nl`, `contactvoorkeur`, `ingeschreven_door`, `laatste_contact`, `inschrijf_datum`, `stop_datum`) VALUES (:naam, :familienaam, :straat, :huisnr, :busnr, :postcode, :plaats, :soort_deelnemer, 0 , '%1' , 0 , 0 , 0 , 0 , 0 , '%1' , '%1' , '%1' )").arg(DEFAULT_DATE);
+
+    QSqlQuery query_add_new_participant;
+    query_add_new_participant.prepare(SQLquery_add_new_participant);
+    query_add_new_participant.bindValue(":naam", naam);
+    if(is_individu)
+        query_add_new_participant.bindValue(":familienaam", familienaam);
+    else
+        query_add_new_participant.bindValue(":familienaam", QVariant(QVariant::String));
+    query_add_new_participant.bindValue(":straat", straat);
+    query_add_new_participant.bindValue(":huisnr", huisnr);
+    query_add_new_participant.bindValue(":busnr", busnr);
+    query_add_new_participant.bindValue(":postcode", postcode);
+    query_add_new_participant.bindValue(":plaats", plaats);
+    if(is_individu)
+        query_add_new_participant.bindValue(":soort_deelnemer", DEELNEMER_SOORT_is_INDIVIDU);
+    else
+        query_add_new_participant.bindValue(":soort_deelnemer", DEELNEMER_SOORT_is_ORGANISATIE);
+
+    if(query_add_new_participant.exec())
+    {
+        vvimDebug() << "adding new participant" << "success";
+        feedbackSuccess(QString("%1 opgeslagen").arg(volledige_naam));
+    }
+    else
+    {
+        vvimDebug() << "adding new participant" << "[FAILED]" <<     query_add_new_participant.lastQuery();
+        feedbackWarning(QString("Er ging iets mis, %1 niet opgeslagen").arg(volledige_naam));
     }
 
 
@@ -1017,22 +1034,18 @@ void Buurtijd_deelnemers::addNewIndividuToDatabase(QString naam,QString familien
     /** TIJDELIJK: zolang er nog geen link is tussen de BH en Ming, gebruiken we tabel TRANSACTIE
      ** bij Nieuwe Leden: Slapend Lid aanmaken
      **/
-    /**/ QString vollnaam = naam;
-    /**/ if(familienaam.length() > 0)
-    /**/    vollnaam.append(" ").append(familienaam);
-    /**/
     /**/ QString SQLquery_add_transaction = QString("INSERT INTO `transactie` (`timestamp`, `ontvanger`,   `gever`, `buren`, `taak`, `datum`, `opmerking`, `ingegeven_door`, `categorie`) "
     /**/                                                        "VALUES (CURRENT_TIMESTAMP, 'Slapend Lid', :vollnaam, '0', 'slapend lid', '%1', 'ingeschreven %2', 'Ming', 'Slapend lid')").arg(DEFAULT_DATE).arg(QDate::currentDate().toString("d MMM yyyy"));
     /**/ QSqlQuery query_add_transaction;
     /**/ query_add_transaction.prepare(SQLquery_add_transaction);
-    /**/ query_add_transaction.bindValue(":vollnaam",vollnaam);
+    /**/ query_add_transaction.bindValue(":vollnaam",volledige_naam);
     /**/ if(query_add_transaction.exec())
     /**/ {
-    /**/     vvimDebug() << "adding" << vollnaam << "as 'Slapend Lid' in boekhouding" << "success";
+    /**/     vvimDebug() << "adding" << volledige_naam << "as 'Slapend Lid' in boekhouding" << "success";
     /**/ }
     /**/ else
     /**/ {
-    /**/     vvimDebug() << "adding" << vollnaam << "as 'Slapend Lid' in boekhouding" << "[FAILED]";
+    /**/     vvimDebug() << "adding" << volledige_naam << "as 'Slapend Lid' in boekhouding" << "[FAILED]";
     /**/     vvimDebug() << "lastQuery:" << query_add_transaction.lastQuery();
     /**/     vvimDebug() << "executedQuery:" << query_add_transaction.executedQuery();
     /**/     vvimDebug() << "lastError:" << query_add_transaction.lastError().text();
