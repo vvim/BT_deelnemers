@@ -29,4 +29,21 @@ void NewDeelnemerIndividu::on_buttonBox_accepted()
     emit addNewIndividu(ui->le_naam->text(),ui->le_familieNaam->text(),
                         ui->le_straat->text(),ui->le_huisnr->text(),ui->le_busnr->text(),
                         ui->le_postcode->text(),ui->le_plaats->text());
+
+void NewDeelnemerIndividu::on_rb_individu_toggled(bool checked)
+{
+    if(checked)
+    {
+        //vvimDebug() << "individu checked!";
+        ui->label_familieNaam->setVisible(true);
+        ui->le_familieNaam->setVisible(true);
+        ui->label_naam->setText("Voornaam");
+    }
+    else
+    {
+        //vvimDebug() << "organisation checked!";
+        ui->label_familieNaam->setVisible(false);
+        ui->le_familieNaam->setVisible(false);
+        ui->label_naam->setText("Organisatie");
+    }
 }

@@ -35,6 +35,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="pushButton_CreateNewIndividu">
+       <property name="toolTip">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Nieuwe deelnemer toevoegen (individu of organisatie)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
        <property name="text">
         <string>Nieuw</string>
        </property>

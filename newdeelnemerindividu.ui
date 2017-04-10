@@ -24,46 +24,27 @@
       </font>
      </property>
      <property name="text">
-      <string>Nieuw individu toevoegen</string>
+      <string>Nieuwe deelnemer toevoegen</string>
      </property>
     </widget>
    </item>
    <item>
     <layout class="QGridLayout" name="gridLayout">
-     <item row="2" column="4" colspan="3">
-      <widget class="QLineEdit" name="le_plaats"/>
-     </item>
-     <item row="1" column="3">
-      <widget class="QLabel" name="label_huisnr">
-       <property name="text">
-        <string>Nr</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="3">
-      <widget class="QLabel" name="label_plaats">
-       <property name="text">
-        <string>Plaats</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0">
+     <item row="3" column="0">
       <widget class="QLabel" name="label_straat">
        <property name="text">
         <string>Straat</string>
        </property>
       </widget>
      </item>
-     <item row="1" column="1" colspan="2">
-      <widget class="QLineEdit" name="le_straat"/>
+     <item row="2" column="0">
+      <widget class="QLabel" name="label_naam">
+       <property name="text">
+        <string>Voornaam</string>
+       </property>
+      </widget>
      </item>
-     <item row="0" column="4" colspan="3">
-      <widget class="QLineEdit" name="le_familieNaam"/>
-     </item>
-     <item row="1" column="4">
+     <item row="3" column="4">
       <widget class="QLineEdit" name="le_huisnr">
        <property name="maximumSize">
         <size>
@@ -73,27 +54,7 @@
        </property>
       </widget>
      </item>
-     <item row="2" column="1" colspan="2">
-      <widget class="QLineEdit" name="le_postcode"/>
-     </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="label_naam">
-       <property name="text">
-        <string>Voornaam</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="3">
-      <widget class="QLabel" name="label_familieNaam">
-       <property name="text">
-        <string>Familienaam</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="6">
+     <item row="3" column="6">
       <widget class="QLineEdit" name="le_busnr">
        <property name="maximumSize">
         <size>
@@ -103,20 +64,86 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="5">
+     <item row="2" column="1" colspan="2">
+      <widget class="QLineEdit" name="le_naam"/>
+     </item>
+     <item row="3" column="3">
+      <widget class="QLabel" name="label_huisnr">
+       <property name="text">
+        <string>Nr</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="4" colspan="3">
+      <widget class="QLineEdit" name="le_plaats"/>
+     </item>
+     <item row="4" column="1" colspan="2">
+      <widget class="QLineEdit" name="le_postcode"/>
+     </item>
+     <item row="3" column="1" colspan="2">
+      <widget class="QLineEdit" name="le_straat"/>
+     </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="label_postcode">
+       <property name="text">
+        <string>Postcode</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="5">
       <widget class="QLabel" name="label_busnr">
        <property name="text">
         <string>Bus</string>
        </property>
       </widget>
      </item>
-     <item row="0" column="1" colspan="2">
-      <widget class="QLineEdit" name="le_naam"/>
-     </item>
-     <item row="2" column="0">
-      <widget class="QLabel" name="label_postcode">
+     <item row="2" column="3">
+      <widget class="QLabel" name="label_familieNaam">
        <property name="text">
-        <string>Postcode</string>
+        <string>Familienaam</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="3">
+      <widget class="QLabel" name="label_plaats">
+       <property name="text">
+        <string>Plaats</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="4" colspan="3">
+      <widget class="QLineEdit" name="le_familieNaam"/>
+     </item>
+     <item row="1" column="1">
+      <widget class="QRadioButton" name="rb_organisatie">
+       <property name="font">
+        <font>
+         <italic>true</italic>
+        </font>
+       </property>
+       <property name="text">
+        <string>organisatie</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QRadioButton" name="rb_individu">
+       <property name="font">
+        <font>
+         <italic>true</italic>
+        </font>
+       </property>
+       <property name="text">
+        <string>individu</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
