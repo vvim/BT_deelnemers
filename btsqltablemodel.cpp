@@ -69,7 +69,13 @@ QStringList BTSqlTableModel::getCheckedItems()
     {
         checked_ids.append(index.sibling(index.row(),0).data().toString());
     }
+    qSort( checked_ids.begin(), checked_ids.end(), intStringSort );
     vvimDebug() << checked_ids.count() << "items aangevinkt";
     vvimDebug() << checked_ids;
     return checked_ids;
+}
+
+bool BTSqlTableModel::intStringSort( const QString &s1, const QString &s2 )
+{
+            return( s1.toInt() < s2.toInt() );
 }

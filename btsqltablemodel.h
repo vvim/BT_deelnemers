@@ -20,6 +20,7 @@ public:
 
 private:
     QSet<QModelIndex> checkedItems;
+    static bool intStringSort( const QString &s1, const QString &s2 );
 };
 
 #endif // BTSQLTABLEMODEL_H
