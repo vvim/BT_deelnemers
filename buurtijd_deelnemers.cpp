@@ -999,7 +999,8 @@ void Buurtijd_deelnemers::addNewParticipantToDatabase(QString naam, QString stra
     }
 
 
-    QString SQLquery_add_new_participant = QString("INSERT INTO `t_deelnemers` ( `naam`, `familienaam`, `straat`, `huisnr`, `busnr`, `postcode`, `plaats`, `soort_deelnemer`, `geslacht`, `geboortedatum`, `statuut`, `bt_leren_kennen`, `niveau_nl`, `contactvoorkeur`, `ingeschreven_door`, `laatste_contact`, `inschrijf_datum`, `stop_datum`) VALUES (:naam, :familienaam, :straat, :huisnr, :busnr, :postcode, :plaats, :soort_deelnemer, 0 , '%1' , 0 , 0 , 0 , 0 , 0 , '%1' , '%1' , '%1' )").arg(DEFAULT_DATE);
+    QString SQLquery_add_new_participant = QString("INSERT INTO `t_deelnemers` ( `naam`, `familienaam`, `straat`, `huisnr`, `busnr`, `postcode`, `plaats`, `soort_deelnemer`) "
+                                                                        " VALUES (:naam, :familienaam,  :straat,  :huisnr,  :busnr,  :postcode,  :plaats,  :soort_deelnemer)");
 
     QSqlQuery query_add_new_participant;
     query_add_new_participant.prepare(SQLquery_add_new_participant);
