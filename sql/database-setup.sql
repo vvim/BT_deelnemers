@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.2.12deb2+deb8u2
--- http://www.phpmyadmin.net
+-- version 4.6.6
+-- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 20, 2017 at 02:40 PM
--- Server version: 5.5.50-0+deb8u1
--- PHP Version: 5.6.24-0+deb8u1
+-- Generation Time: Apr 11, 2017 at 05:34 PM
+-- Server version: 5.5.54-MariaDB
+-- PHP Version: 5.6.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -14,7 +14,7 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Database: `buurtijd_test`
@@ -23,11 +23,30 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `transactie`
+--
+
+CREATE TABLE `transactie` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `ontvanger` varchar(255) NOT NULL,
+  `gever` varchar(255) NOT NULL,
+  `buren` double UNSIGNED NOT NULL,
+  `taak` varchar(255) NOT NULL,
+  `datum` date NOT NULL,
+  `opmerking` varchar(255) DEFAULT NULL,
+  `ingegeven_door` varchar(255) DEFAULT NULL,
+  `categorie` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='overzicht van de Buurtijd_boekhouding';
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `t_deelnemers`
 --
 
 CREATE TABLE IF NOT EXISTS `t_deelnemers` (
-`id` int(10) unsigned NOT NULL,
+  `id` int(10) UNSIGNED NOT NULL,
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `naam` varchar(50) NOT NULL,
   `familienaam` varchar(30) DEFAULT NULL,
@@ -40,45 +59,43 @@ CREATE TABLE IF NOT EXISTS `t_deelnemers` (
   `gsm` varchar(15) DEFAULT NULL,
   `email1` varchar(100) DEFAULT NULL,
   `email2` varchar(100) DEFAULT NULL,
-  `geslacht` tinyint(3) unsigned DEFAULT NULL,
-  `geboortedatum` date DEFAULT NULL,
+  `geslacht` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `geboortedatum` date NOT NULL DEFAULT '1800-01-01',
   `afkomst` varchar(30) DEFAULT NULL,
-  `statuut` tinyint(3) unsigned DEFAULT NULL,
-  `bt_leren_kennen` tinyint(3) unsigned DEFAULT NULL,
-  `niveau_nl` tinyint(3) unsigned DEFAULT NULL,
+  `statuut` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `bt_leren_kennen` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `niveau_nl` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
   `hr_goedgekeurd` tinyint(1) NOT NULL,
   `contact_delen` tinyint(1) NOT NULL,
   `fam_verzekering` tinyint(1) NOT NULL,
   `brand_verzekering` tinyint(1) NOT NULL,
   `fotomateriaal_gebruiken` tinyint(1) NOT NULL,
   `wanneer_best_contacteren` varchar(200) DEFAULT NULL,
-  `contactvoorkeur` tinyint(3) unsigned DEFAULT NULL,
+  `contactvoorkeur` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
   `contactpersoon_voornaam` varchar(30) DEFAULT NULL,
   `contactpersoon_familienaam` varchar(30) DEFAULT NULL,
   `domein` varchar(20) DEFAULT NULL COMMENT 'How to save an Array of Ints in MySQL? Dirty solution',
   `vrijwilligers_verzekering` tinyint(1) NOT NULL,
   `doelgroep` varchar(20) DEFAULT NULL COMMENT 'How to save an Array of Ints in MySQL? Dirty solution',
   `lid` tinyint(1) NOT NULL,
-  `ingeschreven_door` tinyint(3) unsigned DEFAULT NULL,
-  `inschrijf_datum` date DEFAULT NULL,
-  `laatste_contact` date DEFAULT NULL,
+  `ingeschreven_door` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `inschrijf_datum` date NOT NULL DEFAULT '1800-01-01',
+  `laatste_contact` date NOT NULL DEFAULT '1800-01-01',
   `was_lid_is_nu_gestopt` tinyint(1) NOT NULL,
-  `stop_datum` date DEFAULT NULL,
+  `stop_datum` date NOT NULL DEFAULT '1800-01-01',
   `stop_reden` varchar(250) DEFAULT NULL,
-  `soort_deelnemer` tinyint(3) unsigned NOT NULL,
+  `soort_deelnemer` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
   `varia` varchar(1000) DEFAULT NULL,
   `lat` decimal(10,6) DEFAULT NULL COMMENT 'latitude up to 6 decimals (accuracy to 1 meter)',
   `lng` decimal(10,6) DEFAULT NULL COMMENT 'longitude up to 6 decimals (accuracy to 1 meter)'
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 --
 -- Table structure for table `t_deelnemer_contact_voorkeur`
 --
 
 CREATE TABLE IF NOT EXISTS `t_deelnemer_contact_voorkeur` (
-  `id` tinyint(3) unsigned NOT NULL,
+  `id` tinyint(3) UNSIGNED NOT NULL,
   `voorkeur` varchar(22) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -105,7 +122,7 @@ INSERT INTO `t_deelnemer_contact_voorkeur` (`id`, `voorkeur`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `t_deelnemer_doelgroep` (
-  `id` tinyint(3) unsigned NOT NULL,
+  `id` tinyint(3) UNSIGNED NOT NULL,
   `doelgroep` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -132,7 +149,7 @@ INSERT INTO `t_deelnemer_doelgroep` (`id`, `doelgroep`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `t_deelnemer_domein` (
-  `id` tinyint(3) unsigned NOT NULL,
+  `id` tinyint(3) UNSIGNED NOT NULL,
   `domein` varchar(40) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -163,7 +180,7 @@ INSERT INTO `t_deelnemer_domein` (`id`, `domein`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `t_deelnemer_geslacht` (
-  `id` tinyint(3) unsigned NOT NULL,
+  `id` tinyint(3) UNSIGNED NOT NULL,
   `geslacht` varchar(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -183,7 +200,7 @@ INSERT INTO `t_deelnemer_geslacht` (`id`, `geslacht`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `t_deelnemer_hoe_leren_kennen` (
-  `id` tinyint(3) unsigned NOT NULL,
+  `id` tinyint(3) UNSIGNED NOT NULL,
   `info` varchar(23) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -206,7 +223,7 @@ INSERT INTO `t_deelnemer_hoe_leren_kennen` (`id`, `info`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `t_deelnemer_ingeschreven_door` (
-  `id` tinyint(3) unsigned NOT NULL,
+  `id` tinyint(3) UNSIGNED NOT NULL,
   `medewerker` varchar(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -219,7 +236,8 @@ INSERT INTO `t_deelnemer_ingeschreven_door` (`id`, `medewerker`) VALUES
 (1, 'Wim'),
 (2, 'Erica'),
 (3, 'Bram'),
-(4, 'Sultan');
+(4, 'Sultan'),
+(5, 'Lin');
 
 -- --------------------------------------------------------
 
@@ -228,7 +246,7 @@ INSERT INTO `t_deelnemer_ingeschreven_door` (`id`, `medewerker`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `t_deelnemer_niv_nederlands` (
-  `id` tinyint(3) unsigned NOT NULL,
+  `id` tinyint(3) UNSIGNED NOT NULL,
   `niveau` varchar(31) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -250,20 +268,20 @@ INSERT INTO `t_deelnemer_niv_nederlands` (`id`, `niveau`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `t_deelnemer_notas` (
-`id` int(10) unsigned NOT NULL,
+  `id` int(10) UNSIGNED NOT NULL,
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `nota` text NOT NULL COMMENT 'see http://stackoverflow.com/a/13182846/',
-  `deelnemer_id` int(10) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
+  `deelnemer_id` int(10) UNSIGNED NOT NULL
 
 --
 -- Table structure for table `t_deelnemer_soort`
 --
 
 CREATE TABLE IF NOT EXISTS `t_deelnemer_soort` (
-  `id` tinyint(3) unsigned NOT NULL,
+  `id` tinyint(3) UNSIGNED NOT NULL,
   `soort` varchar(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -282,8 +300,8 @@ INSERT INTO `t_deelnemer_soort` (`id`, `soort`) VALUES
 -- Table structure for table `t_deelnemer_statuut`
 --
 
-CREATE TABLE IF NOT EXISTS `t_deelnemer_statuut` (
-  `id` tinyint(3) unsigned NOT NULL,
+CREATE TABLE `t_deelnemer_statuut` (
+  `id` tinyint(3) UNSIGNED NOT NULL,
   `statuut` varchar(80) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -312,70 +330,78 @@ INSERT INTO `t_deelnemer_statuut` (`id`, `statuut`) VALUES
 --
 
 --
+-- Indexes for table `transactie`
+--
+ALTER TABLE `transactie`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `id` (`id`);
+
+--
 -- Indexes for table `t_deelnemers`
 --
 ALTER TABLE `t_deelnemers`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `t_deelnemer_contact_voorkeur`
 --
 ALTER TABLE `t_deelnemer_contact_voorkeur`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `t_deelnemer_doelgroep`
 --
 ALTER TABLE `t_deelnemer_doelgroep`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `t_deelnemer_domein`
 --
 ALTER TABLE `t_deelnemer_domein`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `t_deelnemer_geslacht`
 --
 ALTER TABLE `t_deelnemer_geslacht`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `t_deelnemer_hoe_leren_kennen`
 --
 ALTER TABLE `t_deelnemer_hoe_leren_kennen`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `t_deelnemer_ingeschreven_door`
 --
 ALTER TABLE `t_deelnemer_ingeschreven_door`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `t_deelnemer_niv_nederlands`
 --
 ALTER TABLE `t_deelnemer_niv_nederlands`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `t_deelnemer_notas`
 --
 ALTER TABLE `t_deelnemer_notas`
- ADD PRIMARY KEY (`id`), ADD KEY `fk_deelnemer_id` (`deelnemer_id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_deelnemer_id` (`deelnemer_id`);
 
 --
 -- Indexes for table `t_deelnemer_soort`
 --
 ALTER TABLE `t_deelnemer_soort`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `t_deelnemer_statuut`
 --
 ALTER TABLE `t_deelnemer_statuut`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -399,7 +425,7 @@ MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 -- Constraints for table `t_deelnemer_notas`
 --
 ALTER TABLE `t_deelnemer_notas`
-ADD CONSTRAINT `fk_deelnemer_id` FOREIGN KEY (`deelnemer_id`) REFERENCES `t_deelnemers` (`id`);
+  ADD CONSTRAINT `fk_deelnemer_id` FOREIGN KEY (`deelnemer_id`) REFERENCES `t_deelnemers` (`id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
