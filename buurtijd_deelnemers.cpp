@@ -2,6 +2,7 @@
 #include "ui_buurtijd_deelnemers.h"
 #include "sdeelnemermarker.h"
 #include <QClipboard>
+#include <QFileDialog>
 
 #define DEELNEMER_SOORT_is_INDIVIDU 1
 #define DEELNEMER_SOORT_is_ORGANISATIE 2
@@ -1249,4 +1250,45 @@ void Buurtijd_deelnemers::on_comboBox_soort_currentIndexChanged(int index)
         showInformationForOrganisation(true);
         break;
     }
+}
+
+void Buurtijd_deelnemers::on_pushButton_participantsWithoutEmail_clicked()
+{
+    vvimDebug() << "create CSV-file with all members that did not quit and have no emailaddresses";
+    QString filename = QFileDialog::getSaveFileName(this, "Adressenlijst opslaan als:", "adressenlijst.csv", "CSV-bestanden (*.csv);;Tekstbestanden (*.txt, *.log)", 0, 0); // getting the filename (full path)
+    QFile data(filename);
+    if(!data.open(QFile::WriteOnly |QFile::Truncate))
+    {
+        //showError() -> enkel voor QSqlError()
+        vvimDebug() << "kon bestand" << filename << "niet openen om naar te schrijven";
+    }
+
+    QTextStream output(&data);
+    output << "naam;familienaam;straat;huisnr;busnr;postcode;plaats";
+
+    QSqlQuery query;
+    query.exec("SELECT naam, familienaam, straat, huisnr, busnr, postcode, plaats FROM t_deelnemers WHERE lid = 1 AND was_lid_is_nu_gestopt = 0 AND (email1 IS NULL OR email1 = '')");
+
+    int nr_of_participantsWithoutEmail = 0;
+    while (query.next())
+    {
+        int i = 0;
+        QStringList address;
+        address << query.value(i++).toString(); // naam
+        address << query.value(i++).toString(); // familienaam
+        address << query.value(i++).toString(); // straat
+        address << query.value(i++).toString(); // huisnr
+        address << query.value(i++).toString(); // busnr
+        address << query.value(i++).toString(); // postcode
+        address << query.value(i++).toString(); // plaats
+
+        // write as CSV
+        output << endl;
+        output << address.join(";");
+
+        nr_of_participantsWithoutEmail++;
+    }
+    data.close();
+
+    vvimDebug() << nr_of_participantsWithoutEmail << "addresses written to" << filename;
 }
