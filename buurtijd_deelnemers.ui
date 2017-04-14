@@ -647,6 +647,17 @@
       </widget>
      </item>
      <item>
+      <widget class="QPushButton" name="pushButton_participantsWithoutEmail">
+       <property name="text">
+        <string>Bussen</string>
+       </property>
+       <property name="icon">
+        <iconset resource="buurtijd_deelnemers.qrc">
+         <normaloff>:/icons/icons/newsletter.png</normaloff>:/icons/icons/newsletter.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
       <spacer name="horizontalSpacer_2">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
@@ -665,7 +676,11 @@
         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Kopieer de contactgegevens van deze deelnemer naar het klembord.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
        <property name="text">
-        <string>Kopieer contactgegevens</string>
+        <string>Kopieer</string>
+       </property>
+       <property name="icon">
+        <iconset resource="buurtijd_deelnemers.qrc">
+         <normaloff>:/icons/icons/copy contact details.png</normaloff>:/icons/icons/copy contact details.png</iconset>
        </property>
       </widget>
      </item>

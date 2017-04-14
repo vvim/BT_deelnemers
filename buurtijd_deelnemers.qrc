@@ -7,6 +7,8 @@
         <file>icons/today.png</file>
         <file>icons/first.png</file>
         <file>icons/last.png</file>
+        <file>icons/copy contact details.png</file>
+        <file>icons/newsletter.png</file>
     </qresource>
     <qresource prefix="/html">
         <file>google_maps.html</file>
