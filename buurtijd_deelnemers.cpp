@@ -18,6 +18,7 @@ Buurtijd_deelnemers::Buurtijd_deelnemers(QWidget *parent) :
     completer = NULL;
     location = NULL;
     notes = NULL;
+    vraag_aanbod = NULL;
     newindividu = NULL;
     last_known_deelnemer = SDeelnemerMarker();
     settings = new QSettings("settings.ini", QSettings::IniFormat);
@@ -157,6 +158,19 @@ Buurtijd_deelnemers::Buurtijd_deelnemers(QWidget *parent) :
     ui->dateEdit_stop_datum->setCalendarPopup(true);  //zie http://stackoverflow.com/questions/7031962/qdateedit-calendar-popup
 
     ui->le_zoekDeelnemer->setFocus();
+
+    model_vraag_aanbod = new QSqlRelationalTableModel();
+    model_vraag_aanbod->setEditStrategy(QSqlTableModel::OnManualSubmit);
+    model_vraag_aanbod->setTable("t_vraag_aanbod");
+
+    // Populate the model
+    if (!model_vraag_aanbod->select())
+    {
+        showError(model_vraag_aanbod->lastError());
+        return;
+    }
+
+    vraag_aanbod = new OverzichtVraagAanbod(model_vraag_aanbod);
 }
 
 Buurtijd_deelnemers::~Buurtijd_deelnemers()
@@ -169,6 +183,8 @@ Buurtijd_deelnemers::~Buurtijd_deelnemers()
 
     delete location;
     delete notes;
+    delete vraag_aanbod;
+    delete model_vraag_aanbod;
     delete newindividu;
     delete ui;
 
@@ -1346,4 +1362,9 @@ void Buurtijd_deelnemers::on_pushButton_vraag_aanbod_clicked()
 
     // ook een knop met "voeg nieuw V/A toe"
 
+    vvimDebug() << "show Overzicht Vraag/Aanbod";
+//    if(vraag_aanbod) --> we do not need to destroy vraag_aanbod every time like with the "notes", but we need to refresh it if needed. SIGNAL/SLOT ?
+//        delete vraag_aanbod;
+
+    vraag_aanbod->show();
 }

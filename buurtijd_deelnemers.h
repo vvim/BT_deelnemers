@@ -17,6 +17,7 @@
 #include "deelnemer_location.h"
 #include "deelnemernotes.h"
 #include "newdeelnemerindividu.h"
+#include "overzichtvraagaanbod.h"
 
 namespace Ui {
 class Buurtijd_deelnemers;
@@ -36,7 +37,7 @@ private:
     bool connectToDatabase();
     QSqlDatabase db;
     // as we do not use relations amongst the tables, maybe better to use the simpler QSqlTableModel ???
-    QSqlRelationalTableModel *model_deelnemers, *model_contactVoorkeur, *model_geslacht, *model_hoeLerenKennen, *model_ingeschrevenDoor, *model_niveauNl, *model_soortDeelnemer, *model_statuut, *model_soort;
+    QSqlRelationalTableModel *model_deelnemers, *model_contactVoorkeur, *model_geslacht, *model_hoeLerenKennen, *model_ingeschrevenDoor, *model_niveauNl, *model_soortDeelnemer, *model_statuut, *model_soort, *model_vraag_aanbod;
     BTSqlTableModel *model_doelgroep, *model_domein;
     QDataWidgetMapper *mapper;
     void mapComboboxAndTableModel(QComboBox *combobox, QSqlRelationalTableModel *model, QString table_name, int t_deelnemers_fieldindex);
@@ -60,6 +61,7 @@ private:
     void feedbackWarning(QString message);
 
     MyCompleter *completer;
+    OverzichtVraagAanbod *vraag_aanbod;
     QMap<QString, QModelIndex> deelnemers_map;
     QModelIndex last_known_index;
     SDeelnemerMarker last_known_deelnemer;
