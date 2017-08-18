@@ -1255,6 +1255,8 @@ void Buurtijd_deelnemers::on_comboBox_soort_currentIndexChanged(int index)
 
 void Buurtijd_deelnemers::on_pushButton_participantsWithoutEmail_clicked()
 {
+    int DEELNEMERS_VAN_LINKEROEVER = 5; // see database `t_deelnemer_ingeschreven_door` -> Lin
+
     vvimDebug() << "create CSV-file with all members that did not quit and have no emailaddresses";
     QString filename = QFileDialog::getSaveFileName(this, "Adressenlijst opslaan als:", "adressenlijst.csv", "CSV-bestanden (*.csv);;Tekstbestanden (*.txt, *.log)", 0, 0); // getting the filename (full path)
     QFile data(filename);
@@ -1265,10 +1267,19 @@ void Buurtijd_deelnemers::on_pushButton_participantsWithoutEmail_clicked()
     }
 
     QTextStream output(&data);
+    output << "Deelnemers Berchem" << endl << endl;
     output << "naam;familienaam;straat;huisnr;busnr;postcode;plaats";
 
     QSqlQuery query;
-    query.exec("SELECT naam, familienaam, straat, huisnr, busnr, postcode, plaats FROM t_deelnemers WHERE lid = 1 AND was_lid_is_nu_gestopt = 0 AND (email1 IS NULL OR email1 = '')");
+    query.prepare("SELECT naam, familienaam, straat, huisnr, busnr, postcode, plaats FROM t_deelnemers WHERE lid = 1 AND was_lid_is_nu_gestopt = 0 AND (email1 IS NULL OR email1 = '') AND ingeschreven_door <> :linkeroever");
+    query.bindValue(":linkeroever", DEELNEMERS_VAN_LINKEROEVER);
+
+    if(!query.exec())
+    {
+        vvimDebug() << "on_pushButton_participantsWithoutEmail_clicked SQL1" << "failed";
+        feedbackWarning(QString("kan geen deelnemers opvragen"));
+        return;
+    }
 
     int nr_of_participantsWithoutEmail = 0;
     while (query.next())
@@ -1289,6 +1300,41 @@ void Buurtijd_deelnemers::on_pushButton_participantsWithoutEmail_clicked()
 
         nr_of_participantsWithoutEmail++;
     }
+    vvimDebug() << nr_of_participantsWithoutEmail << "addresses written to (deelnemers NIET van Linkeroever)" << filename;
+
+    output << endl << endl;
+    output << "Deelnemers Linkeroever" << endl << endl;
+    output << "naam;familienaam;straat;huisnr;busnr;postcode;plaats";
+
+    query.prepare("SELECT naam, familienaam, straat, huisnr, busnr, postcode, plaats FROM t_deelnemers WHERE lid = 1 AND was_lid_is_nu_gestopt = 0 AND (email1 IS NULL OR email1 = '') AND ingeschreven_door = :linkeroever");
+    query.bindValue(":linkeroever", DEELNEMERS_VAN_LINKEROEVER);
+
+    if(!query.exec())
+    {
+        vvimDebug() << "on_pushButton_participantsWithoutEmail_clicked SQL2" << "failed";
+        feedbackWarning(QString("kan geen deelnemers opvragen"));
+        return;
+    }
+
+    while (query.next())
+    {
+        int i = 0;
+        QStringList address;
+        address << query.value(i++).toString(); // naam
+        address << query.value(i++).toString(); // familienaam
+        address << query.value(i++).toString(); // straat
+        address << query.value(i++).toString(); // huisnr
+        address << query.value(i++).toString(); // busnr
+        address << query.value(i++).toString(); // postcode
+        address << query.value(i++).toString(); // plaats
+
+        // write as CSV
+        output << endl;
+        output << address.join(";");
+
+        nr_of_participantsWithoutEmail++;
+    }
+
     data.close();
 
     vvimDebug() << nr_of_participantsWithoutEmail << "addresses written to" << filename;
