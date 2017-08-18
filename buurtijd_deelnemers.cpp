@@ -1031,30 +1031,6 @@ void Buurtijd_deelnemers::addNewParticipantToDatabase(QString naam, QString stra
         feedbackWarning(QString("Er ging iets mis, %1 niet opgeslagen").arg(volledige_naam));
     }
 
-
-
-    /** TIJDELIJK: zolang er nog geen link is tussen de BH en Ming, gebruiken we tabel TRANSACTIE
-     ** bij Nieuwe Leden: Slapend Lid aanmaken
-     **/
-    /**/ QString SQLquery_add_transaction = QString("INSERT INTO `transactie` (`timestamp`, `ontvanger`,   `gever`, `buren`, `taak`, `datum`, `opmerking`, `ingegeven_door`, `categorie`) "
-    /**/                                                        "VALUES (CURRENT_TIMESTAMP, 'Slapend Lid', :vollnaam, '0', 'slapend lid', '%1', 'ingeschreven %2', 'Ming', 'Slapend lid')").arg(DEFAULT_DATE).arg(QDate::currentDate().toString("d MMM yyyy"));
-    /**/ QSqlQuery query_add_transaction;
-    /**/ query_add_transaction.prepare(SQLquery_add_transaction);
-    /**/ query_add_transaction.bindValue(":vollnaam",volledige_naam);
-    /**/ if(query_add_transaction.exec())
-    /**/ {
-    /**/     vvimDebug() << "adding" << volledige_naam << "as 'Slapend Lid' in boekhouding" << "success";
-    /**/ }
-    /**/ else
-    /**/ {
-    /**/     vvimDebug() << "adding" << volledige_naam << "as 'Slapend Lid' in boekhouding" << "[FAILED]";
-    /**/     vvimDebug() << "lastQuery:" << query_add_transaction.lastQuery();
-    /**/     vvimDebug() << "executedQuery:" << query_add_transaction.executedQuery();
-    /**/     vvimDebug() << "lastError:" << query_add_transaction.lastError().text();
-    /**/ }
-
-
-
     //update the model
     model_deelnemers->database().transaction();
     model_deelnemers->submitAll();
