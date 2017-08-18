@@ -1069,13 +1069,18 @@ void Buurtijd_deelnemers::addNewParticipantToDatabase(QString naam, QString stra
 
 void Buurtijd_deelnemers::feedbackSuccess(QString message)
 {
-    ui->label_feedback->setText(message);
+    // or if you want to include the date as well: QDateTime currentTime = QDateTime::currentDateTime();
+    QTime currentTime = QTime::currentTime();
+    QString message_with_timestamp = QString("%1 (%2)").arg(message).arg(currentTime.toString());
+    ui->label_feedback->setText(message_with_timestamp);
     ui->label_feedback->setStyleSheet("font-style: italic; color: green");
 }
 
 void Buurtijd_deelnemers::feedbackWarning(QString message)
 {
-    ui->label_feedback->setText(message);
+    QTime currentTime = QTime::currentTime();
+    QString message_with_timestamp = QString("%1 (%2)").arg(message).arg(currentTime.toString());
+    ui->label_feedback->setText(message_with_timestamp);
     ui->label_feedback->setStyleSheet("font-weight: bold; color: red");
 }
 
