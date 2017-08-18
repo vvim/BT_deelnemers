@@ -89,6 +89,7 @@ private slots:
     void on_checkBox_was_lid_is_nu_gestopt_toggled(bool checked);
     void on_comboBox_soort_currentIndexChanged(int index);
     void on_pushButton_participantsWithoutEmail_clicked();
+    void on_pushButton_vraag_aanbod_clicked();
 };
 
 #endif // BUURTIJD_DEELNEMERS_H

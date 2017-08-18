@@ -745,6 +745,13 @@
       </widget>
      </item>
      <item>
+      <widget class="QPushButton" name="pushButton_vraag_aanbod">
+       <property name="text">
+        <string>Vraag/Aanbod</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <spacer name="horizontalSpacer_2">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
@@ -897,6 +904,7 @@
   <tabstop>pushButton_next</tabstop>
   <tabstop>pushButton_last</tabstop>
   <tabstop>pushButton_participantsWithoutEmail</tabstop>
+  <tabstop>pushButton_vraag_aanbod</tabstop>
   <tabstop>pushButton_copyContactInformation</tabstop>
   <tabstop>pushButton_showMaps</tabstop>
   <tabstop>pushButton_showNotes</tabstop>

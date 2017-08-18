@@ -1339,3 +1339,11 @@ void Buurtijd_deelnemers::on_pushButton_participantsWithoutEmail_clicked()
 
     vvimDebug() << nr_of_participantsWithoutEmail << "addresses written to" << filename;
 }
+
+void Buurtijd_deelnemers::on_pushButton_vraag_aanbod_clicked()
+{
+    // geef een overzicht van huidige Vraag / Aanbod in de databank
+
+    // ook een knop met "voeg nieuw V/A toe"
+
+}
