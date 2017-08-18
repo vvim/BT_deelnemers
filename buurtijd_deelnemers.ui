@@ -673,6 +673,19 @@
       </widget>
      </item>
      <item>
+      <widget class="QLineEdit" name="le_id">
+       <property name="maximumSize">
+        <size>
+         <width>30</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="pushButton_next">
        <property name="toolTip">
         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Toon volgende deelnemer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>

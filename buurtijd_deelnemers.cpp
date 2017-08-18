@@ -29,6 +29,8 @@ Buurtijd_deelnemers::Buurtijd_deelnemers(QWidget *parent) :
     ui->saveButton->setAutoFillBackground(true);
     ui->saveButton->setStyleSheet("background-color: rgb(255, 0, 0); color: rgb(255, 255, 255)");
 
+    ui->le_id->setStyleSheet("QLineEdit { background: lightgray; selection-background-color: lightgray; }"); // to emphasize that the id is 'readonly'
+
     QPalette p = ui->plainTextEdit_varia->palette();
     p.setColor(QPalette::Active, QPalette::Base, QColor("#ffffb2"));
     p.setColor(QPalette::Inactive, QPalette::Base, QColor("#ffffb2"));
@@ -75,6 +77,7 @@ Buurtijd_deelnemers::Buurtijd_deelnemers(QWidget *parent) :
 
     // mapping database t_deelnemers to ui->...
     /// -> 1) information for all participants
+    mapper->addMapping(ui->le_id, model_deelnemers->fieldIndex("id"));
     mapper->addMapping(ui->le_naam, model_deelnemers->fieldIndex("naam"));
     mapper->addMapping(ui->le_straat, model_deelnemers->fieldIndex("straat"));
     mapper->addMapping(ui->le_huisnr, model_deelnemers->fieldIndex("huisnr"));
