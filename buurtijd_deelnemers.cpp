@@ -30,6 +30,7 @@ Buurtijd_deelnemers::Buurtijd_deelnemers(QWidget *parent) :
     ui->saveButton->setStyleSheet("background-color: rgb(255, 0, 0); color: rgb(255, 255, 255)");
 
     ui->le_id->setStyleSheet("QLineEdit { background: lightgray; selection-background-color: lightgray; }"); // to emphasize that the id is 'readonly'
+    ui->le_leeftijd->setStyleSheet("QLineEdit { background: lightgray; selection-background-color: lightgray; }"); // to emphasize that the id is 'readonly'
 
     QPalette p = ui->plainTextEdit_varia->palette();
     p.setColor(QPalette::Active, QPalette::Base, QColor("#ffffb2"));
@@ -306,6 +307,20 @@ void Buurtijd_deelnemers::ChangeRow(QModelIndex new_index)
         vvimDebug() << model_deelnemers->data(model_deelnemers->index(currentRow,model_deelnemers->fieldIndex("naam"))).toString() << "is een individu";
         showInformationForIndividual(true);
         showInformationForOrganisation(false);
+
+        /// calculate age of individual -> code by Pavan Ramkumar https://pavanrz.wordpress.com/2015/10/14/a-method-to-calculate-age-using-qt/
+        QDate dateOfBirth = ui->dateEdit_geboortedatum->date();
+        QDate currentDate = QDate::currentDate();
+        int currentAge = currentDate.year() - dateOfBirth.year();
+
+        if (( dateOfBirth.month() > currentDate.month()
+                ||
+                (dateOfBirth.month()==currentDate.month() && dateOfBirth.day()>currentDate.day())))
+        {
+            currentAge--;
+        }
+        ui->le_leeftijd->setText(QString::number(currentAge));
+
     }
     else
     {
@@ -380,6 +395,8 @@ void Buurtijd_deelnemers::showInformationForIndividual(bool make_visible)
     ui->label_familieNaam->setVisible(make_visible);
     ui->dateEdit_geboortedatum->setVisible(make_visible);
     ui->label_geboortedatum->setVisible(make_visible);
+    ui->le_leeftijd->setVisible(make_visible);
+    ui->label_leeftijd->setVisible(make_visible);
     ui->le_afkomst->setVisible(make_visible);
     ui->label_afkomst->setVisible(make_visible);
     ui->checkBox_brandverzekering->setVisible(make_visible);

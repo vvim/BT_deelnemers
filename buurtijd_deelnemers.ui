@@ -513,8 +513,8 @@
        <string>Details</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout">
-       <item row="4" column="2" colspan="2">
-        <widget class="QComboBox" name="comboBox_niveau_nederlands"/>
+       <item row="0" column="6" rowspan="2">
+        <widget class="QDateEdit" name="dateEdit_geboortedatum"/>
        </item>
        <item row="0" column="0">
         <widget class="QLabel" name="label_geslacht">
@@ -523,52 +523,12 @@
          </property>
         </widget>
        </item>
-       <item row="8" column="5" colspan="2">
-        <widget class="BTListView" name="listView_domein" native="true">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>310</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="4">
-        <widget class="QLabel" name="label_statuut">
+       <item row="6" column="2" colspan="2">
+        <widget class="QCheckBox" name="checkBox_brandverzekering">
          <property name="text">
-          <string>Statuut</string>
+          <string>Heeft brandverzekering</string>
          </property>
         </widget>
-       </item>
-       <item row="6" column="0" colspan="2">
-        <widget class="QCheckBox" name="checkBox_familiale_verzekering">
-         <property name="text">
-          <string>Heeft familiale verzekering</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="2" rowspan="2" colspan="2">
-        <widget class="QLineEdit" name="le_afkomst">
-         <property name="maxLength">
-          <number>30</number>
-         </property>
-        </widget>
-       </item>
-       <item row="8" column="0" alignment="Qt::AlignTop">
-        <widget class="QLabel" name="label_doelgroep">
-         <property name="text">
-          <string>Doelgroep</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="2" rowspan="2" colspan="2">
-        <widget class="QComboBox" name="comboBox_geslacht"/>
-       </item>
-       <item row="8" column="1" colspan="2">
-        <widget class="BTListView" name="listView_doelgroep" native="true"/>
-       </item>
-       <item row="0" column="6" rowspan="2">
-        <widget class="QDateEdit" name="dateEdit_geboortedatum"/>
        </item>
        <item row="8" column="3" colspan="2" alignment="Qt::AlignTop">
         <widget class="QLabel" name="label_domein">
@@ -577,13 +537,19 @@
          </property>
         </widget>
        </item>
-       <item row="2" column="6" rowspan="2">
-        <widget class="QComboBox" name="comboBox_statuut"/>
+       <item row="4" column="2" colspan="2">
+        <widget class="QComboBox" name="comboBox_niveau_nederlands"/>
        </item>
-       <item row="5" column="4" colspan="2">
-        <widget class="QLabel" name="label_hoe_bt_leren_kennen">
-         <property name="text">
-          <string>Hoe Buurtijd leren kennen</string>
+       <item row="3" column="6">
+        <widget class="QLineEdit" name="le_leeftijd">
+         <property name="maximumSize">
+          <size>
+           <width>30</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="readOnly">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
@@ -594,8 +560,12 @@
          </property>
         </widget>
        </item>
-       <item row="5" column="6">
-        <widget class="QComboBox" name="comboBox_hoe_bt_leren_kennen"/>
+       <item row="3" column="0">
+        <widget class="QLabel" name="label_afkomst">
+         <property name="text">
+          <string>Afkomst</string>
+         </property>
+        </widget>
        </item>
        <item row="7" column="1">
         <spacer name="verticalSpacer_2">
@@ -610,17 +580,27 @@
          </property>
         </spacer>
        </item>
-       <item row="6" column="2" colspan="2">
-        <widget class="QCheckBox" name="checkBox_brandverzekering">
+       <item row="4" column="4">
+        <widget class="QLabel" name="label_statuut">
          <property name="text">
-          <string>Heeft brandverzekering</string>
+          <string>Statuut</string>
          </property>
         </widget>
        </item>
-       <item row="0" column="4" colspan="2">
-        <widget class="QLabel" name="label_geboortedatum">
-         <property name="text">
-          <string>Geboren op</string>
+       <item row="8" column="5" colspan="2">
+        <widget class="BTListView" name="listView_domein" native="true">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>310</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="2" rowspan="2" colspan="2">
+        <widget class="QLineEdit" name="le_afkomst">
+         <property name="maxLength">
+          <number>30</number>
          </property>
         </widget>
        </item>
@@ -631,10 +611,50 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="label_afkomst">
+       <item row="0" column="2" rowspan="2" colspan="2">
+        <widget class="QComboBox" name="comboBox_geslacht"/>
+       </item>
+       <item row="8" column="0" alignment="Qt::AlignTop">
+        <widget class="QLabel" name="label_doelgroep">
          <property name="text">
-          <string>Afkomst</string>
+          <string>Doelgroep</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0" colspan="2">
+        <widget class="QCheckBox" name="checkBox_familiale_verzekering">
+         <property name="text">
+          <string>Heeft familiale verzekering</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="6">
+        <widget class="QComboBox" name="comboBox_statuut"/>
+       </item>
+       <item row="6" column="6">
+        <widget class="QComboBox" name="comboBox_hoe_bt_leren_kennen"/>
+       </item>
+       <item row="8" column="1" colspan="2">
+        <widget class="BTListView" name="listView_doelgroep" native="true"/>
+       </item>
+       <item row="6" column="4">
+        <widget class="QLabel" name="label_hoe_bt_leren_kennen">
+         <property name="text">
+          <string>Hoe Buurtijd leren kennen</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="4" colspan="2">
+        <widget class="QLabel" name="label_geboortedatum">
+         <property name="text">
+          <string>Geboren op</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="4">
+        <widget class="QLabel" name="label_leeftijd">
+         <property name="text">
+          <string>Leeftijd</string>
          </property>
         </widget>
        </item>
@@ -864,14 +884,16 @@
   <tabstop>comboBox_geslacht</tabstop>
   <tabstop>dateEdit_geboortedatum</tabstop>
   <tabstop>le_afkomst</tabstop>
-  <tabstop>comboBox_statuut</tabstop>
+  <tabstop>le_leeftijd</tabstop>
   <tabstop>comboBox_niveau_nederlands</tabstop>
+  <tabstop>comboBox_statuut</tabstop>
   <tabstop>checkBox_vrijwilligers_verzekering</tabstop>
-  <tabstop>comboBox_hoe_bt_leren_kennen</tabstop>
   <tabstop>checkBox_familiale_verzekering</tabstop>
   <tabstop>checkBox_brandverzekering</tabstop>
+  <tabstop>comboBox_hoe_bt_leren_kennen</tabstop>
   <tabstop>pushButton_first</tabstop>
   <tabstop>pushButton_previous</tabstop>
+  <tabstop>le_id</tabstop>
   <tabstop>pushButton_next</tabstop>
   <tabstop>pushButton_last</tabstop>
   <tabstop>pushButton_participantsWithoutEmail</tabstop>
