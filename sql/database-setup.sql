@@ -427,6 +427,40 @@ MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 ALTER TABLE `t_deelnemer_notas`
   ADD CONSTRAINT `fk_deelnemer_id` FOREIGN KEY (`deelnemer_id`) REFERENCES `t_deelnemers` (`id`);
 
+--
+-- Table structure for table `t_vraag_aanbod`
+--
+
+CREATE TABLE `t_vraag_aanbod` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `deelnemer` int(11) NOT NULL,
+  `vraag` tinyint(1) NOT NULL COMMENT 'TRUE voor vraag, FALSE voor aanbod',
+  `categorie` int(11) NOT NULL,
+  `inhoud` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `t_vraag_aanbod`
+--
+ALTER TABLE `t_vraag_aanbod`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `id` (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `t_vraag_aanbod`
+--
+ALTER TABLE `t_vraag_aanbod`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;COMMIT;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
