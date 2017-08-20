@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QSqlRelationalTableModel>
+#include "checkboxdelegate.h"
 
 namespace Ui {
 class OverzichtVraagAanbod;
@@ -19,6 +20,7 @@ public:
 private:
     Ui::OverzichtVraagAanbod *ui;
     QSqlRelationalTableModel *model_vraag_aanbod;
+    CheckboxDelegate *vraag_aanbod_checkbox;
 };
 
 #endif // OVERZICHTVRAAGAANBOD_H
