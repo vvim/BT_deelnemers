@@ -11,6 +11,8 @@ OverzichtVraagAanbod::OverzichtVraagAanbod(QSqlRelationalTableModel *_model_vraa
     ui->setupUi(this);
     model_vraag_aanbod = _model_vraag_aanbod;
     ui->tableView->setModel(model_vraag_aanbod);
+    ui->tableView->setColumnHidden(0,1); // hide column with "id"
+    ui->tableView->setColumnHidden(1,1); // hide column with "timestamp"
 }
 
 OverzichtVraagAanbod::~OverzichtVraagAanbod()
