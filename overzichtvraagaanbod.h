@@ -20,7 +20,7 @@ public:
 private:
     Ui::OverzichtVraagAanbod *ui;
     QSqlRelationalTableModel *model_vraag_aanbod;
-    ComboBoxDelegate *vraag_aanbod_checkbox;
+    ComboBoxDelegate *vraag_aanbod_combobox, *categories_combobox;
 };
 
 #endif // OVERZICHTVRAAGAANBOD_H
