@@ -9,12 +9,17 @@ OverzichtVraagAanbod::OverzichtVraagAanbod(QSqlRelationalTableModel *_model_vraa
     ui(new Ui::OverzichtVraagAanbod)
 {
     ui->setupUi(this);
-    vraag_aanbod_checkbox = new CheckboxDelegate(this);
+    vraag_aanbod_checkbox = new ComboBoxVADelegate(this);
     model_vraag_aanbod = _model_vraag_aanbod;
     ui->tableView->setModel(model_vraag_aanbod);
     ui->tableView->setColumnHidden(0,1); // hide column with "id"
     ui->tableView->setColumnHidden(1,1); // hide column with "timestamp"
-    ui->tableView->setItemDelegate(vraag_aanbod_checkbox);
+    ui->tableView->setItemDelegateForColumn(3,vraag_aanbod_checkbox);
+    //ui->tableView->setItemDelegate(vraag_aanbod_checkbox);
+    for ( int i = 0; i < model_vraag_aanbod->rowCount(); ++i )
+      {
+      ui->tableView->openPersistentEditor( model_vraag_aanbod->index(i, 3) );
+      }
 }
 
 OverzichtVraagAanbod::~OverzichtVraagAanbod()
