@@ -15,8 +15,8 @@
 ComboBoxVADelegate::ComboBoxVADelegate(QObject *parent)
 :QItemDelegate(parent)
 {
-  Items.push_back("AANBOD");
-  Items.push_back("VRAAG");
+    Items[0] = QString("AANBOD");
+    Items[1] = QString("VRAAG");
 }
 
 
@@ -25,7 +25,7 @@ QWidget *ComboBoxVADelegate::createEditor(QWidget *parent, const QStyleOptionVie
   QComboBox* editor = new QComboBox(parent);
   for(unsigned int i = 0; i < Items.size(); ++i)
     {
-        editor->addItem(Items[i].c_str());
+        editor->addItem(Items[i]);
     }
   return editor;
 }
