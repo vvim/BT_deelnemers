@@ -9,7 +9,10 @@ OverzichtVraagAanbod::OverzichtVraagAanbod(QSqlRelationalTableModel *_model_vraa
     ui(new Ui::OverzichtVraagAanbod)
 {
     ui->setupUi(this);
-    vraag_aanbod_checkbox = new ComboBoxVADelegate(this);
+    std::vector<std::string> vraag_aanbod_items_for_combobox;
+    vraag_aanbod_items_for_combobox.push_back("Aanbod"); // value="0"
+    vraag_aanbod_items_for_combobox.push_back("Vraag"); // value="1"
+    vraag_aanbod_checkbox = new ComboBoxDelegate(vraag_aanbod_items_for_combobox, this);
     model_vraag_aanbod = _model_vraag_aanbod;
     ui->tableView->setModel(model_vraag_aanbod);
     ui->tableView->setColumnHidden(0,1); // hide column with "id"
