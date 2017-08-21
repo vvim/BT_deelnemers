@@ -15,11 +15,6 @@ OverzichtVraagAanbod::OverzichtVraagAanbod(QSqlRelationalTableModel *_model_vraa
     ui->tableView->setColumnHidden(0,1); // hide column with "id"
     ui->tableView->setColumnHidden(1,1); // hide column with "timestamp"
     ui->tableView->setItemDelegateForColumn(3,vraag_aanbod_checkbox);
-    //ui->tableView->setItemDelegate(vraag_aanbod_checkbox);
-    for ( int i = 0; i < model_vraag_aanbod->rowCount(); ++i )
-      {
-      ui->tableView->openPersistentEditor( model_vraag_aanbod->index(i, 3) );
-      }
 }
 
 OverzichtVraagAanbod::~OverzichtVraagAanbod()
