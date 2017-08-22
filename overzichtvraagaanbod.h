@@ -3,6 +3,8 @@
 
 #include <QDialog>
 #include <QSqlRelationalTableModel>
+#include <QSqlError>
+#include <QMessageBox>
 #include "comboboxdelegate.h"
 
 namespace Ui {
