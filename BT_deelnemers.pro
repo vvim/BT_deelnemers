@@ -44,7 +44,8 @@ SOURCES += main.cpp\
     notassortfilterproxymodel.cpp \
     newdeelnemerindividu.cpp \
     overzichtvraagaanbod.cpp \
-    comboboxdelegate.cpp
+    comboboxdelegate.cpp \
+    deelnemerbhoverzicht.cpp
 
 HEADERS  += buurtijd_deelnemers.h \
     btlistview.h \
@@ -60,13 +61,15 @@ HEADERS  += buurtijd_deelnemers.h \
     newdeelnemerindividu.h \
     sdeelnemerorganisatie.h \
     overzichtvraagaanbod.h \
-    comboboxdelegate.h
+    comboboxdelegate.h \
+    deelnemerbhoverzicht.h
 
 FORMS    += buurtijd_deelnemers.ui \
     deelnemer_location.ui \
     deelnemernotes.ui \
     newdeelnemerindividu.ui \
-    overzichtvraagaanbod.ui
+    overzichtvraagaanbod.ui \
+    deelnemerbhoverzicht.ui
 
 RESOURCES += \
     buurtijd_deelnemers.qrc

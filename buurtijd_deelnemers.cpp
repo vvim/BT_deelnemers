@@ -20,6 +20,7 @@ Buurtijd_deelnemers::Buurtijd_deelnemers(QWidget *parent) :
     notes = NULL;
     vraag_aanbod = NULL;
     newindividu = NULL;
+    bh_overzicht = NULL;
     last_known_deelnemer = SDeelnemerMarker();
     settings = new QSettings("settings.ini", QSettings::IniFormat);
 
@@ -184,6 +185,7 @@ Buurtijd_deelnemers::~Buurtijd_deelnemers()
     delete location;
     delete notes;
     delete vraag_aanbod;
+    delete bh_overzicht;
     delete model_vraag_aanbod;
     delete newindividu;
     delete ui;
@@ -1367,4 +1369,16 @@ void Buurtijd_deelnemers::on_pushButton_vraag_aanbod_clicked()
 //        delete vraag_aanbod;
 
     vraag_aanbod->show();
+}
+
+void Buurtijd_deelnemers::on_pushButton_BH_clicked()
+{
+    vvimDebug() << "show overview of Buurtijdoverzicht";
+    if(bh_overzicht)
+        delete bh_overzicht;
+
+    SDeelnemerMarker deelnemer = readDeelnemer();
+
+    bh_overzicht = new DeelnemerBHOverzicht(deelnemer);
+    bh_overzicht->show();
 }

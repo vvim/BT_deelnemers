@@ -18,6 +18,7 @@
 #include "deelnemernotes.h"
 #include "newdeelnemerindividu.h"
 #include "overzichtvraagaanbod.h"
+#include "deelnemerbhoverzicht.h"
 
 namespace Ui {
 class Buurtijd_deelnemers;
@@ -68,6 +69,7 @@ private:
     DeelnemerLocation *location;
     DeelnemerNotes *notes;
     NewDeelnemerIndividu *newindividu;
+    DeelnemerBHOverzicht *bh_overzicht;
     QSettings *settings;
 
 private slots:
@@ -92,6 +94,7 @@ private slots:
     void on_comboBox_soort_currentIndexChanged(int index);
     void on_pushButton_participantsWithoutEmail_clicked();
     void on_pushButton_vraag_aanbod_clicked();
+    void on_pushButton_BH_clicked();
 };
 
 #endif // BUURTIJD_DEELNEMERS_H

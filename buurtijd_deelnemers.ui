@@ -138,6 +138,13 @@
        </property>
       </widget>
      </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_BH">
+       <property name="text">
+        <string>BH</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
    <item>
