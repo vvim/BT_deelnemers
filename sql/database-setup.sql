@@ -461,6 +461,89 @@ ALTER TABLE `t_vraag_aanbod`
 ALTER TABLE `t_vraag_aanbod`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;COMMIT;
 
+
+--
+-- Table structure for table `t_categorie`
+--
+
+CREATE TABLE `t_categorie` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `categorie` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `t_categorie`
+--
+
+INSERT INTO `t_categorie` (`id`, `categorie`) VALUES
+(0, 'Administratie'),
+(1, 'Babysit'),
+(2, 'Boeken'),
+(3, 'Boodschappen'),
+(4, 'Computers & GSM'),
+(5, 'Cultuur'),
+(6, 'Dieren'),
+(7, 'Donatie aan deelnemers of het Sociaal Fonds'),
+(8, 'Donatie Boekenmarktje'),
+(9, 'Donatie Bureaumarktje'),
+(10, 'Donatie Kledingmarktje'),
+(11, 'Donatie Speelgoedmarktje'),
+(12, 'Donatie Voedingsmarktje'),
+(13, 'Feesten'),
+(14, 'Fietsen'),
+(15, 'Flyeren'),
+(16, 'Hergebruik'),
+(17, 'Huishoudelijke hulp'),
+(18, 'Huur tuinproject'),
+(19, 'Kleding & Creatieve vaardigheden'),
+(20, 'Kledingmarktje - bezoek aan kledingmarktje'),
+(21, 'Kledingmarktje - hulp'),
+(22, 'Klusjes & Verhuizen'),
+(23, 'Koken & Bakken'),
+(24, 'Lenen'),
+(25, 'Lokaal'),
+(26, 'Materiaal'),
+(27, 'Organisatie'),
+(28, 'Sociaal contact & Burenhulp'),
+(29, 'Speelgoedmarktje - bezoek'),
+(30, 'Speelgoedmarktje - hulp'),
+(31, 'Sport'),
+(32, 'Tolken & Vertalen'),
+(33, 'Tuin & Plantjes'),
+(34, 'Vervoer'),
+(35, 'Voedingsmarktje - bezoek aan voedingsmarktje'),
+(36, 'Voedingsmarktje - hulp'),
+(37, 'Voedingsmarktje - ophalen'),
+(38, 'Volkskeuken - bezoek aan volkskeuken'),
+(39, 'Volkskeuken - hulp'),
+(40, 'Vorming - huiswerkbegeleiding'),
+(41, 'Vorming - hulp sollicitatie'),
+(42, 'Vorming - Nederlands oefenen'),
+(43, 'Vorming - nieuwe taal inoefenen'),
+(44, 'Vorming - vorming allerhande'),
+(45, 'Workshop');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `t_categorie`
+--
+ALTER TABLE `t_categorie`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `id` (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `t_categorie`
+--
+ALTER TABLE `t_categorie`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;COMMIT;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
