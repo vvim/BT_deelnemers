@@ -39,3 +39,18 @@ void DeelnemerBHOverzicht::showOverzicht()
     vvimDebug() << "url:" << url;
     ui->webView->load(QUrl(url));
 }
+
+void DeelnemerBHOverzicht::print(QPrinter* printer)
+{
+    ui->webView->print(printer);
+}
+
+void DeelnemerBHOverzicht::on_pushButton_print_clicked()
+{
+    if (!m_printer) m_printer.reset(new QPrinter);
+    QScopedPointer<QPrintDialog> dialog(new QPrintDialog(m_printer.data(), this));
+    dialog->setAttribute(Qt::WA_DeleteOnClose);
+    connect(dialog.data(), SIGNAL(accepted(QPrinter*)), SLOT(print(QPrinter*)));
+    dialog->show();
+    dialog.take(); // The dialog will self-delete}
+}

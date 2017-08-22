@@ -26,19 +26,6 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <spacer name="horizontalSpacer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
       <widget class="QLabel" name="label_max_lines">
        <property name="text">
         <string>Maximum aantal lijntjes:</string>
@@ -58,7 +45,27 @@
      <item>
       <widget class="QPushButton" name="pushButton_set_max_lines">
        <property name="text">
-        <string>Go!</string>
+        <string>Toon</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_print">
+       <property name="text">
+        <string>Overzicht afdrukken</string>
        </property>
       </widget>
      </item>
