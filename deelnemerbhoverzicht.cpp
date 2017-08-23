@@ -10,6 +10,7 @@ DeelnemerBHOverzicht::DeelnemerBHOverzicht(SDeelnemerMarker _deelnemer, QWidget 
     ui(new Ui::DeelnemerBHOverzicht)
 {
     ui->setupUi(this);
+    ui->webView->setStyleSheet("background-color: white");
 
     deelnemer_id = _deelnemer.id;
     overzicht_max_lines = 10;
