@@ -5,6 +5,7 @@
 #include <QDebug>
 #include <QPrinter>
 #include <QPrintDialog>
+#include <QWebFrame>
 #include "sdeelnemermarker.h"
 
 namespace Ui {
@@ -24,6 +25,8 @@ private slots:
     void print(QPrinter* printer);
 
     void on_pushButton_print_clicked();
+
+    void on_pushButton_email_clicked();
 
 private:
     Ui::DeelnemerBHOverzicht *ui;

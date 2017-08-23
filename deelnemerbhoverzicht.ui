@@ -63,6 +63,13 @@
       </spacer>
      </item>
      <item>
+      <widget class="QPushButton" name="pushButton_email">
+       <property name="text">
+        <string>Email</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="pushButton_print">
        <property name="text">
         <string>Overzicht afdrukken</string>
