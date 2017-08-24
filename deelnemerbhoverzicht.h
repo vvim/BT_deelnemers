@@ -5,6 +5,7 @@
 #include <QDebug>
 #include <QPrinter>
 #include <QPrintDialog>
+#include <QSettings>
 #include "sdeelnemermarker.h"
 
 namespace Ui {
@@ -28,10 +29,12 @@ private slots:
     void on_radioButton_toon_overzicht_toggled(bool checked);
 
 private:
+    QSettings *settings;
     Ui::DeelnemerBHOverzicht *ui;
     int deelnemer_id, overzicht_max_lines;
     void showOverzicht();
     QScopedPointer<QPrinter> m_printer;
+    QString urloverview, urlinput;
 };
 
 #endif // DEELNEMERBHOVERZICHT_H

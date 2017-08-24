@@ -9,8 +9,15 @@ DeelnemerBHOverzicht::DeelnemerBHOverzicht(SDeelnemerMarker _deelnemer, QWidget 
     QDialog(parent),
     ui(new Ui::DeelnemerBHOverzicht)
 {
+    settings = new QSettings("settings.ini", QSettings::IniFormat);
+
+    urloverview = settings->value("bh/urloverview").toString();
+
+    urlinput = settings->value("bh/urlinput").toString();
+    QString minguser = settings->value("minguser").toString();
+    urlinput.append(QString("%1.php").arg(minguser.toLower()));
+
     ui->setupUi(this);
-    ui->webView->setStyleSheet("background-color: white");
 
     deelnemer_id = _deelnemer.id;
     overzicht_max_lines = 10;
@@ -35,7 +42,8 @@ void DeelnemerBHOverzicht::on_pushButton_set_max_lines_clicked()
 
 void DeelnemerBHOverzicht::showOverzicht()
 {
-    QString url = QString("http://www.buurtijd.be/bh/gettransactions.php?q=%1").arg(deelnemer_id);
+    ui->webView->setStyleSheet("background-color: white");
+    QString url = QString("%1?q=%2").arg(urloverview).arg(deelnemer_id);
     if(overzicht_max_lines > 0)
         url = QString("%1&limit=%2").arg(url).arg(overzicht_max_lines);
     vvimDebug() << "max lines:" << overzicht_max_lines;
@@ -71,6 +79,7 @@ void DeelnemerBHOverzicht::on_radioButton_toon_overzicht_toggled(bool checked)
     }
     else
     {
-        ui->webView->load(QUrl("http://www.google.com"));
+        ui->webView->setStyleSheet("background-color: none");
+        ui->webView->load(QUrl(urlinput));
     }
 }
