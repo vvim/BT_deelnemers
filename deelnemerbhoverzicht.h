@@ -25,6 +25,8 @@ private slots:
 
     void on_pushButton_print_clicked();
 
+    void on_radioButton_toon_overzicht_toggled(bool checked);
+
 private:
     Ui::DeelnemerBHOverzicht *ui;
     int deelnemer_id, overzicht_max_lines;

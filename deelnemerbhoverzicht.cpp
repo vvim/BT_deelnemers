@@ -17,6 +17,8 @@ DeelnemerBHOverzicht::DeelnemerBHOverzicht(SDeelnemerMarker _deelnemer, QWidget 
 
     ui->spinbox_max_lines->setValue(overzicht_max_lines);
     showOverzicht();
+
+    ui->radioButton_toon_overzicht->setChecked(true);
 }
 
 DeelnemerBHOverzicht::~DeelnemerBHOverzicht()
@@ -54,4 +56,21 @@ void DeelnemerBHOverzicht::on_pushButton_print_clicked()
     connect(dialog.data(), SIGNAL(accepted(QPrinter*)), SLOT(print(QPrinter*)));
     dialog->show();
     dialog.take(); // The dialog will self-delete}
+}
+
+void DeelnemerBHOverzicht::on_radioButton_toon_overzicht_toggled(bool checked)
+{
+    ui->spinbox_max_lines->setVisible(checked);
+    ui->label_max_lines->setVisible(checked);
+    ui->pushButton_print->setVisible(checked);
+    ui->pushButton_set_max_lines->setVisible(checked);
+
+    if(checked)
+    {
+        showOverzicht();
+    }
+    else
+    {
+        ui->webView->load(QUrl("http://www.google.com"));
+    }
 }
