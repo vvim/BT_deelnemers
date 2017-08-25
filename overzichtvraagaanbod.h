@@ -17,7 +17,7 @@ class OverzichtVraagAanbod : public QDialog
     Q_OBJECT
 
 public:
-    explicit OverzichtVraagAanbod(QSqlRelationalTableModel *_model_vraag_aanbod, QWidget *parent = 0);
+    explicit OverzichtVraagAanbod(QSqlRelationalTableModel *_model_vraag_aanbod_overzicht, QWidget *parent = 0);
     ~OverzichtVraagAanbod();
 
 private:
