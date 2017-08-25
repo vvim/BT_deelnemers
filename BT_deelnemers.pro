@@ -45,6 +45,7 @@ SOURCES += main.cpp\
     newdeelnemerindividu.cpp \
     overzichtvraagaanbod.cpp \
     comboboxdelegate.cpp \
+    completerdelegate.cpp \
     deelnemerbhoverzicht.cpp
 
 HEADERS  += buurtijd_deelnemers.h \
@@ -62,6 +63,7 @@ HEADERS  += buurtijd_deelnemers.h \
     sdeelnemerorganisatie.h \
     overzichtvraagaanbod.h \
     comboboxdelegate.h \
+    completerdelegate.h \
     deelnemerbhoverzicht.h
 
 FORMS    += buurtijd_deelnemers.ui \
