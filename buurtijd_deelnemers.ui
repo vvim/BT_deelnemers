@@ -813,6 +813,19 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_bottom_savingbuttons">
      <item>
+      <widget class="QLabel" name="label_user">
+       <property name="font">
+        <font>
+         <pointsize>6</pointsize>
+         <italic>true</italic>
+        </font>
+       </property>
+       <property name="text">
+        <string>TextLabel</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QLabel" name="label_feedback">
        <property name="text">
         <string>TextLabel</string>

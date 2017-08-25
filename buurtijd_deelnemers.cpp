@@ -27,6 +27,8 @@ Buurtijd_deelnemers::Buurtijd_deelnemers(QWidget *parent) :
     ui->setupUi(this);
     ui->deelnemersTable->setVisible(false); // only keeping it for debugging reasons, it has no use of the user
     ui->label_feedback->clear();
+    ui->label_user->setText(QString("logged in as %1").arg(settings->value("minguser").toString()));
+    vvimDebug() << "logged in as" << settings->value("minguser").toString();
 
     ui->saveButton->setAutoFillBackground(true);
     ui->saveButton->setStyleSheet("background-color: rgb(255, 0, 0); color: rgb(255, 255, 255)");
