@@ -22,7 +22,7 @@ public:
 
 private:
     Ui::OverzichtVraagAanbod *ui;
-    QSqlRelationalTableModel *model_vraag_aanbod;
+    QSqlRelationalTableModel *model_vraag_aanbod_overzicht;
     ComboBoxDelegate *vraag_aanbod_combobox, *categories_combobox;
     CompleterDelegate *deelnemer_completer;
 };
