@@ -37,11 +37,11 @@ OverzichtVraagAanbod::OverzichtVraagAanbod(QSqlRelationalTableModel *_model_vraa
     vvimDebug() << "\n\n\t!! categorie geladen:" << model_categorie->rowCount() <<"\n\n";
     // to get the categories, we should have a table T_CATEGORIES in the database >TODO<
     std::vector<std::string> categories;
-    int categorieIdx = model_categorie->fieldIndex("categorie"); // which column do we need?
+    int categorieIdx_t_categorie = model_categorie->fieldIndex("categorie"); // which column do we need?
 
     for ( int i = 0 ; i < model_categorie->rowCount() ; ++i )
     {
-        categories.push_back(model_categorie->index( i ,categorieIdx).data().toString().toStdString());
+        categories.push_back(model_categorie->index( i ,categorieIdx_t_categorie).data().toString().toStdString());
     }
 
     categories_combobox = new ComboBoxDelegate(categories, this);
@@ -50,12 +50,19 @@ OverzichtVraagAanbod::OverzichtVraagAanbod(QSqlRelationalTableModel *_model_vraa
     loadCompleter();
     deelnemer_completer = new CompleterDelegate(deelnemers_map, id_map, this);
 
+    int idIdx = model_vraag_aanbod_overzicht->fieldIndex("id");
+    int timestampIdx = model_vraag_aanbod_overzicht->fieldIndex("timestamp");
+    int deelnemerIdx = model_vraag_aanbod_overzicht->fieldIndex("deelnemer");
+    int vraagIdx = model_vraag_aanbod_overzicht->fieldIndex("vraag");
+    int categorieIdx_t_vraag_aanbod = model_vraag_aanbod_overzicht->fieldIndex("categorie");
+    int inhoudIdx = model_vraag_aanbod_overzicht->fieldIndex("inhoud");
+
     ui->tableView->setModel(model_vraag_aanbod_overzicht);
-    ui->tableView->setColumnHidden(0,1); // hide column with "id"
-    ui->tableView->setColumnHidden(1,1); // hide column with "timestamp"
-    ui->tableView->setItemDelegateForColumn(3,vraag_aanbod_combobox);
-    ui->tableView->setItemDelegateForColumn(4,categories_combobox);
-    ui->tableView->setItemDelegateForColumn(2,deelnemer_completer);
+    ui->tableView->setColumnHidden(idIdx,1); // hide column with "id"
+    ui->tableView->setColumnHidden(timestampIdx,1); // hide column with "timestamp"
+    ui->tableView->setItemDelegateForColumn(vraagIdx,vraag_aanbod_combobox);
+    ui->tableView->setItemDelegateForColumn(categorieIdx_t_vraag_aanbod,categories_combobox);
+    ui->tableView->setItemDelegateForColumn(deelnemerIdx,deelnemer_completer);
 }
 
 OverzichtVraagAanbod::~OverzichtVraagAanbod()
