@@ -63,6 +63,12 @@ OverzichtVraagAanbod::OverzichtVraagAanbod(QSqlRelationalTableModel *_model_vraa
     ui->tableView->setItemDelegateForColumn(vraagIdx,vraag_aanbod_combobox);
     ui->tableView->setItemDelegateForColumn(categorieIdx_t_vraag_aanbod,categories_combobox);
     ui->tableView->setItemDelegateForColumn(deelnemerIdx,deelnemer_completer);
+
+    // make delegates readable (maybe better to implement virtual sizeHint()
+    ui->tableView->resizeColumnsToContents();
+    ui->tableView->setColumnWidth(vraagIdx,80);
+    ui->tableView->setColumnWidth(categorieIdx_t_vraag_aanbod,150);
+    ui->tableView->setColumnWidth(deelnemerIdx,150);
 }
 
 OverzichtVraagAanbod::~OverzichtVraagAanbod()

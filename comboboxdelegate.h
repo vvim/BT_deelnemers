@@ -23,6 +23,9 @@ public:
   void updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const;
   void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
 
+  // might add later: QSize sizeHint(const QStyleOptionViewItem & option, const QModelIndex & index) const;
+  // return QSize depending on longest string in Items ?
+
 private:
   std::vector<std::string> Items;
 

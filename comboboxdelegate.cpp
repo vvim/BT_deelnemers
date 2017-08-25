@@ -70,3 +70,12 @@ void ComboBoxDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
  see www.qtcentre.org/threads/15249-Different-delegates-to-different-Columns-of-QTableView
  see http://programmingexamples.net/wiki/Qt/Delegates/ComboBoxDelegate
 ** *****************************/
+
+/*
+
+QSize ComboBoxDelegate::sizeHint(const QStyleOptionViewItem & option, const QModelIndex & index) const
+{
+    QStyleOptionViewItemV4 myOption = option;
+// return QSize depending on longest string in Items ?
+}
+*/
