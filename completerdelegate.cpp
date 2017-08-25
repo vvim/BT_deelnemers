@@ -12,10 +12,9 @@
 #define vvimDebug()\
     qDebug() << "[" << Q_FUNC_INFO << "]"
 
-CompleterDelegate::CompleterDelegate(std::vector<std::string> _items, QObject *parent)
+CompleterDelegate::CompleterDelegate(QObject *parent)
 :QItemDelegate(parent)
 {
-    Items = _items;
 }
 
 
@@ -50,8 +49,7 @@ void CompleterDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opt
 {
   QStyleOptionViewItemV4 myOption = option;
 
-  //QString text = Items[index.model()->index(index.row(),index.column()).data(Qt::EditRole).toInt()];
-  QString text = QString::fromStdString(Items[index.model()->data(index, Qt::EditRole).toInt()]);
+  QString text = index.model()->index(index.row(),index.column()).data(Qt::EditRole).toString();
   myOption.text = text;
 
   QApplication::style()->drawControl(QStyle::CE_ItemViewItem, &myOption, painter);

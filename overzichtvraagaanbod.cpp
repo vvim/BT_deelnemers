@@ -43,6 +43,7 @@ OverzichtVraagAanbod::OverzichtVraagAanbod(QSqlRelationalTableModel *_model_vraa
 
     categories_combobox = new ComboBoxDelegate(categories, this);
 
+    deelnemer_completer = new CompleterDelegate(this);
 
     model_vraag_aanbod = _model_vraag_aanbod;
     ui->tableView->setModel(model_vraag_aanbod);
@@ -50,9 +51,13 @@ OverzichtVraagAanbod::OverzichtVraagAanbod(QSqlRelationalTableModel *_model_vraa
     ui->tableView->setColumnHidden(1,1); // hide column with "timestamp"
     ui->tableView->setItemDelegateForColumn(3,vraag_aanbod_combobox);
     ui->tableView->setItemDelegateForColumn(4,categories_combobox);
+    ui->tableView->setItemDelegateForColumn(2,deelnemer_completer);
 }
 
 OverzichtVraagAanbod::~OverzichtVraagAanbod()
 {
     delete ui;
+    delete vraag_aanbod_combobox;
+    delete categories_combobox;
+    delete deelnemer_completer;
 }

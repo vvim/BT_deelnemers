@@ -6,6 +6,7 @@
 #include <QSqlError>
 #include <QMessageBox>
 #include "comboboxdelegate.h"
+#include "completerdelegate.h"
 
 namespace Ui {
 class OverzichtVraagAanbod;
@@ -23,6 +24,7 @@ private:
     Ui::OverzichtVraagAanbod *ui;
     QSqlRelationalTableModel *model_vraag_aanbod;
     ComboBoxDelegate *vraag_aanbod_combobox, *categories_combobox;
+    CompleterDelegate *deelnemer_completer;
 };
 
 #endif // OVERZICHTVRAAGAANBOD_H
