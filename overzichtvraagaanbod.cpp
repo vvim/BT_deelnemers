@@ -45,7 +45,7 @@ OverzichtVraagAanbod::OverzichtVraagAanbod(QSqlRelationalTableModel *_model_vraa
 
     deelnemer_completer = new CompleterDelegate(this);
 
-    model_vraag_aanbod_overzicht = _model_vraag_aanbod;
+    model_vraag_aanbod_overzicht = model_vraag_aanbod_overzicht;
     ui->tableView->setModel(model_vraag_aanbod_overzicht);
     ui->tableView->setColumnHidden(0,1); // hide column with "id"
     ui->tableView->setColumnHidden(1,1); // hide column with "timestamp"
