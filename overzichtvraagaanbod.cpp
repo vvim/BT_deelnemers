@@ -101,9 +101,9 @@ void OverzichtVraagAanbod::loadCompleter()
             dlnmr.chop(2);
         }
         deelnemers_list << dlnmr;
-        deelnemers_map[dlnmr] = idIdx;
 
         int id_deelnemer = model_deelnemers->index( i, idIdx ).data().toInt();
+        deelnemers_map[dlnmr] = id_deelnemer;
         id_map[id_deelnemer] = dlnmr;
     }
 
