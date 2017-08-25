@@ -30,15 +30,15 @@ void CompleterDelegate::setEditorData(QWidget *editor, const QModelIndex &index)
 {
     // get value from the MODEL and bring it to the VIEW
   QLineEdit *lineEdit = static_cast<QLineEdit*>(editor);
-  QString value = index.model()->data(index, Qt::EditRole).toString();
-  lineEdit->setText(value);
+  int deelnemer_id = index.model()->data(index, Qt::EditRole).toInt();
+    lineEdit->setText(id_map[deelnemer_id]);
 }
 
 void CompleterDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
 {
     // get value from the VIEW and save it in the MODEL
     QLineEdit *lineEdit = static_cast<QLineEdit*>(editor);
-  model->setData(index, lineEdit->text(), Qt::EditRole);
+  model->setData(index, deelnemers_map[lineEdit->text()], Qt::EditRole);
 }
 
 void CompleterDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &/* index */) const
@@ -51,13 +51,10 @@ void CompleterDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opt
 {
   QStyleOptionViewItemV4 myOption = option;
 
-  QString text = index.model()->index(index.row(),index.column()).data(Qt::EditRole).toString();
-  myOption.text = text;
-
-
   int value = index.model()->index(index.row(),index.column()).data(Qt::EditRole).toInt();
 
   QString deelnemer = id_map[value];
+  myOption.text = deelnemer;
   vvimDebug() << value << deelnemer;
 
   QApplication::style()->drawControl(QStyle::CE_ItemViewItem, &myOption, painter);
