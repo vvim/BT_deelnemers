@@ -12,11 +12,15 @@
 #define vvimDebug()\
     qDebug() << "[" << Q_FUNC_INFO << "]"
 
-CompleterDelegate::CompleterDelegate(QMap<QString, int> _deelnemers_map, QMap<int, QString> _id_map, QObject *parent)
+CompleterDelegate::CompleterDelegate(QSqlRelationalTableModel *_model_deelnemers, QObject *parent)
 :QItemDelegate(parent)
 {
-    deelnemers_map = _deelnemers_map;
-    id_map = _id_map;
+    model_deelnemers = _model_deelnemers;
+
+    completer = NULL;
+    loadCompleter();
+
+    vvimDebug() << "destructor: delete completer aub";
 }
 
 
@@ -58,4 +62,52 @@ void CompleterDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opt
   vvimDebug() << value << deelnemer;
 
   QApplication::style()->drawControl(QStyle::CE_ItemViewItem, &myOption, painter);
+}
+
+
+void CompleterDelegate::loadCompleter()
+{
+    if(completer)
+        delete completer;
+
+    deelnemers_map.clear();
+    QStringList deelnemers_list;
+
+    int idIdx = model_deelnemers->fieldIndex("id");
+    int familieNaamIdx = model_deelnemers->fieldIndex("familienaam");
+    int naamIdx = model_deelnemers->fieldIndex("naam");
+    vvimDebug() << "[CAVEAT]"
+                << "we expect the combination [naam] [familienaam] to be unique, but can we guarantee that?"
+                << "else we could mix the address of telephonenumber in the mix?"
+                << "currently I add there ID-number to make every entry unique";
+
+    for ( int i = 0 ; i < model_deelnemers->rowCount() ; ++i )
+    {
+        QString dlnmr;
+        if( model_deelnemers->index( i, familieNaamIdx ).data().isNull())
+        {
+            dlnmr = model_deelnemers->index( i, naamIdx ).data().toString();
+        }
+        else
+        {
+            dlnmr = model_deelnemers->index( i, naamIdx ).data().toString();
+            dlnmr.append(" ");
+            dlnmr.append(model_deelnemers->index( i, familieNaamIdx ).data().toString());
+        }
+        dlnmr = dlnmr.simplified();
+        while(dlnmr.endsWith(" -"))
+        {
+            dlnmr.chop(2);
+        }
+        deelnemers_list << dlnmr;
+
+        int id_deelnemer = model_deelnemers->index( i, idIdx ).data().toInt();
+        deelnemers_map[dlnmr] = id_deelnemer;
+        id_map[id_deelnemer] = dlnmr;
+    }
+
+    deelnemers_list.sort();
+    completer = new MyCompleter(deelnemers_list, this);
+    completer->setCaseSensitivity(Qt::CaseInsensitive);
+    vvimDebug() << "done, completer (re)loaded." << deelnemers_map.count() << id_map.count() << "rows";
 }

@@ -4,6 +4,8 @@
 #include <string>
 #include <vector>
 #include <QDebug>
+#include <QSqlRelationalTableModel>
+#include "mylineedit.h"
 
 #include <QItemDelegate>
 
@@ -15,8 +17,8 @@ class CompleterDelegate : public QItemDelegate
 {
 Q_OBJECT
 public:
-  CompleterDelegate(QMap<QString, int> _deelnemers_map, QMap<int, QString> _id_map, QObject *parent = 0);
-
+  CompleterDelegate(QSqlRelationalTableModel *_model_deelnemers, QObject *parent = 0);
+  void loadCompleter();
 
   QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const;
   void setEditorData(QWidget *editor, const QModelIndex &index) const;
@@ -27,5 +29,7 @@ public:
 private:
     QMap<QString, int> deelnemers_map;
     QMap<int, QString> id_map;
+    MyCompleter *completer;
+    QSqlRelationalTableModel *model_deelnemers;
 };
 #endif

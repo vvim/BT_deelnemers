@@ -11,7 +11,6 @@ OverzichtVraagAanbod::OverzichtVraagAanbod(QSqlRelationalTableModel *_model_vraa
     ui->setupUi(this);
 
     model_vraag_aanbod_overzicht = _model_vraag_aanbod_overzicht;
-    model_deelnemers = _model_deelnemers;
 
     // we should get this information from a database, but "vraag-aanbod" which is actually a Boolean, should be ok
     std::vector<std::string> vraag_aanbod_items_for_combobox;
@@ -46,9 +45,7 @@ OverzichtVraagAanbod::OverzichtVraagAanbod(QSqlRelationalTableModel *_model_vraa
 
     categories_combobox = new ComboBoxDelegate(categories, this);
 
-    completer = NULL;
-    loadCompleter();
-    deelnemer_completer = new CompleterDelegate(deelnemers_map, id_map, this);
+    deelnemer_completer = new CompleterDelegate(_model_deelnemers, this);
 
     int idIdx = model_vraag_aanbod_overzicht->fieldIndex("id");
     int timestampIdx = model_vraag_aanbod_overzicht->fieldIndex("timestamp");
@@ -77,51 +74,4 @@ OverzichtVraagAanbod::~OverzichtVraagAanbod()
     delete vraag_aanbod_combobox;
     delete categories_combobox;
     delete deelnemer_completer;
-}
-
-void OverzichtVraagAanbod::loadCompleter()
-{
-    if(completer)
-        delete completer;
-
-    deelnemers_map.clear();
-    QStringList deelnemers_list;
-
-    int idIdx = model_deelnemers->fieldIndex("id");
-    int familieNaamIdx = model_deelnemers->fieldIndex("familienaam");
-    int naamIdx = model_deelnemers->fieldIndex("naam");
-    vvimDebug() << "[CAVEAT]"
-                << "we expect the combination [naam] [familienaam] to be unique, but can we guarantee that?"
-                << "else we could mix the address of telephonenumber in the mix?"
-                << "currently I add there ID-number to make every entry unique";
-
-    for ( int i = 0 ; i < model_deelnemers->rowCount() ; ++i )
-    {
-        QString dlnmr;
-        if( model_deelnemers->index( i, familieNaamIdx ).data().isNull())
-        {
-            dlnmr = model_deelnemers->index( i, naamIdx ).data().toString();
-        }
-        else
-        {
-            dlnmr = model_deelnemers->index( i, naamIdx ).data().toString();
-            dlnmr.append(" ");
-            dlnmr.append(model_deelnemers->index( i, familieNaamIdx ).data().toString());
-        }
-        dlnmr = dlnmr.simplified();
-        while(dlnmr.endsWith(" -"))
-        {
-            dlnmr.chop(2);
-        }
-        deelnemers_list << dlnmr;
-
-        int id_deelnemer = model_deelnemers->index( i, idIdx ).data().toInt();
-        deelnemers_map[dlnmr] = id_deelnemer;
-        id_map[id_deelnemer] = dlnmr;
-    }
-
-    deelnemers_list.sort();
-    completer = new MyCompleter(deelnemers_list, this);
-    completer->setCaseSensitivity(Qt::CaseInsensitive);
-    vvimDebug() << "done, completer (re)loaded." << deelnemers_map.count() << id_map.count() << "rows";
 }
