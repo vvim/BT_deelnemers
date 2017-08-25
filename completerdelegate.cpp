@@ -12,9 +12,11 @@
 #define vvimDebug()\
     qDebug() << "[" << Q_FUNC_INFO << "]"
 
-CompleterDelegate::CompleterDelegate(QObject *parent)
+CompleterDelegate::CompleterDelegate(QMap<QString, int> _deelnemers_map, QMap<int, QString> _id_map, QObject *parent)
 :QItemDelegate(parent)
 {
+    deelnemers_map = _deelnemers_map;
+    id_map = _id_map;
 }
 
 
@@ -51,6 +53,12 @@ void CompleterDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opt
 
   QString text = index.model()->index(index.row(),index.column()).data(Qt::EditRole).toString();
   myOption.text = text;
+
+
+  int value = index.model()->index(index.row(),index.column()).data(Qt::EditRole).toInt();
+
+  QString deelnemer = id_map[value];
+  vvimDebug() << value << deelnemer;
 
   QApplication::style()->drawControl(QStyle::CE_ItemViewItem, &myOption, painter);
 }

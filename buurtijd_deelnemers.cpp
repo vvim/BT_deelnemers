@@ -171,7 +171,7 @@ Buurtijd_deelnemers::Buurtijd_deelnemers(QWidget *parent) :
         return;
     }
 
-    vraag_aanbod = new OverzichtVraagAanbod(model_vraag_aanbod);
+    vraag_aanbod = new OverzichtVraagAanbod(model_vraag_aanbod,model_deelnemers);
 }
 
 Buurtijd_deelnemers::~Buurtijd_deelnemers()

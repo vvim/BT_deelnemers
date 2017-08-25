@@ -15,7 +15,8 @@ class CompleterDelegate : public QItemDelegate
 {
 Q_OBJECT
 public:
-  CompleterDelegate(QObject *parent = 0);
+  CompleterDelegate(QMap<QString, int> _deelnemers_map, QMap<int, QString> _id_map, QObject *parent = 0);
+
 
   QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const;
   void setEditorData(QWidget *editor, const QModelIndex &index) const;
@@ -24,6 +25,7 @@ public:
   void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
 
 private:
-
+    QMap<QString, int> deelnemers_map;
+    QMap<int, QString> id_map;
 };
 #endif
