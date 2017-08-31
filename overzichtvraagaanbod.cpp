@@ -45,8 +45,8 @@ OverzichtVraagAanbod::OverzichtVraagAanbod(QSqlRelationalTableModel *_model_vraa
     {
         categories.push_back(model_categorie->index( i ,categorieIdx_t_categorie).data().toString().toStdString());
     }
-
     categories_combobox = new ComboBoxDelegate(categories, this);
+    delete model_categorie;
 
     QSqlRelationalTableModel *model_transactie_statussen = new QSqlRelationalTableModel();
     model_transactie_statussen->setEditStrategy(QSqlTableModel::OnManualSubmit);
@@ -69,6 +69,7 @@ OverzichtVraagAanbod::OverzichtVraagAanbod(QSqlRelationalTableModel *_model_vraa
         transactie_status.push_back(model_transactie_statussen->index( i ,transactiestatusIdx_t_va_transactie_status).data().toString().toStdString());
     }
     transactie_status_combobox = new ComboBoxDelegate(transactie_status, this);
+    delete model_transactie_statussen;
 
     deelnemer_completer = new CompleterDelegate(_model_deelnemers, this);
 
