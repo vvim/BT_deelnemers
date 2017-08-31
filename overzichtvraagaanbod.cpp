@@ -31,16 +31,13 @@ OverzichtVraagAanbod::OverzichtVraagAanbod(QSqlRelationalTableModel *_model_vraa
     // Populate the model
     if (!model_categorie->select())
     {
-        //vvimDebug() << "[TODO]" << "show error" << ;
-        // !! TODO //showError(model_categorie->lastError());
+        vvimDebug() << "error selecting model_categorie" << model_categorie->lastError().text();
         QMessageBox::critical(this, "Unable to lookup categories in database",
                     "Unable to lookup categories in database: " + model_categorie->lastError().text());
         return;
     }
 
-
-    vvimDebug() << "\n\n\t!! categorie geladen:" << model_categorie->rowCount() <<"\n\n";
-    // to get the categories, we should have a table T_CATEGORIES in the database >TODO<
+    vvimDebug() << "categorieën geladen voor overzicht t_vraag_aanbod:" << model_categorie->rowCount();
     std::vector<std::string> categories;
     int categorieIdx_t_categorie = model_categorie->fieldIndex("categorie"); // which column do we need?
 
@@ -51,6 +48,28 @@ OverzichtVraagAanbod::OverzichtVraagAanbod(QSqlRelationalTableModel *_model_vraa
 
     categories_combobox = new ComboBoxDelegate(categories, this);
 
+    QSqlRelationalTableModel *model_transactie_statussen = new QSqlRelationalTableModel();
+    model_transactie_statussen->setEditStrategy(QSqlTableModel::OnManualSubmit);
+    model_transactie_statussen->setTable("t_va_transactie_status");
+
+    // Populate the model
+    if (!model_transactie_statussen->select())
+    {
+        vvimDebug() << "error selecting model_transactie_statussen" << model_transactie_statussen->lastError().text();
+        QMessageBox::critical(this, "Unable to lookup transactie statussen in database",
+                    "Unable to lookup transactie statussen in database: " + model_transactie_statussen->lastError().text());
+        return;
+    }
+    vvimDebug() << "transactie_statussen geladen voor overzicht t_vraag_aanbod:" << model_transactie_statussen->rowCount();
+    std::vector<std::string> transactie_status;
+    int transactiestatusIdx_t_va_transactie_status = model_transactie_statussen->fieldIndex("transactie_status"); // which column do we need?
+
+    for ( int i = 0 ; i < model_transactie_statussen->rowCount() ; ++i )
+    {
+        transactie_status.push_back(model_transactie_statussen->index( i ,transactiestatusIdx_t_va_transactie_status).data().toString().toStdString());
+    }
+    transactie_status_combobox = new ComboBoxDelegate(transactie_status, this);
+
     deelnemer_completer = new CompleterDelegate(_model_deelnemers, this);
 
     int idIdx = model_vraag_aanbod_overzicht->fieldIndex("id");
@@ -58,6 +77,7 @@ OverzichtVraagAanbod::OverzichtVraagAanbod(QSqlRelationalTableModel *_model_vraa
     int deelnemerIdx = model_vraag_aanbod_overzicht->fieldIndex("deelnemer");
     int vraagIdx = model_vraag_aanbod_overzicht->fieldIndex("vraag");
     int categorieIdx_t_vraag_aanbod = model_vraag_aanbod_overzicht->fieldIndex("categorie");
+    int transactiestatusIdx_t_vraag_aanbod = model_vraag_aanbod_overzicht->fieldIndex("transactie_status");
     int inhoudIdx = model_vraag_aanbod_overzicht->fieldIndex("inhoud");
 
     ui->tableView->setModel(model_vraag_aanbod_overzicht);
@@ -65,6 +85,7 @@ OverzichtVraagAanbod::OverzichtVraagAanbod(QSqlRelationalTableModel *_model_vraa
     ui->tableView->setColumnHidden(timestampIdx,1); // hide column with "timestamp"
     ui->tableView->setItemDelegateForColumn(vraagIdx,vraag_aanbod_combobox);
     ui->tableView->setItemDelegateForColumn(categorieIdx_t_vraag_aanbod,categories_combobox);
+    ui->tableView->setItemDelegateForColumn(transactiestatusIdx_t_vraag_aanbod,transactie_status_combobox);
     ui->tableView->setItemDelegateForColumn(deelnemerIdx,deelnemer_completer);
 
     // make delegates readable (maybe better to implement virtual sizeHint()
@@ -79,6 +100,7 @@ OverzichtVraagAanbod::~OverzichtVraagAanbod()
     delete ui;
     delete vraag_aanbod_combobox;
     delete categories_combobox;
+    delete transactie_status_combobox;
     delete deelnemer_completer;
 }
 

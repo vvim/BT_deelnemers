@@ -431,13 +431,15 @@ ALTER TABLE `t_deelnemer_notas`
 -- Table structure for table `t_vraag_aanbod`
 --
 
+
 CREATE TABLE `t_vraag_aanbod` (
   `id` int(10) UNSIGNED NOT NULL,
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `deelnemer` int(11) NOT NULL,
   `vraag` tinyint(1) NOT NULL COMMENT 'TRUE voor vraag, FALSE voor aanbod',
   `categorie` int(11) NOT NULL,
-  `inhoud` text NOT NULL
+  `inhoud` text NOT NULL,
+  `transactie_status` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -543,6 +545,41 @@ ALTER TABLE `t_categorie`
 --
 ALTER TABLE `t_categorie`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;COMMIT;
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `t_va_transactie_status`
+--
+
+CREATE TABLE `t_va_transactie_status` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `transactie_status` varchar(25) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `t_va_transactie_status`
+--
+
+INSERT INTO `t_va_transactie_status` (`id`, `transactie_status`) VALUES
+(0, 'transactie mislukt'),
+(1, 'vraag/aanbod geformuleerd'),
+(2, 'kandidaten'),
+(3, 'contacten uitgewisseld'),
+(4, 'effectief uitgevoerd'),
+(5, 'transactie ingevuld in BH');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `t_va_transactie_status`
+--
+ALTER TABLE `t_va_transactie_status`
+  ADD PRIMARY KEY (`id`);
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

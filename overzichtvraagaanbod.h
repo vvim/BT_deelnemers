@@ -28,7 +28,7 @@ private slots:
 private:
     Ui::OverzichtVraagAanbod *ui;
     QSqlRelationalTableModel *model_vraag_aanbod_overzicht;
-    ComboBoxDelegate *vraag_aanbod_combobox, *categories_combobox;
+    ComboBoxDelegate *vraag_aanbod_combobox, *categories_combobox, *transactie_status_combobox;
     CompleterDelegate *deelnemer_completer;
     OverzichtVraagAanbod *vraag_aanbod;
     QMap<QString, int> deelnemers_map;
