@@ -21,6 +21,7 @@ ComboBoxDelegate::ComboBoxDelegate(std::vector<std::string> _items, QObject *par
 
 QWidget *ComboBoxDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &/* option */, const QModelIndex &/* index */) const
 {
+    // The createEditor() function is called when the user starts editing an item:
   QComboBox* editor = new QComboBox(parent);
   for(unsigned int i = 0; i < Items.size(); ++i)
     {
@@ -32,6 +33,7 @@ QWidget *ComboBoxDelegate::createEditor(QWidget *parent, const QStyleOptionViewI
 void ComboBoxDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
 {
     // get value from the MODEL and bring it to the VIEW
+    // The setEditorData() function is called when an editor is created to initialize it with data from the model:
   QComboBox *comboBox = static_cast<QComboBox*>(editor);
   int value = index.model()->data(index, Qt::EditRole).toUInt();
   comboBox->setCurrentIndex(value);
@@ -40,6 +42,7 @@ void ComboBoxDelegate::setEditorData(QWidget *editor, const QModelIndex &index) 
 void ComboBoxDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
 {
     // get value from the VIEW and save it in the MODEL
+    // The setModelData() function is called when editing is finished, to commit data from the editor to the model:
   QComboBox *comboBox = static_cast<QComboBox*>(editor);
   model->setData(index, comboBox->currentIndex(), Qt::EditRole);
 }
@@ -52,6 +55,7 @@ void ComboBoxDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionV
 
 void ComboBoxDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
+    // The paint() function is reimplemented from QStyledItemDelegate and is called whenever the view needs to repaint an item
   QStyleOptionViewItemV4 myOption = option;
 
   //QString text = Items[index.model()->index(index.row(),index.column()).data(Qt::EditRole).toInt()];
@@ -75,6 +79,7 @@ void ComboBoxDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
 
 QSize ComboBoxDelegate::sizeHint(const QStyleOptionViewItem & option, const QModelIndex & index) const
 {
+    // The sizeHint() function returns an item's preferred size:
     QStyleOptionViewItemV4 myOption = option;
 // return QSize depending on longest string in Items ?
 }

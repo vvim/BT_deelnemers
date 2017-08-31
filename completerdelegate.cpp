@@ -26,22 +26,35 @@ CompleterDelegate::CompleterDelegate(QSqlRelationalTableModel *_model_deelnemers
 
 QWidget *CompleterDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &/* option */, const QModelIndex &/* index */) const
 {
-  QLineEdit* editor = new QLineEdit(parent);
+    // The createEditor() function is called when the user starts editing an item:
+  MyLineEdit *editor = new MyLineEdit(parent);
+  //connect(editor, SIGNAL(editingFinished()), this, SLOT(commitAndCloseEditor())); -> this is mentioned in http://doc.qt.io/qt-4.8/qt-itemviews-stardelegate-example.html , but do we need it?
+  editor->setCompleter(completer);
+
   return editor;
 }
 
 void CompleterDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
 {
     // get value from the MODEL and bring it to the VIEW
-  QLineEdit *lineEdit = static_cast<QLineEdit*>(editor);
+
+    //zeker lezen !!! http://doc.qt.io/qt-5/qtwidgets-itemviews-stardelegate-example.html
+    //            http://doc.qt.io/qt-4.8/qt-itemviews-stardelegate-example.html
+
+    // The setEditorData() function is called when an editor is created to initialize it with data from the model:
+
+  MyLineEdit *lineEdit = static_cast<MyLineEdit*>(editor);
   int deelnemer_id = index.model()->data(index, Qt::EditRole).toInt();
     lineEdit->setText(id_map[deelnemer_id]);
+    lineEdit->setCompleter(completer);
 }
 
 void CompleterDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
 {
+    // The setModelData() function is called when editing is finished, to commit data from the editor to the model:
+
     // get value from the VIEW and save it in the MODEL
-    QLineEdit *lineEdit = static_cast<QLineEdit*>(editor);
+    MyLineEdit *lineEdit = static_cast<MyLineEdit*>(editor);
   model->setData(index, deelnemers_map[lineEdit->text()], Qt::EditRole);
 }
 
@@ -53,6 +66,8 @@ void CompleterDelegate::updateEditorGeometry(QWidget *editor, const QStyleOption
 
 void CompleterDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
+    // The paint() function is reimplemented from QStyledItemDelegate and is called whenever the view needs to repaint an item
+
   QStyleOptionViewItemV4 myOption = option;
 
   int value = index.model()->index(index.row(),index.column()).data(Qt::EditRole).toInt();
