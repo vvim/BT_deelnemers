@@ -23,6 +23,8 @@ public:
 private slots:
     void on_saveButton_clicked();
 
+    void on_cancelButton_clicked();
+
 private:
     Ui::OverzichtVraagAanbod *ui;
     QSqlRelationalTableModel *model_vraag_aanbod_overzicht;

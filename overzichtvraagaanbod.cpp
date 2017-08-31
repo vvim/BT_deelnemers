@@ -109,5 +109,42 @@ void OverzichtVraagAanbod::feedbackNeutral(QString message)
 
 void OverzichtVraagAanbod::on_saveButton_clicked()
 {
-    feedbackSuccess("succes klik!");
+    vvimDebug() << "saving";
+    model_vraag_aanbod_overzicht->database().transaction();
+
+    if(model_vraag_aanbod_overzicht->submitAll())
+    {
+        vvimDebug() << "submitAll is successful, committing";
+        model_vraag_aanbod_overzicht->database().commit();
+        feedbackSuccess("opgeslagen");
+    }
+    else
+    {
+        vvimDebug() << "submitAll FAILED, rollback";
+        vvimDebug() << "error:" << model_vraag_aanbod_overzicht->lastError();
+        model_vraag_aanbod_overzicht->database().rollback();
+        feedbackWarning("Er ging iets mis, wijzigingen niet opgeslagen");
+    }
+}
+
+void OverzichtVraagAanbod::on_cancelButton_clicked()
+{
+    vvimDebug() << "... Cancel button pressed" << "undo all changes";
+
+    vvimDebug() << "... rolling back";
+    if(!model_vraag_aanbod_overzicht->database().rollback())
+    {
+        vvimDebug() << "rollback FAILED" << model_vraag_aanbod_overzicht->lastError().text();
+        feedbackWarning(QString("annuleren faalde: %1").arg(model_vraag_aanbod_overzicht->lastError().text()));
+    }
+
+
+    vvimDebug() << "... reload by using select() , see https://forum.qt.io/topic/2981/how-to-reload-the-tableview-to-reload-its-data/4";
+    if(!model_vraag_aanbod_overzicht->select())
+    {
+        vvimDebug() << "select FAILED" << model_vraag_aanbod_overzicht->lastError().text();
+        feedbackWarning(QString("annuleren is gelukt, maar daarna ging er iets mis bij het ophalen van de gegevens: %1").arg(model_vraag_aanbod_overzicht->lastError().text()));
+    }
+
+    feedbackNeutral("Bewerkingen annuleren is gelukt");
 }
