@@ -1,5 +1,6 @@
 #include "overzichtvraagaanbod.h"
 #include "ui_overzichtvraagaanbod.h"
+#include <QTime>
 
 #define vvimDebug()\
     qDebug() << "[" << Q_FUNC_INFO << "]"
@@ -9,6 +10,11 @@ OverzichtVraagAanbod::OverzichtVraagAanbod(QSqlRelationalTableModel *_model_vraa
     ui(new Ui::OverzichtVraagAanbod)
 {
     ui->setupUi(this);
+
+    ui->label_feedback->clear();
+    ui->saveButton->setAutoFillBackground(true);
+    ui->saveButton->setStyleSheet("background-color: rgb(255, 0, 0); color: rgb(255, 255, 255)");
+
 
     model_vraag_aanbod_overzicht = _model_vraag_aanbod_overzicht;
 
@@ -74,4 +80,26 @@ OverzichtVraagAanbod::~OverzichtVraagAanbod()
     delete vraag_aanbod_combobox;
     delete categories_combobox;
     delete deelnemer_completer;
+}
+
+void OverzichtVraagAanbod::feedbackSuccess(QString message)
+{
+    // or if you want to include the date as well: QDateTime currentTime = QDateTime::currentDateTime();
+    QTime currentTime = QTime::currentTime();
+    QString message_with_timestamp = QString("%1 (%2)").arg(message).arg(currentTime.toString());
+    ui->label_feedback->setText(message_with_timestamp);
+    ui->label_feedback->setStyleSheet("font-style: italic; color: green");
+}
+
+void OverzichtVraagAanbod::feedbackWarning(QString message)
+{
+    QTime currentTime = QTime::currentTime();
+    QString message_with_timestamp = QString("%1 (%2)").arg(message).arg(currentTime.toString());
+    ui->label_feedback->setText(message_with_timestamp);
+    ui->label_feedback->setStyleSheet("font-weight: bold; color: red");
+}
+
+void OverzichtVraagAanbod::on_saveButton_clicked()
+{
+    feedbackSuccess("succes klik!");
 }

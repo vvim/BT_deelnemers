@@ -20,6 +20,9 @@ public:
     explicit OverzichtVraagAanbod(QSqlRelationalTableModel *_model_vraag_aanbod_overzicht, QSqlRelationalTableModel *_model_deelnemers, QWidget *parent = 0);
     ~OverzichtVraagAanbod();
 
+private slots:
+    void on_saveButton_clicked();
+
 private:
     Ui::OverzichtVraagAanbod *ui;
     QSqlRelationalTableModel *model_vraag_aanbod_overzicht;
@@ -28,6 +31,8 @@ private:
     OverzichtVraagAanbod *vraag_aanbod;
     QMap<QString, int> deelnemers_map;
     QMap<int, QString> id_map;
+    void feedbackSuccess(QString message);
+    void feedbackWarning(QString message);
 };
 
 #endif // OVERZICHTVRAAGAANBOD_H
