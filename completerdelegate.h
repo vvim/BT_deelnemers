@@ -1,9 +1,11 @@
-#ifndef COMBOBOXDELEGATE_H
-#define COMBOBOXDELEGATE_H
+#ifndef COMPLETERDELEGATE_H
+#define COMPLETERDELEGATE_H
 
 #include <string>
 #include <vector>
 #include <QDebug>
+#include <QSqlRelationalTableModel>
+#include "mylineedit.h"
 
 #include <QItemDelegate>
 
@@ -11,11 +13,12 @@ class QModelIndex;
 class QWidget;
 class QVariant;
 
-class ComboBoxDelegate : public QItemDelegate
+class CompleterDelegate : public QItemDelegate
 {
 Q_OBJECT
 public:
-  ComboBoxDelegate(std::vector<std::string> _items, QObject *parent = 0);
+  CompleterDelegate(QSqlRelationalTableModel *_model_deelnemers, QObject *parent = 0);
+  void loadCompleter();
 
   QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const;
   void setEditorData(QWidget *editor, const QModelIndex &index) const;
@@ -23,11 +26,10 @@ public:
   void updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const;
   void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
 
-  // might add later: QSize sizeHint(const QStyleOptionViewItem & option, const QModelIndex & index) const;
-  // return QSize depending on longest string in Items ?
-
 private:
-  std::vector<std::string> Items;
-
+    QMap<QString, int> deelnemers_map;
+    QMap<int, QString> id_map;
+    MyCompleter *completer;
+    QSqlRelationalTableModel *model_deelnemers;
 };
 #endif
