@@ -33,6 +33,7 @@ private:
     QMap<int, QString> id_map;
     void feedbackSuccess(QString message);
     void feedbackWarning(QString message);
+    void feedbackNeutral(QString message);
 };
 
 #endif // OVERZICHTVRAAGAANBOD_H

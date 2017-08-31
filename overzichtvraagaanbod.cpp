@@ -99,6 +99,14 @@ void OverzichtVraagAanbod::feedbackWarning(QString message)
     ui->label_feedback->setStyleSheet("font-weight: bold; color: red");
 }
 
+void OverzichtVraagAanbod::feedbackNeutral(QString message)
+{
+    QTime currentTime = QTime::currentTime();
+    QString message_with_timestamp = QString("%1 (%2)").arg(message).arg(currentTime.toString());
+    ui->label_feedback->setText(message_with_timestamp);
+    ui->label_feedback->setStyleSheet("");
+}
+
 void OverzichtVraagAanbod::on_saveButton_clicked()
 {
     feedbackSuccess("succes klik!");

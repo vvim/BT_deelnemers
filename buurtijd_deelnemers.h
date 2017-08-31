@@ -60,6 +60,7 @@ private:
     bool UserMadeChangesToDeelnemerOrganisatie();
     void feedbackSuccess(QString message);
     void feedbackWarning(QString message);
+    void feedbackNeutral(QString message);
 
     MyCompleter *completer;
     OverzichtVraagAanbod *vraag_aanbod;

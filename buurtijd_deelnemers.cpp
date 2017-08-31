@@ -557,16 +557,24 @@ void Buurtijd_deelnemers::on_cancelButton_clicked()
 
     vvimDebug() << "... rolling back, will also trigger ChangeRow()";
     if(!model_deelnemers->database().rollback())
+    {
         vvimDebug() << "rollback FAILED" << model_deelnemers->lastError().text();
+        feedbackWarning(QString("annuleren faalde: %1").arg(model_deelnemers->lastError().text()));
+    }
 
 
     vvimDebug() << "... reload by using select() , see https://forum.qt.io/topic/2981/how-to-reload-the-tableview-to-reload-its-data/4";
     if(!model_deelnemers->select())
+    {
         vvimDebug() << "select FAILED" << model_deelnemers->lastError().text();
+        feedbackWarning(QString("annuleren is gelukt, maar daarna ging er iets mis bij het ophalen van de gegevens: %1").arg(model_deelnemers->lastError().text()));
+    }
 
     vvimDebug() << "... we have to reset the CurrentModelIndex, or the currentindex will be invalid (-1) and no changes are possible";
     mapper->setCurrentModelIndex(last_known_index);
     vvimDebug() << "... end of function on_cancelButton_clicked() DONE";
+
+    feedbackNeutral("Bewerkingen annuleren is gelukt");
 }
 
 void Buurtijd_deelnemers::on_pushButton_showNotes_clicked()
@@ -1102,6 +1110,14 @@ void Buurtijd_deelnemers::feedbackWarning(QString message)
     QString message_with_timestamp = QString("%1 (%2)").arg(message).arg(currentTime.toString());
     ui->label_feedback->setText(message_with_timestamp);
     ui->label_feedback->setStyleSheet("font-weight: bold; color: red");
+}
+
+void Buurtijd_deelnemers::feedbackNeutral(QString message)
+{
+    QTime currentTime = QTime::currentTime();
+    QString message_with_timestamp = QString("%1 (%2)").arg(message).arg(currentTime.toString());
+    ui->label_feedback->setText(message_with_timestamp);
+    ui->label_feedback->setStyleSheet("");
 }
 
 void Buurtijd_deelnemers::updateNavigationalButtons(int row)
