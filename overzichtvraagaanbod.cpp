@@ -92,9 +92,10 @@ OverzichtVraagAanbod::OverzichtVraagAanbod(QSqlRelationalTableModel *_model_vraa
 
     // make delegates readable (maybe better to implement virtual sizeHint()
     ui->tableView->resizeColumnsToContents();
-    ui->tableView->setColumnWidth(vraagIdx,80);
-    ui->tableView->setColumnWidth(categorieIdx_t_vraag_aanbod,150);
-    ui->tableView->setColumnWidth(deelnemerIdx,150);
+    ui->tableView->setColumnWidth(vraagIdx,60);
+    ui->tableView->setColumnWidth(categorieIdx_t_vraag_aanbod,120);
+    ui->tableView->setColumnWidth(deelnemerIdx,140);
+    ui->tableView->setColumnWidth(transactiestatusIdx_t_vraag_aanbod,120);
 }
 
 OverzichtVraagAanbod::~OverzichtVraagAanbod()
