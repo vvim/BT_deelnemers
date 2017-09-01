@@ -66,7 +66,8 @@ OverzichtVraagAanbod::OverzichtVraagAanbod(QSqlRelationalTableModel *_model_vraa
 
     for ( int i = 0 ; i < model_transactie_statussen->rowCount() ; ++i )
     {
-        transactie_status.push_back(model_transactie_statussen->index( i ,transactiestatusIdx_t_va_transactie_status).data().toString().toStdString());
+        QString status = QString("%1 %2").arg(i).arg(model_transactie_statussen->index( i ,transactiestatusIdx_t_va_transactie_status).data().toString());
+        transactie_status.push_back(status.toStdString());
     }
     transactie_status_combobox = new ComboBoxDelegate(transactie_status, this);
     delete model_transactie_statussen;
