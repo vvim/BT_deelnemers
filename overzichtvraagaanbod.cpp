@@ -1,6 +1,7 @@
 #include "overzichtvraagaanbod.h"
 #include "ui_overzichtvraagaanbod.h"
 #include <QTime>
+#include <QSqlRelationalDelegate>
 
 #define vvimDebug()\
     qDebug() << "[" << Q_FUNC_INFO << "]"
@@ -10,6 +11,7 @@ OverzichtVraagAanbod::OverzichtVraagAanbod(QSqlRelationalTableModel *_model_vraa
     ui(new Ui::OverzichtVraagAanbod)
 {
     ui->setupUi(this);
+    toonOverzicht(true);
 
     ui->label_feedback->clear();
     ui->saveButton->setAutoFillBackground(true);
@@ -96,6 +98,31 @@ OverzichtVraagAanbod::OverzichtVraagAanbod(QSqlRelationalTableModel *_model_vraa
     ui->tableView->setColumnWidth(categorieIdx_t_vraag_aanbod,120);
     ui->tableView->setColumnWidth(deelnemerIdx,140);
     ui->tableView->setColumnWidth(transactiestatusIdx_t_vraag_aanbod,120);
+
+    model_vraag_aanbod_overzicht->setRelation(categorieIdx_t_vraag_aanbod,
+                                              QSqlRelation("t_categorie","id", "categorie")  );
+    model_vraag_aanbod_overzicht->setRelation(transactiestatusIdx_t_vraag_aanbod,
+                                              QSqlRelation("t_va_transactie_status","id", "transactie_status")  );
+    model_vraag_aanbod_overzicht->select();
+
+    QSqlTableModel *rel_categorie = model_vraag_aanbod_overzicht->relationModel(categorieIdx_t_vraag_aanbod);
+    ui->comboBox_categorie->setModel(rel_categorie);
+    ui->comboBox_categorie->setModelColumn(rel_categorie->fieldIndex("categorie"));
+
+    QSqlTableModel *rel_status = model_vraag_aanbod_overzicht->relationModel(transactiestatusIdx_t_vraag_aanbod);
+    ui->comboBox_status->setModel(rel_status);
+    ui->comboBox_status->setModelColumn(rel_status->fieldIndex("transactie_status"));
+
+    mapper = new QDataWidgetMapper(this);
+    mapper->setModel(model_vraag_aanbod_overzicht);
+    mapper->setItemDelegate(new QSqlRelationalDelegate(this));
+    mapper->addMapping(ui->le_initiator, deelnemerIdx);
+    // combobox vraag/aanbod
+    // combobox categorie
+    // combobox status
+    mapper->addMapping(ui->textEdit_inhoud, inhoudIdx);
+    mapper->addMapping(ui->comboBox_categorie, categorieIdx_t_vraag_aanbod);
+    mapper->addMapping(ui->comboBox_status, transactiestatusIdx_t_vraag_aanbod);
 }
 
 OverzichtVraagAanbod::~OverzichtVraagAanbod()
@@ -105,6 +132,7 @@ OverzichtVraagAanbod::~OverzichtVraagAanbod()
     delete categories_combobox;
     delete transactie_status_combobox;
     delete deelnemer_completer;
+    delete mapper;
 }
 
 void OverzichtVraagAanbod::feedbackSuccess(QString message)
@@ -173,3 +201,50 @@ void OverzichtVraagAanbod::on_cancelButton_clicked()
 
     feedbackNeutral("Bewerkingen annuleren is gelukt");
 }
+
+void OverzichtVraagAanbod::on_tableView_doubleClicked(const QModelIndex &index)
+{
+    vvimDebug() << "show" << index ;
+/*    vvimDebug() << "\n\nclickety on" << index ;
+    int inhoudIdx = model_vraag_aanbod_overzicht->fieldIndex("inhoud");
+    QString inhoud = model_vraag_aanbod_overzicht->index( index.row(), inhoudIdx).data().toString();
+    vvimDebug() << inhoud << "\n\n";*/
+    toonOverzicht(false);
+
+    ui->label_feedback->clear();
+    mapper->setCurrentModelIndex(index);
+}
+
+void OverzichtVraagAanbod::on_pushButton_transactie_opslaan_clicked()
+{
+    vvimDebug() << "pushed";
+    toonOverzicht(true);
+}
+
+void OverzichtVraagAanbod::toonOverzicht(bool overzicht_visible)
+{
+    vvimDebug() << overzicht_visible;
+    ui->groupBox->setVisible(!overzicht_visible);
+    ui->tableView->setVisible(overzicht_visible);
+    ui->saveButton->setVisible(overzicht_visible);
+    ui->cancelButton->setVisible(overzicht_visible);
+}
+
+void OverzichtVraagAanbod::mapComboboxAndTableModel(QComboBox *combobox,QSqlRelationalTableModel *model, QString table_name, int t_deelnemers_fieldindex)
+{
+//////////////    zie http://doc.qt.io/archives/qq/qq21-datawidgetmapper.html
+
+
+    model = new QSqlRelationalTableModel(combobox);
+    model->setEditStrategy(QSqlTableModel::OnManualSubmit);
+    model->setTable(table_name);
+    if (!model->select())
+    {
+////////////        showError(model->lastError());
+        return;
+    }
+    combobox->setModel(model);
+    combobox->setModelColumn(1);
+    mapper->addMapping(combobox, t_deelnemers_fieldindex,"currentIndex");
+}
+

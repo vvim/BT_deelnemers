@@ -18,6 +18,68 @@
     <widget class="QTableView" name="tableView"/>
    </item>
    <item>
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string>Wijzig transactie</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="1" column="0">
+       <widget class="QComboBox" name="comboBox_vraag_of_aanbod"/>
+      </item>
+      <item row="5" column="0">
+       <widget class="QLabel" name="label_kandidaten">
+        <property name="text">
+         <string>kandidaten</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="2">
+       <widget class="QComboBox" name="comboBox_categorie"/>
+      </item>
+      <item row="5" column="2">
+       <widget class="QListView" name="listView_kandidaten"/>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_initiator">
+        <property name="text">
+         <string>initiator</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0" colspan="3">
+       <widget class="QTextEdit" name="textEdit_inhoud"/>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="label_status">
+        <property name="text">
+         <string>status</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <widget class="QLineEdit" name="le_initiator"/>
+      </item>
+      <item row="4" column="2">
+       <widget class="QComboBox" name="comboBox_status"/>
+      </item>
+      <item row="7" column="2">
+       <widget class="QPushButton" name="pushButton_transactie_opslaan">
+        <property name="text">
+         <string>PushButton</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="2">
+       <widget class="QDialogButtonBox" name="buttonBox">
+        <property name="standardButtons">
+         <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QLabel" name="label_feedback">
