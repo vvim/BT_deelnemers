@@ -44,7 +44,6 @@ SOURCES += main.cpp\
     notassortfilterproxymodel.cpp \
     newdeelnemerindividu.cpp \
     overzichtvraagaanbod.cpp \
-    comboboxdelegate.cpp \
     completerdelegate.cpp \
     deelnemerbhoverzicht.cpp
 
@@ -62,7 +61,6 @@ HEADERS  += buurtijd_deelnemers.h \
     newdeelnemerindividu.h \
     sdeelnemerorganisatie.h \
     overzichtvraagaanbod.h \
-    comboboxdelegate.h \
     completerdelegate.h \
     deelnemerbhoverzicht.h
 
