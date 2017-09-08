@@ -580,6 +580,38 @@ ALTER TABLE `t_va_transactie_status`
   ADD PRIMARY KEY (`id`);
 COMMIT;
 
+--
+-- Table structure for table `t_va_soorten`
+--
+
+CREATE TABLE `t_va_soorten` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `soort` varchar(6) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `t_va_soorten`
+--
+
+INSERT INTO `t_va_soorten` (`id`, `soort`) VALUES
+(0, 'aanbod'),
+(1, 'vraag');
+
+
+--
+-- Indexes for table `t_va_soorten`
+--
+ALTER TABLE `t_va_soorten`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `id` (`id`);
+
+--
+-- AUTO_INCREMENT for table `t_va_soorten`
+--
+ALTER TABLE `t_va_soorten`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

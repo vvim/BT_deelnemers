@@ -33,6 +33,8 @@ OverzichtVraagAanbod::OverzichtVraagAanbod(QSqlRelationalTableModel *_model_vraa
                                               QSqlRelation("t_categorie","id", "categorie")  );
     model_vraag_aanbod_overzicht->setRelation(transactiestatusIdx,
                                               QSqlRelation("t_va_transactie_status","id", "transactie_status")  );
+    model_vraag_aanbod_overzicht->setRelation(vraagIdx,
+                                              QSqlRelation("t_va_soorten","id", "soort")  );
     model_vraag_aanbod_overzicht->setRelation(deelnemerIdx,
                                               QSqlRelation("t_deelnemers","id", "naam")  );
     model_vraag_aanbod_overzicht->select();
@@ -56,14 +58,18 @@ OverzichtVraagAanbod::OverzichtVraagAanbod(QSqlRelationalTableModel *_model_vraa
     ui->comboBox_status->setModel(rel_status);
     ui->comboBox_status->setModelColumn(rel_status->fieldIndex("transactie_status"));
 
+    QSqlTableModel *rel_vraagaanbod = model_vraag_aanbod_overzicht->relationModel(vraagIdx);
+    ui->comboBox_vraag_of_aanbod->setModel(rel_vraagaanbod);
+    ui->comboBox_vraag_of_aanbod->setModelColumn(rel_vraagaanbod->fieldIndex("soort"));
+
     mapper = new QDataWidgetMapper(this);
     mapper->setModel(model_vraag_aanbod_overzicht);
     mapper->setItemDelegate(new QSqlRelationalDelegate(this));
     mapper->addMapping(ui->le_initiator, deelnemerIdx);
-    // combobox vraag/aanbod
     mapper->addMapping(ui->textEdit_inhoud, inhoudIdx);
     mapper->addMapping(ui->comboBox_categorie, categorieIdx);
     mapper->addMapping(ui->comboBox_status, transactiestatusIdx);
+    mapper->addMapping(ui->comboBox_vraag_of_aanbod, vraagIdx);
 }
 
 OverzichtVraagAanbod::~OverzichtVraagAanbod()
