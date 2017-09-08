@@ -1,6 +1,7 @@
 #include "overzichtvraagaanbod.h"
 #include "ui_overzichtvraagaanbod.h"
 #include <QTime>
+#include <QDebug>
 
 #define vvimDebug()\
     qDebug() << "[" << Q_FUNC_INFO << "]"
