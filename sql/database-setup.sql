@@ -271,11 +271,10 @@ CREATE TABLE IF NOT EXISTS `t_deelnemer_notas` (
   `id` int(10) UNSIGNED NOT NULL,
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `nota` text NOT NULL COMMENT 'see http://stackoverflow.com/a/13182846/',
+  `deelnemer_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
-  `deelnemer_id` int(10) UNSIGNED NOT NULL
-
 --
 -- Table structure for table `t_deelnemer_soort`
 --
@@ -440,7 +439,7 @@ CREATE TABLE `t_vraag_aanbod` (
   `categorie` int(11) NOT NULL,
   `inhoud` text NOT NULL,
   `transactie_status` int(10) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Indexes for dumped tables
@@ -471,7 +470,7 @@ ALTER TABLE `t_vraag_aanbod`
 CREATE TABLE `t_categorie` (
   `id` int(10) UNSIGNED NOT NULL,
   `categorie` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `t_categorie`
@@ -556,7 +555,7 @@ ALTER TABLE `t_categorie`
 CREATE TABLE `t_va_transactie_status` (
   `id` int(10) UNSIGNED NOT NULL,
   `transactie_status` varchar(25) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `t_va_transactie_status`
