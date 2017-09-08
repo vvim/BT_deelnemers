@@ -5,6 +5,8 @@
 #include <QSqlRelationalTableModel>
 #include <QSqlError>
 #include <QMessageBox>
+#include <QDataWidgetMapper>
+#include <QComboBox>
 
 namespace Ui {
 class OverzichtVraagAanbod;
@@ -20,18 +22,22 @@ public:
 
 private slots:
     void on_saveButton_clicked();
-
     void on_cancelButton_clicked();
+    void on_tableView_doubleClicked(const QModelIndex &index);
+    void on_pushButton_transactie_opslaan_clicked();
 
 private:
     Ui::OverzichtVraagAanbod *ui;
     QSqlRelationalTableModel *model_vraag_aanbod_overzicht;
-    OverzichtVraagAanbod *vraag_aanbod;
     QMap<QString, int> deelnemers_map;
     QMap<int, QString> id_map;
+    QDataWidgetMapper *mapper;
+
     void feedbackSuccess(QString message);
     void feedbackWarning(QString message);
     void feedbackNeutral(QString message);
+    void toonOverzicht(bool overzicht_visible);
+    void mapComboboxAndTableModel(QComboBox *combobox,QSqlRelationalTableModel *model, QString table_name, int t_deelnemers_fieldindex);
 };
 
 #endif // OVERZICHTVRAAGAANBOD_H

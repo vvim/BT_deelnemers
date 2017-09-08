@@ -194,6 +194,7 @@ Buurtijd_deelnemers::~Buurtijd_deelnemers()
 
     vvimDebug() << "[TODO]" << "delete alle modellen";
     vvimDebug() << "[TODO]" << "delete mapping!";
+    delete mapper;
 }
 
 bool Buurtijd_deelnemers::connectToDatabase()
