@@ -148,10 +148,6 @@ void OverzichtVraagAanbod::on_cancelButton_clicked()
 void OverzichtVraagAanbod::on_tableView_doubleClicked(const QModelIndex &index)
 {
     vvimDebug() << "show" << index ;
-/*    vvimDebug() << "\n\nclickety on" << index ;
-    int inhoudIdx = model_vraag_aanbod_overzicht->fieldIndex("inhoud");
-    QString inhoud = model_vraag_aanbod_overzicht->index( index.row(), inhoudIdx).data().toString();
-    vvimDebug() << inhoud << "\n\n";*/
     toonOverzicht(false);
 
     ui->label_feedback->clear();
