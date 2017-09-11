@@ -11,6 +11,7 @@
 #include <QComboBox>
 #include <QMap>
 #include <QSettings>
+#include <QStatusBar>
 #include "btlistview.h"
 #include "btsqltablemodel.h"
 #include "mylineedit.h"
@@ -72,6 +73,7 @@ private:
     NewDeelnemerIndividu *newindividu;
     DeelnemerBHOverzicht *bh_overzicht;
     QSettings *settings;
+    QStatusBar *statusbar;
 
 private slots:
     void ChangeRow(QModelIndex new_index);

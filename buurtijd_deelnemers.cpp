@@ -21,13 +21,17 @@ Buurtijd_deelnemers::Buurtijd_deelnemers(QWidget *parent) :
     vraag_aanbod = NULL;
     newindividu = NULL;
     bh_overzicht = NULL;
+    statusbar = new QStatusBar(this);
     last_known_deelnemer = SDeelnemerMarker();
     settings = new QSettings("settings.ini", QSettings::IniFormat);
 
     ui->setupUi(this);
     ui->deelnemersTable->setVisible(false); // only keeping it for debugging reasons, it has no use of the user
     ui->label_feedback->clear();
-    ui->label_user->setText(QString("%1@%2").arg(settings->value("minguser").toString()).arg(settings->value("db/host").toString()));
+    statusbar->clearMessage();
+    statusbar->setStyleSheet("font-size: 10px");
+    statusbar->showMessage(QString("logged in as %1@%2").arg(settings->value("minguser").toString()).arg(settings->value("db/host").toString()));
+    ui->verticalLayout->addWidget(statusbar);
     vvimDebug() << QString("%1@%2").arg(settings->value("minguser").toString()).arg(settings->value("db/host").toString());
 
     ui->saveButton->setAutoFillBackground(true);
@@ -191,6 +195,7 @@ Buurtijd_deelnemers::~Buurtijd_deelnemers()
     delete model_vraag_aanbod;
     delete newindividu;
     delete ui;
+    delete statusbar;
 
     vvimDebug() << "[TODO]" << "delete alle modellen";
     vvimDebug() << "[TODO]" << "delete mapping!";
