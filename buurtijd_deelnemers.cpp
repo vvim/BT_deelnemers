@@ -30,12 +30,10 @@ Buurtijd_deelnemers::Buurtijd_deelnemers(QWidget *parent) :
     ui->label_feedback->clear();
     statusbar->clearMessage();
     statusbar->setStyleSheet("font-size: 10px");
-    statusbar->showMessage(QString("logged in as %1@%2 - build version %3 %4").arg(settings->value("minguser").toString()).arg(settings->value("db/host").toString()).arg(__DATE__).arg(__TIME__));
-    /**
-        QDate builddate= QDate::fromString(__DATE__);
-        QTime buildtime = QTime::fromString( __TIME__ );
-        vvimDebug() << builddate.toString("yyyy-MM-dd") << buildtime.toString("hh:mm:ss");
-      **/
+    QDate builddate= QDate::fromString(__DATE__,"MMM d yyyy");
+    QTime buildtime = QTime::fromString( __TIME__ );
+    QString program_version = QString("%1 %2").arg(builddate.toString("yyyy-MM-dd")).arg(buildtime.toString("hh:mm:ss"));
+    statusbar->showMessage(QString("logged in as %1@%2 - build version %3").arg(settings->value("minguser").toString()).arg(settings->value("db/host").toString()).arg(program_version));
     ui->verticalLayout->addWidget(statusbar);
     vvimDebug() << QString("%1@%2").arg(settings->value("minguser").toString()).arg(settings->value("db/host").toString());
 
