@@ -87,7 +87,8 @@ CREATE TABLE IF NOT EXISTS `t_deelnemers` (
   `soort_deelnemer` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
   `varia` varchar(1000) DEFAULT NULL,
   `lat` decimal(10,6) DEFAULT NULL COMMENT 'latitude up to 6 decimals (accuracy to 1 meter)',
-  `lng` decimal(10,6) DEFAULT NULL COMMENT 'longitude up to 6 decimals (accuracy to 1 meter)'
+  `lng` decimal(10,6) DEFAULT NULL COMMENT 'longitude up to 6 decimals (accuracy to 1 meter)',
+  `kwetsbaar` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 --
